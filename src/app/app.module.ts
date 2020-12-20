@@ -19,6 +19,8 @@ import { MaterialModule } from './material/material.module';
 
 //imports de terceros
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { ActivoFijoAddComponent } from './vistas/activo-fijo-add/activo-fijo-add.component';
+import { ActivoFijoListComponent } from './vistas/activo-fijo-list/activo-fijo-list.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -43,6 +45,11 @@ const maskConfig: Partial<IConfig> = {
     AppComponent,
     AdminLayoutComponent,
     PruebaComponent,
+    ActivoFijoAddComponent,
+    ActivoFijoListComponent,
+  ],
+  entryComponents: [
+    ActivoFijoAddComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

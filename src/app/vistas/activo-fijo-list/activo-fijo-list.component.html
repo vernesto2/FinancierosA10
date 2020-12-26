@@ -17,16 +17,22 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Nombre
+                                        Código
+                                    </th>
+                                    <th>
+                                        Activo
                                     </th>
                                     <th>
                                         Precio
                                     </th>
                                     <th>
-                                        Fecha de adquisicion
+                                        Fecha de adquisición
                                     </th>
                                     <th>
-                                        tipo de adquisicion
+                                        Tipo de adquisición
+                                    </th>
+                                    <th>
+                                        Vida util
                                     </th>
                                     <th>
                                         Acciones
@@ -34,6 +40,9 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let a of activos">
+                                        <td>
+                                            {{a.departamento.unidad.codigo + "-" + a.departamento.codigo + "-" + a.tipoActivo.codigo + "-" + a.correlativo}}
+                                        </td>
                                         <td>
                                             {{a.nombre}}
                                         </td>
@@ -43,18 +52,26 @@
                                         <td>
                                             {{a.fechaAdquisicion | date:'dd-MM-yyyy' }}
                                         </td>
-                                        <td class="text-primary">
+                                        <td>
                                             {{a.tipoAdquisicion}}
                                         </td>
                                         <td>
-                                            <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                                            <div *ngIf="a.tipoActivo.nombre == 'TERRENO'">
+                                                N/A
+                                            </div>
+                                            <div *ngIf="a.tipoActivo.nombre != 'TERRENO'">
+                                                {{a.vidaUtil}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button mat-icon-button color="primary">
                                                 <mat-icon>remove_red_eye</mat-icon>
                                               </button>
-                                            <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
-                                                <mat-icon>plus_one</mat-icon>
+                                              <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                                                <mat-icon>home</mat-icon>
                                               </button>
-                                              <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon">
-                                                <mat-icon>filter_list</mat-icon>
+                                              <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+                                                <mat-icon>menu</mat-icon>
                                               </button>
                                         </td>
                                     </tr>

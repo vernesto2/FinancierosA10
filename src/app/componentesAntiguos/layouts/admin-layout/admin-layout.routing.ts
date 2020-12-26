@@ -10,7 +10,7 @@ import { ActivoFijoListComponent } from 'app/vistas/activo-fijo-list/activo-fijo
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: '',      redirectTo: 'user-profile' }, //por defecto va mostrar esta ruta en caso que la url este vacia
+    { path: '',      redirectTo: 'activofijo' }, //por defecto va mostrar esta ruta en caso que la url este vacia
     { path: 'prueba',         component: PruebaComponent },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'table-list',     component: TableListComponent },

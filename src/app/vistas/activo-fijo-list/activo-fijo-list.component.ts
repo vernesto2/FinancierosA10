@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivoFijoService } from 'app/services/activo-fijo.service';
 import { ActivoFijoAddComponent } from '../../vistas/activo-fijo-add/activo-fijo-add.component';
 
 @Component({
@@ -8,10 +9,17 @@ import { ActivoFijoAddComponent } from '../../vistas/activo-fijo-add/activo-fijo
   styleUrls: ['./activo-fijo-list.component.css']
 })
 export class ActivoFijoListComponent implements OnInit {
+  activos: any[];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService) { 
+    this.serviceActivoFijo.listarActivos().subscribe((res: any) => {
+      this.activos = res;
+      console.log(res);
+    });
+  }
 
   ngOnInit(): void {
+
   }
 
   openDialogActivoFijo() {

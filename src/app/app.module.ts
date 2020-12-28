@@ -23,6 +23,8 @@ import { ActivoFijoAddComponent } from './vistas/activo-fijo-add/activo-fijo-add
 import { ActivoFijoListComponent } from './vistas/activo-fijo-list/activo-fijo-list.component';
 import { PoliticasAddComponent } from './vistas/politicas-add/politicas-add.component';
 import { PoliticasListComponent } from './vistas/politicas-list/politicas-list.component';
+import { PersonaEmpresaAddComponent } from './vistas/persona-empresa-add/persona-empresa-add.component';
+import { PersonaEmpresaListComponent } from './vistas/persona-empresa-list/persona-empresa-list.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -51,6 +53,8 @@ const maskConfig: Partial<IConfig> = {
     ActivoFijoListComponent,
     PoliticasAddComponent,
     PoliticasListComponent,
+    PersonaEmpresaAddComponent,
+    PersonaEmpresaListComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

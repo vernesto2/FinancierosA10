@@ -7,6 +7,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { PruebaComponent } from '../../../vistas/prueba/prueba.component';
 import { ActivoFijoListComponent } from 'app/vistas/activo-fijo-list/activo-fijo-list.component';
+import { PoliticasListComponent } from 'app/vistas/politicas-list/politicas-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -18,4 +19,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'icons',          component: IconsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'activofijo',  component: ActivoFijoListComponent },
+    { path: 'politicas',  component: PoliticasListComponent },
 ];

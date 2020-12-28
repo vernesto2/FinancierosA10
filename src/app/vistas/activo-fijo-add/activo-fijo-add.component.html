@@ -6,14 +6,34 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header card-header-primary">
-                <center><h2 class="card-title">Registro </h2></center>
+                <center>
+                  <h2 class="card-title">Registro </h2>
+                </center>
               </div>
               <div class="card-body">
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Código del activo">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Fecha de adquisición</mat-label>
+                      <input matInput [matDatepicker]="picker">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Unidad</mat-label>
+                      <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
                 </div>
@@ -36,24 +56,18 @@
 
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
-                      <mat-label>Fecha de adquisición</mat-label>
-                      <input matInput [matDatepicker]="picker">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-label>Departamento</mat-label>
+                      <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Vida util">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
                     <mat-form-field appearance="legacy">
-                      <mat-label>Unidad</mat-label>
+                      <mat-label>Tipo de adquisición</mat-label>
                       <mat-select>
                         <mat-option value="option">Option</mat-option>
                       </mat-select>
@@ -61,14 +75,18 @@
                   </div>
 
                   <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
-                        <mat-label>Departamento</mat-label>
-                        <mat-select>
-                          <mat-option value="option">Option</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                </div>                
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Vida util">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Monto">
+                    </mat-form-field>
+                  </div>
                 </div>
+
                 <div class="row">
                   <div class="col-md-12">
                     <mat-form-field appearance="fill">

@@ -21,6 +21,8 @@ import { MaterialModule } from './material/material.module';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { ActivoFijoAddComponent } from './vistas/activo-fijo-add/activo-fijo-add.component';
 import { ActivoFijoListComponent } from './vistas/activo-fijo-list/activo-fijo-list.component';
+import { PoliticasAddComponent } from './vistas/politicas-add/politicas-add.component';
+import { PoliticasListComponent } from './vistas/politicas-list/politicas-list.component';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -47,6 +49,8 @@ const maskConfig: Partial<IConfig> = {
     PruebaComponent,
     ActivoFijoAddComponent,
     ActivoFijoListComponent,
+    PoliticasAddComponent,
+    PoliticasListComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

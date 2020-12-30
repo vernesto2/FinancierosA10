@@ -22,7 +22,7 @@ export class ActivoFijoAddComponent implements OnInit {
   ccorrelativo: number;
 
   //variables de comunicacion con el padre
-  @Output() agregado = new EventEmitter();
+  @Output() onAgregado = new EventEmitter();
 
 //combos
   listaUnidad: any[]; //lista del combo Unidad solo sirve para listar
@@ -30,7 +30,7 @@ export class ActivoFijoAddComponent implements OnInit {
   listaDeptoPorUnidad: any[];
   listaActivo: any[];
 
-  constructor(public dialogRef: MatDialogRef<ActivoFijoAddComponent>, @Inject(MAT_DIALOG_DATA) public message: string,
+  constructor(public dialogRef: MatDialogRef<ActivoFijoAddComponent>, @Inject(MAT_DIALOG_DATA) public data: string,
     public serviceActivo: ActivoFijoService, private router: Router) { }
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class ActivoFijoAddComponent implements OnInit {
     console.log(this.activo);
     this.activo.correlativo = this.ccorrelativo;
     this.serviceActivo.agregarActivoFijo(this.activo).subscribe(res => {
-      this.agregado.emit();
+      this.onAgregado.emit();
     });
   }
 
@@ -67,7 +67,7 @@ export class ActivoFijoAddComponent implements OnInit {
       this.listaDeptoPorUnidad = lista;
       this.cunidad = us.codigo;
       //console.log(this.cunidad)
-
+      
       if(this.listaDeptoPorUnidad.length > 0){
         this.valido = false;
       } else {

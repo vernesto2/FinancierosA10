@@ -31,7 +31,13 @@ export class ActivoFijoListComponent implements OnInit {
   }
 
   openDialogActivoFijo() {
-    const dialogref = this.dialog.open(ActivoFijoAddComponent, {});
+    const data = {
+      onAgrego: this.onAgrego
+    }
+    let dialogref = this.dialog.open(ActivoFijoAddComponent, {});
+    const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
+      this.onAgrego();
+    });
     dialogref.afterClosed().subscribe( res => {
       this.activos = res;
         this.onAgrego();

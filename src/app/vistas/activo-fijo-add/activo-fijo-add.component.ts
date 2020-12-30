@@ -1,4 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit, Inject, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivoFijoModel } from 'app/models/activoFijo.model';
@@ -20,13 +21,17 @@ export class ActivoFijoAddComponent implements OnInit {
   ctipo: number;
   ccorrelativo: number;
 
+  //variables de comunicacion con el padre
+  @Output() agregado = new EventEmitter();
+
 //combos
   listaUnidad: any[]; //lista del combo Unidad solo sirve para listar
   listatipoactivo: any[];
   listaDeptoPorUnidad: any[];
+  listaActivo: any[];
 
   constructor(public dialogRef: MatDialogRef<ActivoFijoAddComponent>, @Inject(MAT_DIALOG_DATA) public message: string,
-    public serviceActivo: ActivoFijoService) { }
+    public serviceActivo: ActivoFijoService, private router: Router) { }
 
   ngOnInit(): void {
     //listamos las unidades 
@@ -48,7 +53,9 @@ export class ActivoFijoAddComponent implements OnInit {
 
     console.log(this.activo);
     this.activo.correlativo = this.ccorrelativo;
-    this.serviceActivo.agregarActivoFijo(this.activo).subscribe(res => console.log(res));
+    this.serviceActivo.agregarActivoFijo(this.activo).subscribe(res => {
+      this.agregado.emit();
+    });
   }
 
   onCancelar() {

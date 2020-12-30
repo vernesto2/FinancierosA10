@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  base_uri: "http://127.0.0.1:8080/api"
+  base_uri: "http://192.168.43.44:8080/api"
 };

@@ -1,4 +1,4 @@
-<form>
+<form (ngSubmit)="guardarActivo(forma)" #forma="ngForm"> <!--Se ponen estas lineas para indicar que usaremos angular en este formulario-->
   <div mat-dialog-content>
     <div class="main-content">
       <div class="container-fluid">
@@ -15,14 +15,17 @@
                 <div class="row">
                   <div class="col-md-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Código del activo">
+                      <input matInput placeholder="Código del activo" disabled>
                     </mat-form-field>
                   </div>
 
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
                       <mat-label>Fecha de adquisición</mat-label>
-                      <input matInput [matDatepicker]="picker">
+                      <input matInput [matDatepicker]="picker" required
+                      name="fechaAdq"
+                      #fechaAdq="ngModel"
+                      [(ngModel)]="activo.fechaAdquisicion">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -31,8 +34,8 @@
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
                       <mat-label>Unidad</mat-label>
-                      <mat-select>
-                        <mat-option value="option">Option</mat-option>
+                      <mat-select (selectionChange)="unidadSeleccionada($event.value)" required>
+                        <mat-option *ngFor="let unidad of listaUnidad"  [value]="unidad">{{unidad.nombre}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -41,24 +44,33 @@
                 <div class="row">
                   <div class="col-md-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Nombre del activo">
+                      <input matInput placeholder="Nombre del activo" required
+                      name="nombre"
+                      #nombre="ngModel"
+                      [(ngModel)]="activo.nombre">
                     </mat-form-field>
                   </div>
 
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
                       <mat-label>Tipo de activo</mat-label>
-                      <mat-select>
-                        <mat-option value="option">Option</mat-option>
+                      <mat-select (selectionChange)="tipoASeleccionada($event.value)" required
+                      name="ta"
+                      #ta="ngModel"
+                      [(ngModel)]="activo.tipoActivo">
+                        <mat-option *ngFor="let ta of listatipoactivo" [value]="ta">{{ta.nombre}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
 
                   <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
+                    <mat-form-field appearance="legacy" >
                       <mat-label>Departamento</mat-label>
-                      <mat-select>
-                        <mat-option value="option">Option</mat-option>
+                      <mat-select [disabled]='valido' (selectionChange)="deptoSeleccionada($event.value)" required
+                      name="depto"
+                      #depto="ngModel"
+                      [(ngModel)]="activo.departamento">
+                        <mat-option *ngFor="let depto of listaDeptoPorUnidad" [value]="depto">{{depto.nombre}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
@@ -68,21 +80,33 @@
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
                       <mat-label>Tipo de adquisición</mat-label>
-                      <mat-select>
-                        <mat-option value="option">Option</mat-option>
+                      <mat-select required
+                      name="tadq"
+                      #tadq="ngModel"
+                      [(ngModel)]="activo.tipoAdquisicion">
+                        <mat-option value="COMPRADO_NUEVO">Comprado / Nuevo</mat-option>
+                        <mat-option value="COMPRADO_USADO">Comprado / Usado</mat-option>
+                        <mat-option value="DONADO_NUEVO">Donado / Nuevo</mat-option>
+                        <mat-option value="DONADO_USADO">Donado / Usado</mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
 
                   <div class="col-md-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Vida util">
+                      <input matInput type="number" placeholder="Vida util" required
+                      name="vida"
+                      #vida="ngModel"
+                      [(ngModel)]="activo.vidaUtil">
                     </mat-form-field>
                   </div>
 
                   <div class="col-md-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Monto">
+                      <input matInput placeholder="Monto" required
+                      name="monto"
+                      #monto="ngModel"
+                      [(ngModel)]="activo.precioAdquisicion">
                     </mat-form-field>
                   </div>
                 </div>
@@ -91,7 +115,10 @@
                   <div class="col-md-12">
                     <mat-form-field appearance="fill">
                       <mat-label>Carácteristica del activo</mat-label>
-                      <textarea matInput></textarea>
+                      <textarea matInput 
+                      name="caracteristica"
+                      #caracteristica="ngModel"
+                      [(ngModel)]="activo.descripcion"></textarea>
                     </mat-form-field>
                   </div>
                 </div>

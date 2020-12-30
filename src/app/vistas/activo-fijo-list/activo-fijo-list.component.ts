@@ -14,7 +14,7 @@ export class ActivoFijoListComponent implements OnInit {
   constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService) { 
     this.serviceActivoFijo.listarActivos().subscribe((res: any) => {
       this.activos = res;
-      console.log(res);
+      //console.log(res);
     });
   }
 

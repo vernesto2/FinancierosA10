@@ -5,6 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivoFijoModel } from 'app/models/activoFijo.model';
 import { Unidad } from 'app/models/unidad.model';
 import { ActivoFijoService } from 'app/services/activo-fijo.service';
+declare var $: any; //variable que se usara para las notificaciones
+
 @Component({
   selector: 'app-activo-fijo-add',
   templateUrl: './activo-fijo-add.component.html',
@@ -55,9 +57,37 @@ export class ActivoFijoAddComponent implements OnInit {
     //console.log(this.activo);
     this.activo.correlativo = this.ccorrelativo;
     this.serviceActivo.agregarActivoFijo(this.activo).subscribe(res => {
+      this.showNotification('top', 'right');
       this.onAgregado.emit();
     });
   }
+
+  showNotification(from, align) {
+    const type = ['success'];
+
+    $.notify({
+        icon: "save",
+        message: " Guardado exitosamente.!"
+
+    }, {
+        type: 'success',
+        timer: 4000,
+        placement: {
+            from: from,
+            align: align
+        },
+        template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+          '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+          '<i class="material-icons" data-notify="icon">save</i> ' +
+          '<span data-notify="title">{1}</span> ' +
+          '<span data-notify="message">{2}</span>' +
+          '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+          '</div>' +
+          '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
+}
 
   onCancelar() {
     this.dialogRef.close();

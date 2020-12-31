@@ -28,6 +28,7 @@ import { PersonaEmpresaListComponent } from './vistas/persona-empresa-list/perso
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ const maskConfig: Partial<IConfig> = {
     RouterModule,
     AppRoutingModule,
     MaterialModule,
+    NgxPaginationModule,
     NgxMaskModule.forRoot(maskConfig),
   ],
   exports: [

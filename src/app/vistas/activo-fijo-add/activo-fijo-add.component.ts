@@ -14,7 +14,7 @@ export class ActivoFijoAddComponent implements OnInit {
   // variables globales
   activo = new ActivoFijoModel(); //modelo que se usara para relacionar el formulario
   valido = true; //variable para controlar el estado del Departamento
-  
+
   //variables para autocompletar codigo
   cunidad: number;
   cdepto: number;
@@ -34,6 +34,7 @@ export class ActivoFijoAddComponent implements OnInit {
     public serviceActivo: ActivoFijoService, private router: Router) { }
 
   ngOnInit(): void {
+    this.activo.codigoGenerado = '';
     //listamos las unidades 
     this.serviceActivo.listarUnidad().subscribe((lista: any[]) => {
       this.listaUnidad = lista; //obtenemos el listado y lo guardamos a la variable
@@ -51,7 +52,7 @@ export class ActivoFijoAddComponent implements OnInit {
       return;
     }
 
-    console.log(this.activo);
+    //console.log(this.activo);
     this.activo.correlativo = this.ccorrelativo;
     this.serviceActivo.agregarActivoFijo(this.activo).subscribe(res => {
       this.onAgregado.emit();
@@ -66,15 +67,13 @@ export class ActivoFijoAddComponent implements OnInit {
     this.serviceActivo.listarDepartamentoPorUnidad(us.codigo).subscribe((lista: any[]) => {
       this.listaDeptoPorUnidad = lista;
       this.cunidad = us.codigo;
-      //console.log(this.cunidad)
-      
-      if(this.listaDeptoPorUnidad.length > 0){
+
+      if (this.listaDeptoPorUnidad.length > 0) {
         this.valido = false;
       } else {
         this.valido = true;
       }
-    })
-    //console.log(us);
+    });
   }
 
   deptoSeleccionada(codigo) {
@@ -83,17 +82,20 @@ export class ActivoFijoAddComponent implements OnInit {
     if (this.ctipo > 0) {
       this.serviceActivo.correlativo(this.ctipo, this.cdepto, this.cunidad).subscribe((correlativo: any) => {
         this.ccorrelativo = correlativo.correlativo;
-        //console.log(this.ccorrelativo);
+        //console.log(correlativo);
+        this.activo.codigoGenerado = correlativo.codigoGenerado;
       });
     }
   }
+
   tipoASeleccionada(codigo) {
     this.ctipo = codigo.codigo;
 
     if (this.cdepto > 0) {
       this.serviceActivo.correlativo(this.ctipo, this.cdepto, this.cunidad).subscribe((correlativo: any) => {
         this.ccorrelativo = correlativo.correlativo;
-        //console.log(this.ccorrelativo);
+        //console.log(correlativo);
+        this.activo.codigoGenerado = correlativo.codigoGenerado;
       });
     }
   }

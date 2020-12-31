@@ -15,7 +15,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Código del activo" disabled>
+                      <input matInput placeholder="Código del activo" [value]="activo.codigoGenerado" disabled>
                     </mat-form-field>
                   </div>
 
@@ -103,7 +103,7 @@
 
                   <div class="col-md-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Monto" required
+                      <input matInput type="number" placeholder="Monto" required
                       name="monto"
                       #monto="ngModel"
                       [(ngModel)]="activo.precioAdquisicion">
@@ -134,6 +134,6 @@
   </div>
   <div mat-dialog-actions class="align-content-end">
     <button mat-raised-button class="btn btn-danger" (click)="onCancelar()">Cancelar</button>
-    <button mat-raised-button class="btn btn-primary" type="submit" [mat-dialog-close]="true">Guardar</button>
+    <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="forma.invalid" [mat-dialog-close]="">Guardar</button>
   </div>
 </form>

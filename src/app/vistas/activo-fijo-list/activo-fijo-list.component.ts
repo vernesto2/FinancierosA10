@@ -12,21 +12,26 @@ import { ActivoFijoAddComponent } from '../../vistas/activo-fijo-add/activo-fijo
 export class ActivoFijoListComponent implements OnInit {
   activos: any[];
   navegacion;
+  cargando = false;
+  page = 1; //variable que llevara el control de la pagina de la paginacion
 
-  constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService, private router: Router) { 
-    
+  constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.llenarActivoFijo();
   }
+
   onAgrego() {
     this.llenarActivoFijo();
   }
+
   llenarActivoFijo() {
+    this.cargando = true;
     this.serviceActivoFijo.listarActivos().subscribe((res: any) => {
       this.activos = res;
-      console.log(this.activos);
+      this.cargando = false;
+      //console.log(this.activos);
     });
   }
 
@@ -38,10 +43,7 @@ export class ActivoFijoListComponent implements OnInit {
     const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
       this.onAgrego();
     });
-    dialogref.afterClosed().subscribe( res => {
-      this.activos = res;
-        this.onAgrego();
-    });
+    dialogref.afterClosed().subscribe( res => {});
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PersonaEmpresaAddComponent } from '../persona-empresa-add/persona-empresa-add.component';
+import { EmpresaAddComponent } from '../empresa-add/empresa-add.component';
+import { PersonaAddComponent } from '../persona-add/persona-add.component';
 
 @Component({
   selector: 'app-persona-empresa-list',
@@ -14,8 +15,15 @@ export class PersonaEmpresaListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openDialogPersonaEmpresa() {
-    const dialogref = this.dialog.open(PersonaEmpresaAddComponent, {});
+  openDialogPersona() {
+    const dialogref = this.dialog.open(PersonaAddComponent, {});
+    dialogref.afterClosed().subscribe( res => {
+      console.log(res);
+    });
+  }
+
+  openDialogEmpresa() {
+    const dialogref = this.dialog.open(EmpresaAddComponent, {});
     dialogref.afterClosed().subscribe( res => {
       console.log(res);
     });

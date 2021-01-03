@@ -17,6 +17,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import {MatCardModule} from '@angular/material/card';
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatSliderModule,
@@ -57,6 +60,7 @@ import {MatCardModule} from '@angular/material/card';
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
+    MatAutocompleteModule,
   ]
 })
 export class MaterialModule { }

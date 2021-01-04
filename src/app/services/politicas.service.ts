@@ -15,4 +15,8 @@ export class PoliticasService {
   agregarPoliticas(politicas: PoliticaModel){
     return this.http.post(`${this.base_uri}/politica/`, politicas);
   }
+
+  listarPoliticas(){
+    return this.http.get(`${this.base_uri}/politica`);
+  }
 }

@@ -1,17 +1,17 @@
 export class PoliticaModel {
     fechaEstablecimiento: Date;
-    tInteres: number;
-    tMora: number;
+    tasaInteres: number;
+    tasaMora: number;
     diasCobro: number;
     diasAntesMora: number;
-    fechaFin: Date;
+    fechaFinalizacion: Date;
     id: number;
-    incobrabilidad: number;
+    diasIncobrabilidad: number;
     tipoCredito: number;
-    mInferior: number;
-    mSuperior: number;
+    montoInferior: number;
+    montoSuperior: number;
     tiempo: number;
-    tramitacion: number;
-    notario: number;
-    otras: number;
+    gastosTramitacion: number;
+    gastosNotario: number;
+    otrasComisiones: number;
 }

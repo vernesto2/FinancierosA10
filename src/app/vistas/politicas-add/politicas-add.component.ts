@@ -28,8 +28,6 @@ export class PoliticasAddComponent implements OnInit {
     if(forma.invalid){
       return;
     }
-    console.log(this.politicas);
-    console.log(forma);
     this.servicePolitica.agregarPoliticas(this.politicas).subscribe(res => {
       this.showNotification('top', 'right');
       this.onAgregado.emit();

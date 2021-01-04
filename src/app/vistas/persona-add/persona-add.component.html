@@ -46,9 +46,10 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="standard">
                         <mat-label>Fecha de nacimiento</mat-label>
-                        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="##-##-####" required formControlName="fechaNacimiento">
+                        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                        placeholder="##-##-####" required formControlName="fechaNacimiento" disabled>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-datepicker #picker disabled="false"></mat-datepicker>
                       </mat-form-field>
                     </div>
                   </div>
@@ -132,7 +133,7 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="standard">
                         <mat-label>Municipio</mat-label>
-                        <mat-select required [disabled]="valido"  formControlName="ubicacion">
+                        <mat-select required [disabled]="valido" formControlName="ubicacion">
                           <mat-option *ngFor="let muni of listaMunicipio" [value]="muni">{{muni.nombre}}</mat-option>
                         </mat-select>
                       </mat-form-field>

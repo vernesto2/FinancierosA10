@@ -63,8 +63,6 @@ export class ActivoFijoAddComponent implements OnInit {
   }
 
   showNotification(from, align) {
-    const type = ['success'];
-
     $.notify({
         icon: "save",
         message: " Guardado exitosamente.!"
@@ -76,7 +74,7 @@ export class ActivoFijoAddComponent implements OnInit {
             from: from,
             align: align
         },
-        template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+        template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
           '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
           '<i class="material-icons" data-notify="icon">save</i> ' +
           '<span data-notify="title">{1}</span> ' +

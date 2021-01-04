@@ -5,7 +5,7 @@
                 <button mat-raised-button class="btn btn-primary" (click)="openDialogPoliticas()">Agregar registro</button>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!cargando && listaPoliticas.length > 0">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger" style="text-align: center;">
@@ -16,16 +16,16 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Tipo de Crédito
+                                        Tipo Crédito
                                     </th>
                                     <th>
-                                        Tasa de Interés
+                                        Tasa Interés
                                     </th>
                                     <th>
                                         Días de cobro
                                     </th>
                                     <th>
-                                        Tasa de mora
+                                        Tasa mora
                                     </th>
                                     <th>
                                         Días antes de mora
@@ -77,6 +77,26 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card" *ngIf="!cargando && listaPoliticas.length === 0">
+                    <mat-card>No hay datos</mat-card>
+                </div>
+
+                <div class="text-center" *ngIf="cargando">
+                    <mat-card class="alert alert-danger">
+                        Cargando...
+                        <mat-card-content>
+                            <mat-icon class="fa-spin" >autorenew</mat-icon>
+                        </mat-card-content>
+                        Por favor espere!
+                    </mat-card>
+                    
+                </div>
+
             </div>
         </div>
     </div>

@@ -1,3 +1,5 @@
+import { PersonaModel } from "./persona.model";
+
 export class PersonaNaturalModel {
     dui: string;
     nit: string;
@@ -6,4 +8,5 @@ export class PersonaNaturalModel {
     estadoCivil: string;
     genero: number;
     fechaNacimiento: Date;
+    persona: PersonaModel;
 }

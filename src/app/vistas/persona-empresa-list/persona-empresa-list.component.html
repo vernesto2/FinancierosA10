@@ -8,96 +8,207 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-
                 <mat-tab-group animationDuration="1000ms">
-                    <mat-tab label="Listado de persona natural">
-                        <div class="card">
-                            <div class="card-header card-header-danger">
-                                <h4 class="card-title ">Simple Table</h4>
-                                <p class="card-category"> Here is a subtitle for this table</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class=" text-primary">
-                                            <th>
-                                                Código
-                                            </th>
-                                            <th>
-                                                Activo
-                                            </th>
-                                            <th>
-                                                Precio
-                                            </th>
-                                            <th>
-                                                Fecha de adquisición
-                                            </th>
-                                            <th>
-                                                Tipo de adquisición
-                                            </th>
-                                            <th>
-                                                Vida util
-                                            </th>
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                           <tr>
-                                               
-                                           </tr>
-                                        </tbody>
-                                    </table>
+                    <mat-tab label="Listado de persona natural" >
+                        <div class="row" *ngIf="!cargando && listaPersonaNatural.length > 0">
+                            <div class="col-md-12">
+                                <div class="card" >
+                                    <div class="card-header card-header-danger">
+                                        <h4 class="card-title ">Simple Table</h4>
+                                        <p class="card-category"> Here is a subtitle for this table</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                    <th>
+                                                        DUI
+                                                    </th>
+                                                    <th>
+                                                        Nombres
+                                                    </th>
+                                                    <th>
+                                                        Apellidos
+                                                    </th>
+                                                    <th>
+                                                        Edad
+                                                    </th>
+                                                    <th>
+                                                        Genero
+                                                    </th>
+                                                    <th>
+                                                        Puntuación
+                                                    </th>
+                                                    <th>
+                                                        Acciones
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let pn of listaPersonaNatural | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
+                                                        <td>
+                                                            {{pn.dui}}
+                                                        </td>
+                                                        <td>
+                                                            {{pn.nombres}}
+                                                        </td>
+                                                        <td>
+                                                            {{pn.apellidos}}
+                                                        </td>
+                                                        <td>
+                                                            {{pn.fechaNacimiento | edad}}
+                                                        </td>
+                                                        <td>
+                                                            {{pn.genero}}
+                                                        </td>
+                                                        <td>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <button mat-icon-button color="primary">
+                                                                <mat-icon>remove_red_eye</mat-icon>
+                                                              </button>
+                                                              <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                                                                <mat-icon>home</mat-icon>
+                                                              </button>
+                                                              <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+                                                                <mat-icon>menu</mat-icon>
+                                                              </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center">
+                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                
+                                <div class="text-center" *ngIf="!cargando && listaPersonaNatural.length === 0">
+                                    <mat-card class="alert alert-warning">
+                                        No hay datos!
+                                        <mat-card-content>
+                                            <mat-icon>warning</mat-icon>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                
+                                <div class="text-center" *ngIf="cargando">
+                                    <mat-card class="alert alert-danger">
+                                        Cargando...
+                                        <mat-card-content>
+                                            <mat-icon class="fa-spin" >autorenew</mat-icon>
+                                        </mat-card-content>
+                                        Por favor espere!
+                                    </mat-card>
+                                </div>
+                
                             </div>
                         </div>
                     </mat-tab>
                     <mat-tab label="Listado de persona juridica">
-                        <div class="card">
-                            <div class="card-header card-header-danger">
-                                <h4 class="card-title ">Simple Table</h4>
-                                <p class="card-category"> Here is a subtitle for this table</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class=" text-primary">
-                                            <th>
-                                                Código
-                                            </th>
-                                            <th>
-                                                Activo
-                                            </th>
-                                            <th>
-                                                Precio
-                                            </th>
-                                            <th>
-                                                Fecha de adquisición
-                                            </th>
-                                            <th>
-                                                Tipo de adquisición
-                                            </th>
-                                            <th>
-                                                Vida util
-                                            </th>
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                           <tr>
-                                               
-                                           </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="row" *ngIf="!cargando1 && listaEmpresa.length > 0">
+                            <div class="col-md-12">
+                                <div class="card" >
+                                    <div class="card-header card-header-danger">
+                                        <h4 class="card-title ">Simple Table</h4>
+                                        <p class="card-category"> Here is a subtitle for this table</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                    <th>
+                                                        DUI
+                                                    </th>
+                                                    <th>
+                                                        Nombres
+                                                    </th>
+                                                    <th>
+                                                        Apellidos
+                                                    </th>
+                                                    <th>
+                                                        Edad
+                                                    </th>
+                                                    <th>
+                                                        Genero
+                                                    </th>
+                                                    <th>
+                                                        Puntuación
+                                                    </th>
+                                                    <th>
+                                                        Acciones
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let pn of listaEmpresa | paginate: { itemsPerPage: 5, currentPage: page1 }; let i = index">
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <button mat-icon-button color="primary">
+                                                                <mat-icon>remove_red_eye</mat-icon>
+                                                              </button>
+                                                              <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                                                                <mat-icon>home</mat-icon>
+                                                              </button>
+                                                              <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+                                                                <mat-icon>menu</mat-icon>
+                                                              </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center">
+                                                <pagination-controls (pageChange)="page1 = $event"></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                
+                                <div class="text-center" *ngIf="!cargando1 && listaEmpresa.length === 0">
+                                    <mat-card class="alert alert-warning">
+                                        No hay datos!
+                                        <mat-card-content>
+                                            <mat-icon>warning</mat-icon>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                
+                                <div class="text-center" *ngIf="cargando1">
+                                    <mat-card class="alert alert-danger">
+                                        Cargando...
+                                        <mat-card-content>
+                                            <mat-icon class="fa-spin" >autorenew</mat-icon>
+                                        </mat-card-content>
+                                        Por favor espere!
+                                    </mat-card>
+                                </div>
+                
+                            </div>
+                        </div>
                     </mat-tab>
-                  </mat-tab-group>
-   
+                </mat-tab-group>
+
             </div>
         </div>
     </div>
-  </div>
-  
+</div>

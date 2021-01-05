@@ -1,5 +1,7 @@
+import { UbicacionModel } from "./ubicacion.model";
+
 export class DireccionModel {
     id: number;
     direccion: string;
-    codigoUbicacion: number;
+    ubicacion: UbicacionModel;
 }

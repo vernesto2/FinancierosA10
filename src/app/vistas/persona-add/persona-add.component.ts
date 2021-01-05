@@ -1,11 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { DireccionModel } from 'app/models/direccion.model';
 import { PersonaModel } from 'app/models/persona.model';
 import { PersonaNaturalModel } from 'app/models/personaNatural.model';
+import { TelModel } from 'app/models/tel.model';
+import { TelefonoModel } from 'app/models/telefono.model';
+import { TelefonoPKModel } from 'app/models/telefonoPKModel.model';
 import { UbicacionModel } from 'app/models/ubicacion.model';
 import { PersonaService } from 'app/services/persona.service';
+declare var $: any;
 
 @Component({
   selector: 'app-persona-add',
@@ -13,6 +17,8 @@ import { PersonaService } from 'app/services/persona.service';
   styleUrls: ['./persona-add.component.css']
 })
 export class PersonaAddComponent implements OnInit {
+
+  @Output() onAgregado = new EventEmitter();
 
   forma: FormGroup;
   persona = new PersonaModel();
@@ -22,6 +28,8 @@ export class PersonaAddComponent implements OnInit {
   listaDepartamento: any[];
   listaMunicipio: any[];
   valido = true;
+  listaTelefonos: Array<TelModel>;
+  listaTel: Array<TelefonoModel> = [];
 
   //agregando la fecha minima y maxima para validar los datepicker
   minDate: Date;
@@ -35,7 +43,7 @@ export class PersonaAddComponent implements OnInit {
     const currentYear = new Date().getFullYear(); //obtenemos el año actual
     const currentDay = new Date().getDate(); //sacamos los dias actuales
     const currentMonth = new Date().getMonth(); // aqui obtenemos el mes, pero inicia desde 0
-    console.log(currentYear + '-' + currentMonth + '-' + currentDay );
+    //console.log(currentYear + '-' + currentMonth + '-' + currentDay );
     //                      2021 - 65 = 1956, mes       0,  dia    2  fecha minima que se mostrara
     // -- aqui estamos indicando que la persona tiene que tener al menos 65 años de edad como maximo para hacer un credito
     this.minDate = new Date(currentYear - 65, currentMonth, currentDay);
@@ -67,9 +75,9 @@ export class PersonaAddComponent implements OnInit {
 
       telefonos: this.fb.array([
           this.fb.group({
-          descripcion: ['', ],
-          telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
-        })
+            tipoContacto: ['', []],
+            telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
+          })
       ]),
     }, {
       validators: []
@@ -79,13 +87,54 @@ export class PersonaAddComponent implements OnInit {
   guardar() {
     if (this.forma.invalid) {
       console.log('Campos invalidos');
+    } else {
+      this.separarModelos();
+      console.log('Lista luego de modelos' + this.listaTel);
+      this.personaService.agregarPersona(this.personaNatural).subscribe(res => {
+        console.log('guardo!');
+        this.onAgregado.emit();
+      });
     }
-
-    this.crearFormulario();
   }
 
   separarModelos() {
+    //Direccion
+    this.direccion.direccion = this.forma.get('direccion').value;
+    //Ubicacion
+    this.ubicacion = this.forma.get('ubicacion').value;
+    this.direccion.ubicacion = this.ubicacion;
 
+    //Persona
+    this.persona.nit = this.forma.get('nit').value;
+    this.persona.tipoPersona = 'PERSONA';
+    this.persona.direccion = this.direccion;
+
+    //PersonaNatural
+    this.personaNatural.nit = this.forma.get('nit').value;
+    this.personaNatural.dui = this.forma.get('dui').value;
+    this.personaNatural.nombres = this.forma.get('nombres').value;
+    this.personaNatural.apellidos = this.forma.get('apellidos').value;
+    this.personaNatural.estadoCivil = this.forma.get('estadoCivil').value;
+    this.personaNatural.fechaNacimiento = this.forma.get('fechaNacimiento').value;
+    this.personaNatural.genero = this.forma.get('genero').value;
+    this.personaNatural.persona = this.persona;
+
+    //Telefonos
+    this.listaTelefonos = this.telefonos.value;
+    if (this.listaTelefonos.length > 0) {
+      for (let i = 0; i < this.listaTelefonos.length; i++) {
+        let tel = new TelefonoModel();
+        let telPk = new TelefonoPKModel();
+        telPk.nit = this.persona.nit;
+        telPk.telefono = this.listaTelefonos[i].telefono;
+        tel.id = telPk;
+        tel.tipoContacto = this.listaTelefonos[i].tipoContacto;
+        console.log(tel);
+        this.listaTel.push(tel);
+      }
+      this.persona.telefonos = this.listaTel;
+      console.log(this.listaTel);
+    }
   }
 
   deptoSeleccionado(depto) {
@@ -103,8 +152,8 @@ export class PersonaAddComponent implements OnInit {
   agregarTelefonos() {
     this.telefonos.push(
       this.fb.group({
-          descripcion: ['', ],
-          telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
+        tipoContacto: ['', []],
+        telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
       })
     );
   }

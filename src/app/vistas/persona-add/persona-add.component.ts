@@ -89,9 +89,7 @@ export class PersonaAddComponent implements OnInit {
       console.log('Campos invalidos');
     } else {
       this.separarModelos();
-      console.log('Lista luego de modelos' + this.listaTel);
       this.personaService.agregarPersona(this.personaNatural).subscribe(res => {
-        console.log('guardo!');
         this.onAgregado.emit();
       });
     }

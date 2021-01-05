@@ -30,12 +30,10 @@ export class PersonaEmpresaListComponent implements OnInit {
 
   llenarPersonaNatural() {
     this.cargando = true;
-    this.cargando1 = true;
     this.personaService.listarPersonas().subscribe((res: any) => {
       this.listaPersonaNatural = res;
       this.listaEmpresa = [];
       this.cargando = false;
-      this.cargando1 = false;
     });
   }
 

@@ -90,7 +90,7 @@
                               <div class="col-md-4">
                                 <mat-form-field appearance="standard" >
                                   <mat-label>Tipo de contacto</mat-label>
-                                  <mat-select required formControlName="descripcion">
+                                  <mat-select required formControlName="tipoContacto">
                                     <mat-option value="PERSONAL" >PERSONAL</mat-option>
                                     <mat-option value="CASA">CASA</mat-option>
                                     <mat-option value="TRABAJO">OFICINA</mat-option>
@@ -148,7 +148,7 @@
                       </mat-form-field>
                     </div>
                   </div>
-  
+
                   <pre>
                     {{forma.value | json}}
                   </pre>
@@ -163,6 +163,6 @@
     </div>
     <div mat-dialog-actions class="align-content-end">
       <button mat-raised-button class="btn btn-danger" (click)="onCancelar()">Cancelar</button>
-      <button mat-raised-button class="btn btn-primary" [disabled]="forma.invalid" type="submit" [mat-dialog-close]="">Guardar</button>
+      <button mat-raised-button class="btn btn-primary" [disabled]="forma.invalid" type="submit">Guardar</button>
     </div>
   </form>

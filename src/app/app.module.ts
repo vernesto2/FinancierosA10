@@ -31,6 +31,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { PersonaAddComponent } from './vistas/persona-add/persona-add.component';
 import { EmpresaAddComponent } from './vistas/empresa-add/empresa-add.component';
 import { TelefonoPipe } from './pipes/telefono.pipe';
+import { EdadPipe } from './pipes/edad.pipe';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { TelefonoPipe } from './pipes/telefono.pipe';
     PersonaAddComponent,
     EmpresaAddComponent,
     TelefonoPipe,
+    EdadPipe,
   ],
   entryComponents: [
     ActivoFijoAddComponent

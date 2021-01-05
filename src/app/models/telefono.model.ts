@@ -1,5 +1,8 @@
+import { PersonaModel } from "./persona.model";
+import { TelefonoPKModel } from "./telefonoPKModel.model";
+
 export class TelefonoModel {
-    nit: string;
-    tipoContacto: number;
-    telefono: string;
+    id: TelefonoPKModel;
+    tipoContacto: string;
+    persona: PersonaModel;
 }

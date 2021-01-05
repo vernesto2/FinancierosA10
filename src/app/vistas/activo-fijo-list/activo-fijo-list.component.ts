@@ -11,11 +11,10 @@ import { ActivoFijoAddComponent } from '../../vistas/activo-fijo-add/activo-fijo
 })
 export class ActivoFijoListComponent implements OnInit {
   activos: any[];
-  navegacion;
   cargando = false;
   page = 1; //variable que llevara el control de la pagina de la paginacion
 
-  constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService, private router: Router) {
+  constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService) {
   }
 
   ngOnInit(): void {

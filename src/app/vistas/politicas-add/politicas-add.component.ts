@@ -17,9 +17,25 @@ export class PoliticasAddComponent implements OnInit {
 
    //variables de comunicacion con el padre
    @Output() onAgregado = new EventEmitter();
-  
+
+   //variables para validar rangos de fecha
+   minDateInicio: Date;
+   maxDateInicio: Date;
+   minDateFin: Date;
+   maxDateFin: Date;
+   fecValida = true;
+
   constructor(public dialogRef: MatDialogRef<PoliticasAddComponent>, @Inject(MAT_DIALOG_DATA) public message: string,
-  public servicePolitica: PoliticasService) { }
+  public servicePolitica: PoliticasService) {
+    
+    //seteando las fechas minimas y maximas
+    const currentDay = new Date().getDate(); //sacamos los dias actual
+    const currentMonth = new Date().getMonth(); // sacamos los meses actual
+    const currentYear = new Date().getFullYear(); // sacamos el año actual
+    
+    this.minDateInicio = new Date(currentYear, currentMonth, currentDay);
+    this.maxDateInicio = new Date(currentYear, currentMonth +1, currentDay); 
+  }
 
   ngOnInit(): void {
   }
@@ -34,10 +50,16 @@ export class PoliticasAddComponent implements OnInit {
     })
   }
 
+  fechaSeleccionada(fechaSel: Date) {     
+    this.minDateFin = new Date(fechaSel.getFullYear(), fechaSel.getMonth() +1, fechaSel.getDate() +1);
+    this.maxDateFin = new Date(fechaSel.getFullYear() + 5, fechaSel.getMonth(), fechaSel.getDate());
+    this.fecValida = false;
+  }
+
   showNotification(from, align) {
     $.notify({
         icon: "save",
-        message: " Guardado exitosamente.!"
+        message: " Guardado exitosamente!"
 
     }, {
         type: 'success',

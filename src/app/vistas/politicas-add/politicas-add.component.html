@@ -14,10 +14,10 @@
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
                       <mat-label>Fecha de inicio</mat-label>
-                      <input matInput [matDatepicker]="picker" required
+                      <input matInput [min]="minDateInicio" [max]="maxDateInicio" [matDatepicker]="picker" required
                       name="fechaEstablecimiento"
                       #fechaEstablecimiento="ngModel"
-                      [(ngModel)]="politicas.fechaEstablecimiento">
+                      [(ngModel)]="politicas.fechaEstablecimiento" (dateInput)="fechaSeleccionada(politicas.fechaEstablecimiento)">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -26,7 +26,7 @@
                   <div class="col-md-4">
                     <mat-form-field appearance="legacy">
                       <mat-label>Fecha de finalización</mat-label>
-                      <input matInput [matDatepicker]="picker1" required
+                      <input matInput [min]="minDateFin" [max]="maxDateFin" [matDatepicker]="picker1" required [disabled]="fecValida"
                       name="fechaFin"
                       #fechaFin="ngModel"
                       [(ngModel)]="politicas.fechaFinalizacion">

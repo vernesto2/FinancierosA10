@@ -10,37 +10,20 @@ import { ActivoFijoAddComponent } from '../../vistas/activo-fijo-add/activo-fijo
   styleUrls: ['./activo-fijo-list.component.css']
 })
 export class ActivoFijoListComponent implements OnInit {
-  activos: any[];
   cargando = false;
-  page = 1; //variable que llevara el control de la pagina de la paginacion
-
   constructor(public dialog: MatDialog, public serviceActivoFijo: ActivoFijoService) {
   }
 
   ngOnInit(): void {
-    this.llenarActivoFijo();
-  }
-
-  onAgrego() {
-    this.llenarActivoFijo();
-  }
-
-  llenarActivoFijo() {
-    this.cargando = true;
-    this.serviceActivoFijo.listarActivos().subscribe((res: any) => {
-      this.activos = res;
-      this.cargando = false;
-      //console.log(this.activos);
-    });
   }
 
   openDialogActivoFijo() {
     const data = {
-      onAgrego: this.onAgrego
+      
     }
     let dialogref = this.dialog.open(ActivoFijoAddComponent, {});
     const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
-      this.onAgrego();
+      
     });
     dialogref.afterClosed().subscribe( res => {});
   }

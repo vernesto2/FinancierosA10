@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { PersonaNaturalModel } from 'app/models/personaNatural.model';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,20 @@ export class PersonaService {
 
   constructor(private http: HttpClient) { }
 
-  listarDepartamento() {
-    return this.http.get(`${this.base_uri}/ubicacion/departamentos`);
+  listarDepartamento(): Observable<any> {
+    return this.http.get(`${this.base_uri}/ubicacion/departamentos`, { observe: 'response' });
   }
 
-  listarMunicipioPorDepto(codigo: number) {
-    return this.http.get(`${this.base_uri}/ubicacion/listamunicipios/${codigo}`);
+  listarMunicipioPorDepto(codigo: number): Observable<any> {
+    return this.http.get(`${this.base_uri}/ubicacion/listamunicipios/${codigo}`, { observe: 'response' });
   }
 
-  listarPersonas() {
-    return this.http.get(`${this.base_uri}/personanatural`);
+  listarPersonas(): Observable<any> {
+    return this.http.get(`${this.base_uri}/personanatural`, { observe: 'response' });
   }
 
-  agregarPersona(persona: PersonaNaturalModel) {
-    return this.http.post(`${this.base_uri}/personanatural`, persona);
+  agregarPersona(persona: PersonaNaturalModel): Observable<any> {
+    return this.http.post(`${this.base_uri}/personanatural`, persona, { observe: 'response' });
   }
+
 }

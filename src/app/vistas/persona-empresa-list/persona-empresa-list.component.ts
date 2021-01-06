@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PersonaModel } from 'app/models/persona.model';
+import { PersonaNaturalModel } from 'app/models/personaNatural.model';
 import { PersonaService } from 'app/services/persona.service';
 import { EmpresaAddComponent } from '../empresa-add/empresa-add.component';
 import { PersonaAddComponent } from '../persona-add/persona-add.component';
@@ -11,7 +13,7 @@ import { PersonaAddComponent } from '../persona-add/persona-add.component';
 })
 export class PersonaEmpresaListComponent implements OnInit {
 
-  listaPersonaNatural: any[];
+  listaPersonaNatural: any = [];
   listaEmpresa: any[];
   cargando = false;
   cargando1 = false;
@@ -32,18 +34,19 @@ export class PersonaEmpresaListComponent implements OnInit {
     this.cargando = true;
     this.cargando1 = true;
     this.personaService.listarPersonas().subscribe((res: any) => {
-      this.listaPersonaNatural = res;
+      this.listaPersonaNatural = res.body;
       this.listaEmpresa = [];
       this.cargando = false;
       this.cargando1 = false;
+      //console.log(res);
     });
   }
 
-  openDialogPersona() {
+  openDialogPersona(persona?: PersonaNaturalModel) {
     const data = {
       onAgrego: this.onAgrego
     }
-    let dialogref = this.dialog.open(PersonaAddComponent, {});
+    let dialogref = this.dialog.open(PersonaAddComponent, { data: persona });
     const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
       this.onAgrego();
     });

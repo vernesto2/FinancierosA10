@@ -30,7 +30,7 @@ export class EmpresaAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.personaService.listarDepartamento().subscribe((lista: any) => {
-      this.listaDepartamento = lista;
+      this.listaDepartamento = lista.body;
     });
   }
 
@@ -64,8 +64,8 @@ export class EmpresaAddComponent implements OnInit {
   }
 
   deptoSeleccionado(depto) {
-    this.personaService.listarMunicipioPorDepto(depto.codigo).subscribe((lista: any[]) => {
-      this.listaMunicipio = lista;
+    this.personaService.listarMunicipioPorDepto(depto.codigo).subscribe((lista: any) => {
+      this.listaMunicipio = lista.body;
 
       if (this.listaMunicipio.length > 0) {
         this.valido = false;

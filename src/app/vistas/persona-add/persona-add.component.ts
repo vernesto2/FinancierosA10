@@ -35,9 +35,23 @@ export class PersonaAddComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
 
-  constructor(public dialogRef: MatDialogRef<PersonaAddComponent>, @Inject(MAT_DIALOG_DATA) public message: string,
+  constructor(public dialogRef: MatDialogRef<PersonaAddComponent>, @Inject(MAT_DIALOG_DATA) public data: PersonaNaturalModel,
   private fb: FormBuilder, public personaService: PersonaService) {
+    //lleno el formulario cuando selecciono el de editar
     this.crearFormulario();
+    this.listarDepartamentos();
+    if (data != null) {
+      
+      this.personaNatural = data;
+      //saco los 2 numeros del codigo para determinar el depto
+      //this.deptoSeleccionado(this.personaNatural.persona.direccion.ubicacion.codigo.toString().substring(0, 2));
+      console.log(this.personaNatural);
+      //this.listaTel = this.personaNatural.persona.telefonos;
+      console.log(this.listaTel);
+      //this.forma.setValue(this.personaNatural);
+      this.llenarFormulario();
+      this.valido = false;
+    }
 
     //seteando las fechas minimas y maximas
     const currentYear = new Date().getFullYear(); //obtenemos el año actual
@@ -53,10 +67,35 @@ export class PersonaAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  }
+
+  listarDepartamentos() {
     this.personaService.listarDepartamento().subscribe((lista: any) => {
-      this.listaDepartamento = lista;
+      this.listaDepartamento = lista.body;
+    });
+  }
+
+  llenarFormulario() {
+    // si usamos el .setValue tenemos que mandar el caparazon del obj completo en cambio si usamos
+    // .reset no importa sino va completa la estructura del obj
+    this.forma.reset({
+      nit: this.personaNatural.nit,
+      direccion: this.personaNatural.persona.direccion.direccion,
+      ubicacion: this.personaNatural.persona.direccion.ubicacion,
+
+      dui: this.personaNatural.dui,
+      nombres: this.personaNatural.nombres,
+      apellidos: this.personaNatural.apellidos,
+      estadoCivil: this.personaNatural.estadoCivil,
+      genero: this.personaNatural.genero,
+      fechaNacimiento: this.personaNatural.fechaNacimiento,
+
+      
     });
 
+    // de esta forma podria llenar el array
+    //['Comer', 'Dormir'].forEach( valor => this.pasatiempos.push( this.fb.control(valor) ));
   }
 
   crearFormulario() {
@@ -86,11 +125,17 @@ export class PersonaAddComponent implements OnInit {
 
   guardar() {
     if (this.forma.invalid) {
-      console.log('Campos invalidos');
+      this.showNotification('bottom', 'left', 'Registro cancelado', 'cancel', 'warning');
     } else {
       this.separarModelos();
-      this.personaService.agregarPersona(this.personaNatural).subscribe(res => {
-        this.onAgregado.emit();
+      this.personaService.agregarPersona(this.personaNatural).subscribe((res: any) => {
+        console.log(res);
+        if (res.status == 200) {
+          this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
+          this.onAgregado.emit();
+        } else {
+          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+        }
       });
     }
   }
@@ -127,23 +172,48 @@ export class PersonaAddComponent implements OnInit {
         telPk.telefono = this.listaTelefonos[i].telefono;
         tel.id = telPk;
         tel.tipoContacto = this.listaTelefonos[i].tipoContacto;
-        console.log(tel);
+        //console.log(tel);
         this.listaTel.push(tel);
       }
       this.persona.telefonos = this.listaTel;
-      console.log(this.listaTel);
+      //console.log(this.listaTel);
     }
   }
 
   deptoSeleccionado(depto) {
-    this.personaService.listarMunicipioPorDepto(depto.codigo).subscribe((lista: any[]) => {
-      this.listaMunicipio = lista;
-
+    console.log(depto);
+    this.personaService.listarMunicipioPorDepto(depto.codigo).subscribe((lista: any) => {
+      this.listaMunicipio = lista.body;
       if (this.listaMunicipio.length > 0) {
         this.valido = false;
       } else {
         this.valido = true;
       }
+    });
+  }
+
+  showNotification(from, align, message, icon, type) {
+    $.notify({
+        icon: icon,
+        message: message
+
+    }, {
+        type: type,
+        timer: 4000,
+        placement: {
+            from: from,
+            align: align
+        },
+        template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+          '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+          '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
+          '<span data-notify="title">{1}</span> ' +
+          '<span data-notify="message">{2}</span>' +
+          '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+          '</div>' +
+          '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
     });
   }
 

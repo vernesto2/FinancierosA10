@@ -163,6 +163,6 @@
     </div>
     <div mat-dialog-actions class="align-content-end">
       <button mat-raised-button class="btn btn-danger" (click)="onCancelar()">Cancelar</button>
-      <button mat-raised-button class="btn btn-primary" [disabled]="forma.invalid" type="submit">Guardar</button>
+      <button mat-raised-button class="btn btn-primary" [disabled]="forma.invalid" type="submit" [mat-dialog-close]="">Guardar</button>
     </div>
   </form>

@@ -28,8 +28,12 @@ export class PersonaAddComponent implements OnInit {
   listaDepartamento: any[];
   listaMunicipio: any[];
   valido = true;
-  listaTelefonos: Array<TelModel>;
+  listaTelefonos: Array<TelModel> = [];
   listaTel: Array<TelefonoModel> = [];
+  deptoSel: any = [];
+  muniSel: any = [];
+  editarCampos = false;
+  editar = false;
 
   //agregando la fecha minima y maxima para validar los datepicker
   minDate: Date;
@@ -41,18 +45,28 @@ export class PersonaAddComponent implements OnInit {
     this.crearFormulario();
     this.listarDepartamentos();
     if (data != null) {
-      
+      this.editar = true;
       this.personaNatural = data;
-      //saco los 2 numeros del codigo para determinar el depto
-      //this.deptoSeleccionado(this.personaNatural.persona.direccion.ubicacion.codigo.toString().substring(0, 2));
-      console.log(this.personaNatural);
-      //this.listaTel = this.personaNatural.persona.telefonos;
-      console.log(this.listaTel);
-      //this.forma.setValue(this.personaNatural);
-      this.llenarFormulario();
       this.valido = false;
-    }
+      this.editarCampos = true;
+      this.muniSel = this.personaNatural.persona.direccion.ubicacion;
+      //saco los 2 numeros del codigo para determinar el depto
+      this.personaService.deptoPorCodigo(this.personaNatural.persona.direccion.ubicacion.codigo.toString().substring(0, 2)).subscribe((depto: any) => {
+        this.deptoSeleccionado(depto.body);
+        this.deptoSel = depto.body;
+        //console.log(this.deptoSel);
+        this.llenarFormulario();
+      });
 
+      this.listaTel = this.personaNatural.persona.telefonos;
+      for (let i = 0; i < this.listaTel.length; i++) {
+        let tel = new TelModel();
+        tel.telefono = this.listaTel[i].id.telefono;
+        tel.tipoContacto = this.listaTel[i].tipoContacto;
+        this.listaTelefonos.push(tel);
+      }
+    }
+    this.editarCampos = false;
     //seteando las fechas minimas y maximas
     const currentYear = new Date().getFullYear(); //obtenemos el año actual
     const currentDay = new Date().getDate(); //sacamos los dias actuales
@@ -79,23 +93,39 @@ export class PersonaAddComponent implements OnInit {
   llenarFormulario() {
     // si usamos el .setValue tenemos que mandar el caparazon del obj completo en cambio si usamos
     // .reset no importa sino va completa la estructura del obj
-    this.forma.reset({
-      nit: this.personaNatural.nit,
-      direccion: this.personaNatural.persona.direccion.direccion,
-      ubicacion: this.personaNatural.persona.direccion.ubicacion,
+    this.forma = this.fb.group({
+      nit: [this.personaNatural.nit, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
 
-      dui: this.personaNatural.dui,
-      nombres: this.personaNatural.nombres,
-      apellidos: this.personaNatural.apellidos,
-      estadoCivil: this.personaNatural.estadoCivil,
-      genero: this.personaNatural.genero,
-      fechaNacimiento: this.personaNatural.fechaNacimiento,
+      direccion: [this.personaNatural.persona.direccion.direccion, [Validators.required]],
+      ubicacion: [this.personaNatural.persona.direccion.ubicacion, [Validators.required]],
 
-      
+      dui: [this.personaNatural.dui, [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+      nombres: [this.personaNatural.nombres, [Validators.required, Validators.minLength(3)]],
+      apellidos: [this.personaNatural.apellidos, [Validators.required, Validators.minLength(3)]],
+      estadoCivil: [this.personaNatural.estadoCivil, [Validators.required]],
+      genero: [this.personaNatural.genero, [Validators.required]],
+      fechaNacimiento: [this.personaNatural.fechaNacimiento, [Validators.required]],
+
+      telefonos: this.fb.array([]),
+    }, {
+      validators: []
     });
 
-    // de esta forma podria llenar el array
-    //['Comer', 'Dormir'].forEach( valor => this.pasatiempos.push( this.fb.control(valor) ));
+    for (let i = 0; i < this.listaTelefonos.length; i++) {
+      this.telefonos.push(this.fb.group({
+        'tipoContacto': this.listaTelefonos[i].tipoContacto,
+        'telefono': this.listaTelefonos[i].telefono
+      }));
+    }
+  }
+
+  //Con estas funciones comparamos y seteamos un valor a un SELECT
+  compararDeptos(o1: any, o2: any): boolean {
+    return o1.codigo === o2.codigo;
+  }
+
+  compararMuni(o1: any, o2: any): boolean {
+    return o1.codigo === o2.codigo;
   }
 
   crearFormulario() {
@@ -127,16 +157,34 @@ export class PersonaAddComponent implements OnInit {
     if (this.forma.invalid) {
       this.showNotification('bottom', 'left', 'Registro cancelado', 'cancel', 'warning');
     } else {
-      this.separarModelos();
-      this.personaService.agregarPersona(this.personaNatural).subscribe((res: any) => {
-        console.log(res);
-        if (res.status == 200) {
-          this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
-          this.onAgregado.emit();
-        } else {
-          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
-        }
-      });
+      //console.log(this.personaNatural);
+      if (this.editar) { //si es verdadero EDITAMOS
+        this.listaTelefonos = null;
+        this.persona.telefonos = null;
+        //console.log(this.persona.telefonos);
+        this.separarModelos();
+
+        //console.log(this.persona.telefonos);
+        this.personaService.editarPersona(this.personaNatural).subscribe((res: any) => {
+          if (res.status == 200) {
+            //console.log(res);
+            this.showNotification('top', 'right', 'Editado Correctamente.!', 'save', 'success');
+            this.onAgregado.emit();
+          } else {
+            this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+          }
+        });
+      } else { //Si es falso AGREGAMOS
+        this.separarModelos();
+        this.personaService.agregarPersona(this.personaNatural).subscribe((res: any) => {
+          if (res.status == 200) {
+            this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
+            this.onAgregado.emit();
+          } else {
+            this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+          }
+        });
+      }
     }
   }
 
@@ -181,7 +229,6 @@ export class PersonaAddComponent implements OnInit {
   }
 
   deptoSeleccionado(depto) {
-    console.log(depto);
     this.personaService.listarMunicipioPorDepto(depto.codigo).subscribe((lista: any) => {
       this.listaMunicipio = lista.body;
       if (this.listaMunicipio.length > 0) {

@@ -29,4 +29,13 @@ export class PersonaService {
     return this.http.post(`${this.base_uri}/personanatural`, persona, { observe: 'response' });
   }
 
+  editarPersona(persona: PersonaNaturalModel): Observable<any> {
+    return this.http.put(`${this.base_uri}/personanatural/${persona.nit}`, persona, { observe: 'response' });
+  }
+
+  deptoPorCodigo(codigo: string): Observable<any> {
+    //console.log(codigo);
+    return this.http.get(`${this.base_uri}/ubicacion/${codigo}`, { observe: 'response' });
+  }
+
 }

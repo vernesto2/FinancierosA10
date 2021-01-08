@@ -32,6 +32,8 @@ import { PersonaAddComponent } from './vistas/persona-add/persona-add.component'
 import { EmpresaAddComponent } from './vistas/empresa-add/empresa-add.component';
 import { TelefonoPipe } from './pipes/telefono.pipe';
 import { EdadPipe } from './pipes/edad.pipe';
+import { DuiPipe } from './pipes/dui.pipe';
+import { NitPipe } from './pipes/nit.pipe';
 
 @NgModule({
   imports: [
@@ -63,6 +65,8 @@ import { EdadPipe } from './pipes/edad.pipe';
     EmpresaAddComponent,
     TelefonoPipe,
     EdadPipe,
+    DuiPipe,
+    NitPipe,
   ],
   entryComponents: [
     ActivoFijoAddComponent

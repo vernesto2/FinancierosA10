@@ -7,9 +7,7 @@ import { stringify } from 'querystring';
 export class TelefonoPipe implements PipeTransform {
 
   transform(telefono: number): string {
-    var aux = '';
-    aux.concat(telefono.toPrecision(1 - 4), '-', telefono.toPrecision(4 - 8));
-    console.log(aux);
+    var aux = telefono.toString().substring(0, 3) + '-' + telefono.toString().substring(4, 7);
     return aux;
   }
 

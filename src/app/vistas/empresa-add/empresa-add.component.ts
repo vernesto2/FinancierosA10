@@ -71,7 +71,7 @@ export class EmpresaAddComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       telefonos: this.fb.array([
           this.fb.group({
-          descripcion: ['', ],
+          tipoContacto: ['', ],
           telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
         })
       ]),
@@ -92,12 +92,6 @@ export class EmpresaAddComponent implements OnInit {
     this.persona.tipoPersona = 'EMPRESA';
     this.persona.direccion = this.direccion;
 
-    //empresa
-    this.empresa.nit = this.forma.get('nit').value;
-    this.empresa.nitRepresentante = this.repre.nit;
-    this.empresa.nombre = this.forma.get('nombre').value;
-    this.persona.empresa = this.empresa;
-
     //Telefonos
     this.listaTelefonos = this.telefonos.value;
     if (this.listaTelefonos.length > 0) {
@@ -108,10 +102,16 @@ export class EmpresaAddComponent implements OnInit {
         telPk.telefono = this.listaTelefonos[i].telefono;
         tel.id = telPk;
         tel.tipoContacto = this.listaTelefonos[i].tipoContacto;
-        //console.log(tel);
         this.listaTel.push(tel);
       }
+      //console.log(this.listaTelefonos);
       this.persona.telefonos = this.listaTel;
+
+      //empresa
+      this.empresa.nit = this.forma.get('nit').value;
+      this.empresa.personaNatural = this.repre;
+      this.empresa.nombre = this.forma.get('nombre').value;
+      this.empresa.persona = this.persona;
       //console.log(this.listaTel);
     }
     //console.log(this.personaNatural);
@@ -138,7 +138,8 @@ export class EmpresaAddComponent implements OnInit {
 
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
-        console.log(this.persona);
+        //console.log(this.repre);
+        //console.log(this.empresa);
         this.personaService.agregarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
             this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
@@ -197,8 +198,8 @@ export class EmpresaAddComponent implements OnInit {
   agregarTelefonos() {
     this.telefonos.push(
       this.fb.group({
-          descripcion: ['', ],
-          telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
+        tipoContacto: ['', []],
+        telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
       })
     );
   }

@@ -14,7 +14,7 @@
                     <mat-form-field appearance="standard">
                       <mat-label>Fecha de inicio</mat-label>
                       <input matInput [min]="minDateInicio" [max]="maxDateInicio" [matDatepicker]="picker" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="fechaEstablecimiento"
                       #fechaEstablecimiento="ngModel"
                       [(ngModel)]="politicas.fechaEstablecimiento" (dateInput)="fechaSeleccionada(politicas.fechaEstablecimiento)">
@@ -27,7 +27,7 @@
                     <mat-form-field appearance="standard">
                       <mat-label>Fecha de finalización</mat-label>
                       <input matInput [min]="minDateFin" [max]="maxDateFin" [matDatepicker]="picker1" required [disabled]="fecValida"
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="fechaFin"
                       #fechaFin="ngModel"
                       [(ngModel)]="politicas.fechaFinalizacion">
@@ -39,7 +39,7 @@
                     <mat-form-field appearance="standard">
                       <mat-label>Tipo de persona</mat-label>
                       <mat-select required 
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tipoPersona"
                       #tipoPersona="ngModel"
                       [(ngModel)]="politicas.tipoPersona">
@@ -54,7 +54,7 @@
                     <mat-form-field appearance="standard">
                       <mat-label>Tipo de crédito</mat-label>
                       <mat-select required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tipoCredito"
                       #tipoCredito="ngModel"
                       [(ngModel)]="politicas.tipoCredito">
@@ -65,7 +65,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Días de cobro" required [disabled]="estado"
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="diasCobro"
                       #diasCobro="ngModel"
                       [(ngModel)]="politicas.diasCobro">
@@ -74,7 +74,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Tasa de interés (%)" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tInteres"
                       #tInteres="ngModel"
                       [(ngModel)]="politicas.tasaInteres">
@@ -86,7 +86,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Desde" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tiempoInferior"
                       #tiempoInferior="ngModel"
                       [(ngModel)]="politicas.tiempoInferior">
@@ -95,7 +95,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Hasta" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tiempoSuperior"
                       #tiempoSuperior="ngModel"
                       [(ngModel)]="politicas.tiempoSuperior">
@@ -104,7 +104,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Interés por mora (%)" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tMora"
                       #tMora="ngModel"
                       [(ngModel)]="politicas.tasaMora">
@@ -116,7 +116,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Monto inferior ($)" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="mInferior"
                       #mInferior="ngModel"
                       [(ngModel)]="politicas.montoInferior">
@@ -125,7 +125,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Monto superior ($)" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="mSuperior"
                       #mSuperior="ngModel"
                       [(ngModel)]="politicas.montoSuperior">
@@ -144,7 +144,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Gasto de tramitación (%)" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="tramitacion"
                       #tramitacion="ngModel"
                       [(ngModel)]="politicas.gastosTramitacion">
@@ -153,7 +153,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Honorarios notariales (%)" required
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="notario"
                       #notario="ngModel"
                       [(ngModel)]="politicas.gastosNotario">
@@ -162,7 +162,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Otros (%)" 
-                      required [disabled]="estado"
+                      [disabled]="estado"
                       name="otras"
                       #otras="ngModel"
                       [(ngModel)]="politicas.otrasComisiones">

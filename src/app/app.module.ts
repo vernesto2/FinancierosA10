@@ -33,13 +33,8 @@ import { PersonaAddComponent } from './vistas/persona-add/persona-add.component'
 import { EmpresaAddComponent } from './vistas/empresa-add/empresa-add.component';
 import { TelefonoPipe } from './pipes/telefono.pipe';
 import { EdadPipe } from './pipes/edad.pipe';
-<<<<<<< HEAD
 import { CreditoEmpresaAddComponent } from './vistas/credito-empresa-add/credito-empresa-add.component';
 import { PrecreditoAddComponent } from './vistas/precredito-add/precredito-add.component';
-=======
-import { DuiPipe } from './pipes/dui.pipe';
-import { NitPipe } from './pipes/nit.pipe';
->>>>>>> 783dddaf27aeb838ca04a295cb204b715f504781
 
 @NgModule({
   imports: [
@@ -70,13 +65,8 @@ import { NitPipe } from './pipes/nit.pipe';
     EmpresaAddComponent,
     TelefonoPipe,
     EdadPipe,
-<<<<<<< HEAD
     PrecreditoAddComponent,
     CreditoEmpresaAddComponent, 
-=======
-    DuiPipe,
-    NitPipe,
->>>>>>> 783dddaf27aeb838ca04a295cb204b715f504781
   ],
   entryComponents: [
     ActivoFijoAddComponent

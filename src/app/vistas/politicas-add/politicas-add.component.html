@@ -36,7 +36,7 @@
                   <div class="col-md-3">
                     <mat-form-field appearance="standard">
                       <mat-label>Tipo de persona</mat-label>
-                      <mat-select required
+                      <mat-select required 
                       name="tipoPersona"
                       #tipoPersona="ngModel"
                       [(ngModel)]="politicas.tipoPersona">
@@ -60,7 +60,7 @@
                   </div>                  
                   <div class="col-md-3">
                     <mat-form-field class="example-full-width" appearance="standard">
-                      <input matInput type="number" placeholder="Días de cobro" required
+                      <input matInput type="number" placeholder="Días de cobro" required [disabled]="fecValida"
                       name="diasCobro"
                       #diasCobro="ngModel"
                       [(ngModel)]="politicas.diasCobro">

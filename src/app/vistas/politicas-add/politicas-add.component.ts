@@ -33,6 +33,7 @@ export class PoliticasAddComponent implements OnInit {
     // presionar el boton del ojito
     if(this.data != null){
       this.politicas = data;
+      
     }
     
     //seteando las fechas minimas y maximas

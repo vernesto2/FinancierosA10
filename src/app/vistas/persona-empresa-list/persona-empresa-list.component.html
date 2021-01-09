@@ -24,6 +24,9 @@
                                                         DUI
                                                     </th>
                                                     <th>
+                                                        NIT
+                                                    </th>
+                                                    <th>
                                                         Nombres
                                                     </th>
                                                     <th>
@@ -45,7 +48,10 @@
                                                 <tbody>
                                                     <tr *ngFor="let pn of listaPersonaNatural | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
                                                         <td>
-                                                            {{pn.dui}}
+                                                            {{pn.dui | dui}}
+                                                        </td>
+                                                        <td>
+                                                            {{pn.nit | nit}}
                                                         </td>
                                                         <td>
                                                             {{pn.nombres}}

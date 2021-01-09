@@ -14,16 +14,16 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="standard" class="example-full-width">
                         <mat-label>DUI</mat-label>
-                        <input matInput placeholder="########-#" type="text" mask="00000000-0"
+                        <input matInput placeholder="########-#" [disabled]="false" type="text" mask="00000000-0"
                               required formControlName="dui">
                       </mat-form-field>
                     </div>
 
                     <div class="col-md-4">
-                      <mat-form-field appearance="standard" class="example-full-width">
+                      <mat-form-field appearance="standard" class="example-full-width" >
                         <mat-label>NIT</mat-label>
                         <input matInput placeholder="####-######-###-#" type="text" mask="0000-000000-000-0"
-                              required formControlName="nit">
+                              required formControlName="nit" [disabled]="editarCampos" >
                       </mat-form-field>
                     </div>
                   </div>
@@ -48,8 +48,8 @@
                         <mat-label>Fecha de nacimiento</mat-label>
                         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
                         placeholder="##-##-####" required formControlName="fechaNacimiento" disabled>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker disabled="false"></mat-datepicker>
+                        <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="editarCampos"></mat-datepicker-toggle>
+                        <mat-datepicker #picker [disabled]="editarCampos"></mat-datepicker>
                       </mat-form-field>
                     </div>
                   </div>
@@ -58,7 +58,7 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="standard">
                         <mat-label>Genero</mat-label>
-                        <mat-select required formControlName="genero">
+                        <mat-select required formControlName="genero" [disabled]="editarCampos">
                           <mat-option value="MASCULINO">MASCULINO</mat-option>
                           <mat-option value="FEMENINO">FEMENINO</mat-option>
                         </mat-select>
@@ -103,7 +103,7 @@
                                 <mat-form-field appearance="standard" class="example-full-width">
                                   <mat-label>Teléfono</mat-label>
                                   <input matInput placeholder="####-####" mask="0000-0000" type="text" 
-                                        required
+                                        required 
                                         formControlName="telefono">
                                 </mat-form-field>
                               </div>
@@ -124,8 +124,8 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="standard">
                         <mat-label>Departamento</mat-label>
-                        <mat-select required (selectionChange)="deptoSeleccionado($event.value)">
-                          <mat-option *ngFor="let depto of listaDepartamento" [value]="depto">{{depto.nombre}}</mat-option>
+                        <mat-select required (selectionChange)="deptoSeleccionado($event.value)" [(value)]="deptoSel" [compareWith]="compararDeptos" >
+                          <mat-option *ngFor="let depto of listaDepartamento"  [value]="depto">{{depto.nombre}}</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
@@ -133,7 +133,7 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="standard">
                         <mat-label>Municipio</mat-label>
-                        <mat-select required [disabled]="valido" formControlName="ubicacion">
+                        <mat-select required [disabled]="valido" formControlName="ubicacion" [(value)]="muniSel" [compareWith]="compararMuni">
                           <mat-option *ngFor="let muni of listaMunicipio" [value]="muni">{{muni.nombre}}</mat-option>
                         </mat-select>
                       </mat-form-field>

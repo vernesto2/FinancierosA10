@@ -94,17 +94,17 @@ export class PersonaAddComponent implements OnInit {
     // si usamos el .setValue tenemos que mandar el caparazon del obj completo en cambio si usamos
     // .reset no importa sino va completa la estructura del obj
     this.forma = this.fb.group({
-      nit: [this.personaNatural.nit, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
+      nit: [{value: this.personaNatural.nit, disabled: true}, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
 
       direccion: [this.personaNatural.persona.direccion.direccion, [Validators.required]],
       ubicacion: [this.personaNatural.persona.direccion.ubicacion, [Validators.required]],
 
-      dui: [this.personaNatural.dui, [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
-      nombres: [this.personaNatural.nombres, [Validators.required, Validators.minLength(3)]],
-      apellidos: [this.personaNatural.apellidos, [Validators.required, Validators.minLength(3)]],
+      dui: [{value: this.personaNatural.dui, disabled: true}, [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+      nombres: [{value: this.personaNatural.nombres, disabled: true}, [Validators.required, Validators.minLength(3)]],
+      apellidos: [{value: this.personaNatural.apellidos, disabled: true}, [Validators.required, Validators.minLength(3)]],
       estadoCivil: [this.personaNatural.estadoCivil, [Validators.required]],
-      genero: [this.personaNatural.genero, [Validators.required]],
-      fechaNacimiento: [this.personaNatural.fechaNacimiento, [Validators.required]],
+      genero: [{value: this.personaNatural.genero, disabled: true}, [Validators.required]],
+      fechaNacimiento: [{value: this.personaNatural.fechaNacimiento, disabled: true}, [Validators.required]],
 
       telefonos: this.fb.array([]),
     }, {

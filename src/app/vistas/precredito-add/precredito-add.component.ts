@@ -15,6 +15,8 @@ export class PrecreditoAddComponent implements OnInit {
   secondFormGroup: FormGroup;
   myControl = new FormControl();
   filteredOptions: Observable<true>; //filteredOptions: Observable<User[]>;
+  hipotecario = true;
+  fiador = true;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder) { }
 
@@ -27,6 +29,18 @@ export class PrecreditoAddComponent implements OnInit {
     this.secondFormGroup = this.fb.group({
       secondCtrl: ['', Validators.required]
     });
+  }
+
+  cambioFiador(){
+    if(this.hipotecario = true){
+      this.fiador = false;
+    }
+  }
+
+  cambioHipotecario(){
+    if(this.fiador = true){
+      this.hipotecario = false;
+    }
   }
 
   crearFormuario() {

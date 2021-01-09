@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/creditopersonal', title: 'Crédito Personal',  icon: 'favorite_border', class: '' },
     { path: '/creditoempresa', title: 'Crédito Empresarial',  icon: 'favorite_border', class: '' },    
     { path: '/activofijo', title: 'Activo Fijo',  icon: 'style', class: '' },
-    { path: '/politicas', title: 'Políticas',  icon: 'style', class: '' },
+    { path: '/politicas', title: 'Políticas',  icon: 'privacy_tip', class: '' },
     { path: '/clientes', title: 'Clientes',  icon: 'supervisor_account', class: '' },
     { path: '/notifications', title: 'Notifications',  icon: 'notifications', class: '' },
 

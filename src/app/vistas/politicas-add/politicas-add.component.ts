@@ -25,6 +25,7 @@ export class PoliticasAddComponent implements OnInit {
    maxDateFin: Date;
    fecValida = true;
    forma: FormGroup;
+   estado = false;
 
   constructor(public dialogRef: MatDialogRef<PoliticasAddComponent>, @Inject(MAT_DIALOG_DATA) public data: PoliticaModel, 
   public servicePolitica: PoliticasService,) {
@@ -33,7 +34,7 @@ export class PoliticasAddComponent implements OnInit {
     // presionar el boton del ojito
     if(this.data != null){
       this.politicas = data;
-      
+      this.estado = true;
     }
     
     //seteando las fechas minimas y maximas

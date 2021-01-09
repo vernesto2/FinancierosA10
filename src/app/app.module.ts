@@ -24,6 +24,7 @@ import { ActivoFijoListComponent } from './vistas/activo-fijo-list/activo-fijo-l
 import { PoliticasAddComponent } from './vistas/politicas-add/politicas-add.component';
 import { PoliticasListComponent } from './vistas/politicas-list/politicas-list.component';
 import { PersonaEmpresaListComponent } from './vistas/persona-empresa-list/persona-empresa-list.component';
+
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -33,7 +34,8 @@ import { EmpresaAddComponent } from './vistas/empresa-add/empresa-add.component'
 import { TelefonoPipe } from './pipes/telefono.pipe';
 import { EdadPipe } from './pipes/edad.pipe';
 import { DuiPipe } from './pipes/dui.pipe';
-import { NitPipe } from './pipes/nit.pipe';
+import { CreditoEmpresaAddComponent } from './vistas/credito-empresa-add/credito-empresa-add.component';
+import { PrecreditoAddComponent } from './vistas/precredito-add/precredito-add.component';
 
 @NgModule({
   imports: [
@@ -55,7 +57,6 @@ import { NitPipe } from './pipes/nit.pipe';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    PruebaComponent,
     ActivoFijoAddComponent,
     ActivoFijoListComponent,
     PoliticasAddComponent,
@@ -66,7 +67,8 @@ import { NitPipe } from './pipes/nit.pipe';
     TelefonoPipe,
     EdadPipe,
     DuiPipe,
-    NitPipe,
+    PrecreditoAddComponent,
+    CreditoEmpresaAddComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

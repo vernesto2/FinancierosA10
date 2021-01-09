@@ -2,6 +2,7 @@ import { PoliticaModel } from './../models/politica.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ export class PoliticasService {
   
   constructor(private http: HttpClient) { }
 
-  agregarPoliticas(politicas: PoliticaModel){
-    return this.http.post(`${this.base_uri}/politica/`, politicas);
+  agregarPoliticas(politicas: PoliticaModel): Observable<any> {
+    return this.http.post(`${this.base_uri}/politica`, politicas, { observe: 'response' });
   }
 
-  listarPoliticas(){
-    return this.http.get(`${this.base_uri}/politica`);
+  listarPoliticas(): Observable<any> {
+    return this.http.get(`${this.base_uri}/politica`, { observe: 'response' });
   }
 }

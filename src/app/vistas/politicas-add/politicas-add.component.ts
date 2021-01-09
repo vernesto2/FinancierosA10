@@ -3,7 +3,7 @@ import { PoliticaModel } from './../../models/politica.model';
 import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -24,9 +24,16 @@ export class PoliticasAddComponent implements OnInit {
    minDateFin: Date;
    maxDateFin: Date;
    fecValida = true;
+   forma: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<PoliticasAddComponent>, @Inject(MAT_DIALOG_DATA) public message: string,
-  public servicePolitica: PoliticasService) {
+  constructor(public dialogRef: MatDialogRef<PoliticasAddComponent>, @Inject(MAT_DIALOG_DATA) public data: PoliticaModel, 
+  public servicePolitica: PoliticasService,) {
+
+    // if para mostrar el formulario lleno al 
+    // presionar el boton del ojito
+    if(this.data != null){
+      this.politicas = data;
+    }
     
     //seteando las fechas minimas y maximas
     const currentDay = new Date().getDate(); //sacamos los dias actual
@@ -44,8 +51,15 @@ export class PoliticasAddComponent implements OnInit {
     if(forma.invalid){
       return;
     }
+    console.log(this.politicas);
     this.servicePolitica.agregarPoliticas(this.politicas).subscribe(res => {
-      this.showNotification('top', 'right');
+      console.log(res);
+        if (res.status == 200) {
+          this.showNotification('top', 'right', 'Agregado Correctamente!', 'save', 'success');
+          this.onAgregado.emit();
+        } else {
+          this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
+        }
       this.onAgregado.emit();
     })
   }
@@ -56,13 +70,13 @@ export class PoliticasAddComponent implements OnInit {
     this.fecValida = false;
   }
 
-  showNotification(from, align) {
+  showNotification(from, align, message, icon, type) {
     $.notify({
-        icon: "save",
-        message: " Guardado exitosamente!"
+        icon: icon,
+        message: message
 
     }, {
-        type: 'success',
+        type: type,
         timer: 4000,
         placement: {
             from: from,
@@ -70,7 +84,7 @@ export class PoliticasAddComponent implements OnInit {
         },
         template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
           '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-          '<i class="material-icons" data-notify="icon">save</i> ' +
+          '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
           '<span data-notify="title">{1}</span> ' +
           '<span data-notify="message">{2}</span>' +
           '<div class="progress" data-notify="progressbar">' +
@@ -79,7 +93,7 @@ export class PoliticasAddComponent implements OnInit {
           '<a href="{3}" target="{4}" data-notify="url"></a>' +
         '</div>'
     });
-}
+  }
 
   onCancelar() {
     this.dialogRef.close();

@@ -1,3 +1,4 @@
+import { PoliticaModel } from './../../models/politica.model';
 import { PoliticasService } from './../../services/politicas.service';
 import { Component, OnInit } from '@angular/core';
 import { PoliticasAddComponent } from '../politicas-add/politicas-add.component';
@@ -22,17 +23,17 @@ export class PoliticasListComponent implements OnInit {
   llenarPoliticas(){
     this.cargando = true;
     this.servicePoliticas.listarPoliticas().subscribe((res: any) => {
-      this.listaPoliticas = res;
+      this.listaPoliticas = res.body;
       this.cargando = false;
       
     })
   }
 
-  openDialogPoliticas() {
+  openDialogPoliticas(politicas?: PoliticaModel) {
     const data = {
       onAgrego: this.onAgrego
     }
-    const dialogref = this.dialog.open(PoliticasAddComponent, {});
+    const dialogref = this.dialog.open(PoliticasAddComponent, { data: politicas});
     const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
       this.onAgrego();
     });

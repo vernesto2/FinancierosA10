@@ -4,15 +4,14 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card" style="align-content: center;">
               <div class="card-header card-header-primary" style="text-align: center;">
                   <h2 class="card-title">Registro </h2>
               </div>
               <div class="card-body">
-
                 <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
+                  <div class="col-md-3 ">
+                    <mat-form-field appearance="standard">
                       <mat-label>Fecha de inicio</mat-label>
                       <input matInput [min]="minDateInicio" [max]="maxDateInicio" [matDatepicker]="picker" required
                       name="fechaEstablecimiento"
@@ -23,8 +22,8 @@
                     </mat-form-field>
                   </div>
 
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
+                  <div class="col-md-3">
+                    <mat-form-field appearance="standard">
                       <mat-label>Fecha de finalización</mat-label>
                       <input matInput [min]="minDateFin" [max]="maxDateFin" [matDatepicker]="picker1" required [disabled]="fecValida"
                       name="fechaFin"
@@ -33,21 +32,88 @@
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
-                  </div>                  
+                  </div>                                      
+                  <div class="col-md-3">
+                    <mat-form-field appearance="standard">
+                      <mat-label>Tipo de persona</mat-label>
+                      <mat-select required
+                      name="tipoPersona"
+                      #tipoPersona="ngModel"
+                      [(ngModel)]="politicas.tipoPersona">
+                        <mat-option value="PERSONA">Natural</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>                   
                 </div>
 
-                <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
+                <div class="row">                  
+                  <div class="col-md-3">
+                    <mat-form-field appearance="standard">
+                      <mat-label>Tipo de crédito</mat-label>
+                      <mat-select required
+                      name="tipoCredito"
+                      #tipoCredito="ngModel"
+                      [(ngModel)]="politicas.tipoCredito">
+                        <mat-option value="HIPOTECARIO">Hipotecario</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>                  
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
+                      <input matInput type="number" placeholder="Días de cobro" required
+                      name="diasCobro"
+                      #diasCobro="ngModel"
+                      [(ngModel)]="politicas.diasCobro">
+                    </mat-form-field>
+                  </div> 
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
+                      <input matInput type="number" placeholder="Tasa de interés (%)" required
+                      name="tInteres"
+                      #tInteres="ngModel"
+                      [(ngModel)]="politicas.tasaInteres">
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">                  
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
+                      <input matInput type="number" placeholder="Desde" required
+                      name="tiempoInferior"
+                      #tiempoInferior="ngModel"
+                      [(ngModel)]="politicas.tiempoInferior">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
+                      <input matInput type="number" placeholder="Hasta" required
+                      name="tiempoSuperior"
+                      #tiempoSuperior="ngModel"
+                      [(ngModel)]="politicas.tiempoSuperior">
+                    </mat-form-field>
+                  </div>                  
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
+                      <input matInput type="number" placeholder="Interés por mora (%)" required
+                      name="tMora"
+                      #tMora="ngModel"
+                      [(ngModel)]="politicas.tasaMora">
+                    </mat-form-field>
+                  </div>
+                </div>
+                  
+                <div class="row">                  
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Monto inferior ($)" required
                       name="mInferior"
                       #mInferior="ngModel"
                       [(ngModel)]="politicas.montoInferior">
                     </mat-form-field>
                   </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Monto superior ($)" required
                       name="mSuperior"
                       #mSuperior="ngModel"
@@ -57,92 +123,31 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
-                      <mat-label>Tipo de crédito</mat-label>
-                      <mat-select required
-                      name="tipoCredito"
-                      #tipoCredito="ngModel"
-                      [(ngModel)]="politicas.tipoCredito">
-                        <mat-option value="HIPOTECARIO">Hipotecario</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Tasa de interés (%)" required
-                      name="tInteres"
-                      #tInteres="ngModel"
-                      [(ngModel)]="politicas.tasaInteres">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Días de cobro" required
-                      name="diasCobro"
-                      #diasCobro="ngModel"
-                      [(ngModel)]="politicas.diasCobro">
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Tasa de mora (%)" required
-                      name="tMora"
-                      #tMora="ngModel"
-                      [(ngModel)]="politicas.tasaMora">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Días antes de mora" required
-                      name="diasAntesMora"
-                      #diasAntesMora="ngModel"
-                      [(ngModel)]="politicas.diasAntesMora">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Días para ser incobrable" required
-                      name="incobrabilidad"
-                      #incobrabilidad="ngModel"
-                      [(ngModel)]="politicas.diasIncobrabilidad">
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <hr size="10" color="warning">
+                  <div class="col-md-9">
+                    <hr>
                     <p><b>Comisiones</b></p>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Gasto de tramitación (%)" required
                       name="tramitacion"
                       #tramitacion="ngModel"
                       [(ngModel)]="politicas.gastosTramitacion">
                     </mat-form-field>
                   </div>
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Honorarios notariales (%)" required
                       name="notario"
                       #notario="ngModel"
                       [(ngModel)]="politicas.gastosNotario">
                     </mat-form-field>
                   </div>
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width" appearance="standard">
                       <input matInput type="number" placeholder="Otros (%)" 
                       name="otras"
                       #otras="ngModel"

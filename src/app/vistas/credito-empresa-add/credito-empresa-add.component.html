@@ -1,0 +1,181 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form [formGroup]="forma" (ngSubmit)="guardar()">
+                    <mat-vertical-stepper [linear]="false" #stepper>
+          
+                      <mat-step label="pa1" state="p1">
+                        <ng-template matStepLabel> Consulta de Crédito</ng-template>
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">            
+                                <div class="col-md-3">
+                                  <mat-form-field class="example-full-width" appearance="standard">
+                                    <input matInput placeholder="Monto" type="number" required>
+                                  </mat-form-field>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                  <mat-form-field appearance="standard">
+                                    <mat-label>Tiempo</mat-label>
+                                    <mat-select required>
+                                      <mat-option value="HIPOTECARIO">1 Años - 3 Años</mat-option>
+                                      <mat-option value="HIPOTECARIO">4 Años - 6 Años</mat-option>
+                                      <mat-option value="HIPOTECARIO">7 Años - 10 Años</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                  <mat-form-field appearance="standard">
+                                    <mat-label>Fecha de solicitud</mat-label>
+                                    <input matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field>
+                                </div>                    
+                              </div>
+          
+                            <div class="row">          
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <input matInput placeholder="Cuota Mensual">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <input matInput placeholder="Intereses">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <input matInput placeholder="Capital">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        </div>
+                        <div>
+                          <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+                        </div>
+                      </mat-step>
+          
+          
+                      <mat-step label="pa2" state="p2">
+                        <div class="card">
+                          <div class="card-body">
+                            <ng-template matStepLabel>Solicitud de Crédito</ng-template>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Buscar representante por DUI</mat-label>
+                                  <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                      {{option.name}}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                              </div>
+          
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Víctor Ernesto Acevedo Cornejo</mat-label>
+                                  <input matInput type="text">
+                                </mat-form-field>
+                              </div>
+          
+                              <div class="col-md-5">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Nombre de la empresa</mat-label>
+                                  <input matInput type="text" required>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Ingresos totales ($)</mat-label>
+                                  <input matInput type="number" required>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Otros ingresos ($)</mat-label>
+                                  <input matInput type="number" required>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Egresos totales ($)</mat-label>
+                                  <input matInput type="number" required>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Otros egresos ($)</mat-label>
+                                  <input matInput type="number" required>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Monto</mat-label>
+                                  <input matInput placeholder="$10,000">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Cuota Mensual</mat-label>
+                                  <input matInput placeholder="$ 150">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Número de cuotas</mat-label>
+                                  <input matInput placeholder="36">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                <mat-form-field class="example-full-width" appearance="standard">
+                                  <mat-label>Tiempo</mat-label>
+                                  <input matInput placeholder="3 Años">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <p>Tipo de garantía: </p>
+                              </div>
+                              <div class="col-md-2">
+                                <button mat-stroked-button color="primary">Hipotcaria</button>
+                              </div>
+                              <div>
+                                <button mat-stroked-button color="primary">Personal</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <button mat-stroked-button color="primary" class="mr-1" matStepperPrevious>Atrás</button>
+                          <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+                        </div>
+                      </mat-step>
+          
+                      <mat-step label="pa3" state="p3">
+                        <ng-template matStepLabel>Tipo de Garantía</ng-template> 
+                        <div>
+                          <button mat-stroked-button color="primary" class="mr-1" matStepperPrevious>Atrás</button>
+                          <button mat-stroked-button color="primary" (click)="stepper.reset()">Cancelar</button>
+                        </div>
+                      </mat-step>
+                    </mat-vertical-stepper>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>

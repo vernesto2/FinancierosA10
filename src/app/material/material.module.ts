@@ -18,6 +18,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatTabsModule,
     MatCardModule,
     MatAutocompleteModule,
+    MatButtonToggleModule,
   ],
   exports: [
     MatSliderModule,
@@ -60,6 +62,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatTabsModule,
     MatCardModule,
     MatAutocompleteModule,
+    MatButtonToggleModule,
   ]
 })
 export class MaterialModule { }

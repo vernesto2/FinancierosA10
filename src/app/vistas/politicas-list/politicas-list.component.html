@@ -16,23 +16,20 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Tipo Crédito
+                                        Tipo de crédito
                                     </th>
                                     <th>
-                                        Tasa Interés
+                                        Tipo de cliente
                                     </th>
                                     <th>
                                         Días de cobro
                                     </th>
                                     <th>
-                                        Tasa mora
+                                        Tasa de interés
                                     </th>
                                     <th>
-                                        Días antes de mora
-                                    </th>
-                                    <th>
-                                        Días de incobrable
-                                    </th>
+                                        Interés por mora
+                                    </th> 
                                     <th>
                                         Acciones
                                     </th>
@@ -43,29 +40,20 @@
                                           {{p.tipoCredito}}
                                       </td>
                                       <td style="text-align: center;">
-                                          {{p.tasaInteres}}%
+                                          {{p.tipoPersona}}
                                       </td>
                                       <td style="text-align: center;">
                                           {{p.diasCobro}}
                                       </td>
                                       <td style="text-align: center;">
+                                        {{p.tasaInteres}}%
+                                    </td>
+                                      <td style="text-align: center;">
                                           {{p.tasaMora}}%
-                                      </td>
-                                      <td style="text-align: center;">
-                                          {{p.diasAntesMora}}
-                                      </td>
-                                      <td style="text-align: center;">
-                                          {{p.diasIncobrabilidad}}
                                       </td>
                                       <td>
                                         <button mat-icon-button color="primary" (click)="openDialogPoliticas(p)">
                                             <mat-icon>remove_red_eye</mat-icon>
-                                          </button>
-                                          <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-                                            <mat-icon>home</mat-icon>
-                                          </button>
-                                          <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
-                                            <mat-icon>menu</mat-icon>
                                           </button>
                                       </td>
                                    </tr>

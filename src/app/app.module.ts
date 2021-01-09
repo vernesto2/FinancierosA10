@@ -36,6 +36,7 @@ import { EdadPipe } from './pipes/edad.pipe';
 import { DuiPipe } from './pipes/dui.pipe';
 import { CreditoEmpresaAddComponent } from './vistas/credito-empresa-add/credito-empresa-add.component';
 import { PrecreditoAddComponent } from './vistas/precredito-add/precredito-add.component';
+import { NitPipe } from './pipes/nit.pipe';
 
 @NgModule({
   imports: [
@@ -65,6 +66,7 @@ import { PrecreditoAddComponent } from './vistas/precredito-add/precredito-add.c
     PersonaAddComponent,
     EmpresaAddComponent,
     TelefonoPipe,
+    NitPipe,
     EdadPipe,
     DuiPipe,
     PrecreditoAddComponent,

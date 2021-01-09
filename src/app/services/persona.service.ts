@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { PersonaNaturalModel } from 'app/models/personaNatural.model';
 import { Observable, throwError } from 'rxjs';
+import { EmpresaModel } from 'app/models/empresa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +39,11 @@ export class PersonaService {
     return this.http.get(`${this.base_uri}/ubicacion/${codigo}`, { observe: 'response' });
   }
 
+  listarEmpresa(): Observable<any> {
+    return this.http.get(`${this.base_uri}/empresa`, {observe: 'response'});
+  }
+
+  agregarEmpresa(empresa: EmpresaModel): Observable<any> {
+    return this.http.post(`${this.base_uri}/empresa`, empresa, { observe: 'response' });
+  }
 }

@@ -11,6 +11,66 @@
               <div class="card-body">
 
                 <div class="row">
+                  <div class="col-md-12">
+                    <mat-accordion>
+                      <mat-expansion-panel >
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            Seleccionar representante
+                          </mat-panel-title>
+                          <mat-panel-description>
+                            <p>{{duiRepre | dui}} / {{nombreRepre}}</p>
+                          </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-form-field appearance="outline" class="example-full-width">
+                          <mat-label>Buscar</mat-label>
+                          <input matInput placeholder="Buscar por DUI" type="text">
+                        </mat-form-field>
+                        <div class="table-responsive">
+                          <table class="table">
+                              <thead class=" text-primary">
+                                  <th>
+                                      DUI
+                                  </th>
+                                  <th>
+                                      Nombres
+                                  </th>
+                                  <th>
+                                      Apellidos
+                                  </th>
+                                  <th>
+                                      Acción
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let pn of listaRepresentante | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
+                                      <td>
+                                          {{pn.dui | dui}}
+                                      </td>
+                                      <td>
+                                          {{pn.nombres}}
+                                      </td>
+                                      <td>
+                                          {{pn.apellidos}}
+                                      </td>
+                                      <td>
+                                            <button mat-icon-button type="button" (click)="seleccionoRepresentante(pn)" color="primary">
+                                              <mat-icon>check</mat-icon>
+                                            </button>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <div class="text-center">
+                              <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                          </div>
+                      </div>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </div>
+                </div>
+
+                <div class="row">
                   <div class="col-md-4">
                     <mat-form-field appearance="standard" class="example-full-width">
                       <mat-label>NIT</mat-label>
@@ -26,16 +86,6 @@
                             required formControlName="nombre">
                     </mat-form-field>
                   </div>
-                </div>
-
-                <div class="row" >
-                  <div class="col-md-4">
-                    <mat-form-field appearance="standard" class="example-full-width">
-                      <mat-label>Representante</mat-label>
-                      <input matInput type="text" [value]="repre" required formControlName="representante">
-                    </mat-form-field>
-                  </div>
-
                 </div>
 
                 <div class="row">
@@ -106,66 +156,6 @@
                       <mat-label>Dirección</mat-label>
                       <textarea matInput required formControlName="direccion"></textarea>
                     </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <mat-accordion>
-                      <mat-expansion-panel >
-                        <mat-expansion-panel-header>
-                          <mat-panel-title>
-                            Seleccione un representante
-                          </mat-panel-title>
-                          <mat-panel-description>
-                            <p>{{duiRepre}}, {{nombreRepre}}</p>
-                          </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-form-field appearance="outline" class="example-full-width">
-                          <mat-label>Buscar</mat-label>
-                          <input matInput placeholder="Buscar por DUI" type="text">
-                        </mat-form-field>
-                        <div class="table-responsive">
-                          <table class="table">
-                              <thead class=" text-primary">
-                                  <th>
-                                      DUI
-                                  </th>
-                                  <th>
-                                      Nombres
-                                  </th>
-                                  <th>
-                                      Apellidos
-                                  </th>
-                                  <th>
-                                      Acción
-                                  </th>
-                              </thead>
-                              <tbody>
-                                  <tr *ngFor="let pn of listaRepresentante | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
-                                      <td>
-                                          {{pn.dui | dui}}
-                                      </td>
-                                      <td>
-                                          {{pn.nombres}}
-                                      </td>
-                                      <td>
-                                          {{pn.apellidos}}
-                                      </td>
-                                      <td>
-                                            <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
-                                              <mat-icon>check</mat-icon>
-                                            </button>
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                          <div class="text-center">
-                              <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
-                          </div>
-                      </div>
-                      </mat-expansion-panel>
-                    </mat-accordion>
                   </div>
                 </div>
 

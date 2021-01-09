@@ -220,13 +220,13 @@ export class PersonaAddComponent implements OnInit {
         telPk.telefono = this.listaTelefonos[i].telefono;
         tel.id = telPk;
         tel.tipoContacto = this.listaTelefonos[i].tipoContacto;
-        console.log(tel);
+        //console.log(tel);
         this.listaTel.push(tel);
       }
       this.persona.telefonos = this.listaTel;
       //console.log(this.listaTel);
     }
-    console.log(this.personaNatural);
+    //console.log(this.personaNatural);
   }
 
   deptoSeleccionado(depto) {

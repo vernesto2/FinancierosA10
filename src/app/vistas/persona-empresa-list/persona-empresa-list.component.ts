@@ -48,6 +48,7 @@ export class PersonaEmpresaListComponent implements OnInit {
     this.cargando1 = true;
     this.personaService.listarEmpresa().subscribe((lista: any) => {
       this.listaEmpresa = lista.body;
+      console.log(this.listaEmpresa);
       this.cargando1 = false;
     });
   }

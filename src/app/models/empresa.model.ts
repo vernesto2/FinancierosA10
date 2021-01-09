@@ -1,5 +1,9 @@
+import { PersonaModel } from "./persona.model";
+import { PersonaNaturalModel } from "./personaNatural.model";
+
 export class EmpresaModel {
     nit: string;
-    nitRepresentante: string;
+    personaNatural: PersonaNaturalModel;
     nombre: string;
+    persona: PersonaModel;
 }

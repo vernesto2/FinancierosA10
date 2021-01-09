@@ -127,22 +127,13 @@
                                             <table class="table">
                                                 <thead class=" text-primary">
                                                     <th>
-                                                        DUI
+                                                        NIT
                                                     </th>
                                                     <th>
-                                                        Nombres
+                                                        Nombre de Empresa
                                                     </th>
                                                     <th>
-                                                        Apellidos
-                                                    </th>
-                                                    <th>
-                                                        Edad
-                                                    </th>
-                                                    <th>
-                                                        Genero
-                                                    </th>
-                                                    <th>
-                                                        Puntuación
+                                                        Representante
                                                     </th>
                                                     <th>
                                                         Acciones
@@ -151,17 +142,13 @@
                                                 <tbody>
                                                     <tr *ngFor="let pn of listaEmpresa | paginate: { itemsPerPage: 5, currentPage: page1 }; let i = index">
                                                         <td>
+                                                            {{pn.nit | nit}}
                                                         </td>
                                                         <td>
+                                                            {{pn.nombre}}
                                                         </td>
                                                         <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                            
+                                                            {{pn.personaNatural.nombres}} {{pn.personaNatural.apellidos}}
                                                         </td>
                                                         <td>
                                                             <button mat-icon-button color="primary">

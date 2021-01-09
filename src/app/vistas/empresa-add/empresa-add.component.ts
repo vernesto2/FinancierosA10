@@ -1,11 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { DireccionModel } from 'app/models/direccion.model';
 import { EmpresaModel } from 'app/models/empresa.model';
 import { PersonaModel } from 'app/models/persona.model';
+import { PersonaNaturalModel } from 'app/models/personaNatural.model';
+import { TelModel } from 'app/models/tel.model';
+import { TelefonoModel } from 'app/models/telefono.model';
 import { UbicacionModel } from 'app/models/ubicacion.model';
 import { PersonaService } from 'app/services/persona.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-empresa-add',
@@ -14,24 +19,40 @@ import { PersonaService } from 'app/services/persona.service';
 })
 export class EmpresaAddComponent implements OnInit {
 
+  @Output() onAgregado1 = new EventEmitter();
+
   forma: FormGroup;
   persona = new PersonaModel();
-  personaJuridica = new EmpresaModel();
+  personaNatural = new PersonaNaturalModel();
   direccion = new DireccionModel();
   ubicacion = new UbicacionModel();
   listaDepartamento: any[];
   listaMunicipio: any[];
   valido = true;
+  listaTelefonos: Array<TelModel> = [];
+  listaTel: Array<TelefonoModel> = [];
+  deptoSel: any = [];
+  muniSel: any = [];
+  editarCampos = false;
+  editar = false;
+
+  //filtramos los representantes
+  repre = new PersonaNaturalModel();
+  listaRepresentante: any[];
+  filterPost = '';
+  duiRepre = 'DUI'
+  nombreRepre = 'Nombre de representante';
+  //filtro y paginacion del representante
+  page = 1;
 
   constructor(public dialogRef: MatDialogRef<EmpresaAddComponent>, @Inject(MAT_DIALOG_DATA) public message: string,
   private fb: FormBuilder, public personaService: PersonaService) {
+    this.llenarRepresentantes();
     this.crearFormulario();
   }
 
   ngOnInit(): void {
-    this.personaService.listarDepartamento().subscribe((lista: any) => {
-      this.listaDepartamento = lista.body;
-    });
+
   }
 
   crearFormulario() {
@@ -52,6 +73,12 @@ export class EmpresaAddComponent implements OnInit {
       ]),
     }, {
       validators: []
+    });
+  }
+
+  llenarRepresentantes() {
+    this.personaService.listarPersonas().subscribe((lista: any) => {
+      this.listaRepresentante = lista.body;
     });
   }
 
@@ -83,6 +110,7 @@ export class EmpresaAddComponent implements OnInit {
       })
     );
   }
+
 
   eliminarTelefonos(i: number) {
     this.telefonos.removeAt(i);

@@ -65,8 +65,8 @@ export class PersonaAddComponent implements OnInit {
         tel.tipoContacto = this.listaTel[i].tipoContacto;
         this.listaTelefonos.push(tel);
       }
+      this.editarCampos = false;
     }
-    this.editarCampos = false;
     //seteando las fechas minimas y maximas
     const currentYear = new Date().getFullYear(); //obtenemos el año actual
     const currentDay = new Date().getDate(); //sacamos los dias actuales
@@ -81,7 +81,6 @@ export class PersonaAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   listarDepartamentos() {
@@ -159,29 +158,26 @@ export class PersonaAddComponent implements OnInit {
     } else {
       //console.log(this.personaNatural);
       if (this.editar) { //si es verdadero EDITAMOS
-        this.listaTelefonos = null;
-        this.persona.telefonos = null;
         //console.log(this.persona.telefonos);
         this.separarModelos();
 
         //console.log(this.persona.telefonos);
         this.personaService.editarPersona(this.personaNatural).subscribe((res: any) => {
           if (res.status == 200) {
-            //console.log(res);
-            this.showNotification('top', 'right', 'Editado Correctamente.!', 'save', 'success');
+            this.showNotification('top', 'right', 'Modificado correctamente!', 'save', 'success');
             this.onAgregado.emit();
           } else {
-            this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+            this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
           }
         });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
         this.personaService.agregarPersona(this.personaNatural).subscribe((res: any) => {
           if (res.status == 200) {
-            this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
+            this.showNotification('top', 'right', 'Agregado correctamente!', 'save', 'success');
             this.onAgregado.emit();
           } else {
-            this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+            this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
           }
         });
       }
@@ -211,20 +207,22 @@ export class PersonaAddComponent implements OnInit {
     this.personaNatural.persona = this.persona;
 
     //Telefonos
-    this.listaTelefonos = this.telefonos.value;
-    if (this.listaTelefonos.length > 0) {
-      for (let i = 0; i < this.listaTelefonos.length; i++) {
+    let listaCelular: Array<TelModel> = [];
+    let listaCel: Array<TelefonoModel> = [];
+    listaCelular = this.telefonos.value;
+    if (listaCelular.length > 0) {
+      for (let i = 0; i < listaCelular.length; i++) {
         let tel = new TelefonoModel();
         let telPk = new TelefonoPKModel();
         telPk.nit = this.persona.nit;
-        telPk.telefono = this.listaTelefonos[i].telefono;
+        telPk.telefono = listaCelular[i].telefono;
         tel.id = telPk;
-        tel.tipoContacto = this.listaTelefonos[i].tipoContacto;
+        tel.tipoContacto = listaCelular[i].tipoContacto;
         //console.log(tel);
-        this.listaTel.push(tel);
+        listaCel.push(tel);
       }
-      this.persona.telefonos = this.listaTel;
-      //console.log(this.listaTel);
+      this.persona.telefonos = listaCel;
+      //console.log(listaCelular);
     }
     //console.log(this.personaNatural);
   }

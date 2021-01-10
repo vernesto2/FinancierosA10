@@ -36,6 +36,7 @@ export class EmpresaAddComponent implements OnInit {
   muniSel: any = [];
   editarCampos = false;
   editar = false;
+  busqueda = '';
 
   //filtramos los representantes
   repre = new PersonaNaturalModel();
@@ -93,19 +94,22 @@ export class EmpresaAddComponent implements OnInit {
     this.persona.direccion = this.direccion;
 
     //Telefonos
-    this.listaTelefonos = this.telefonos.value;
-    if (this.listaTelefonos.length > 0) {
-      for (let i = 0; i < this.listaTelefonos.length; i++) {
+    let listaCelular: Array<TelModel> = [];
+    let listaCel: Array<TelefonoModel> = [];
+    listaCelular = this.telefonos.value;
+    if (listaCelular.length > 0) {
+      for (let i = 0; i < listaCelular.length; i++) {
         let tel = new TelefonoModel();
         let telPk = new TelefonoPKModel();
         telPk.nit = this.persona.nit;
-        telPk.telefono = this.listaTelefonos[i].telefono;
+        telPk.telefono = listaCelular[i].telefono;
         tel.id = telPk;
-        tel.tipoContacto = this.listaTelefonos[i].tipoContacto;
-        this.listaTel.push(tel);
+        tel.tipoContacto = listaCelular[i].tipoContacto;
+        //console.log(tel);
+        listaCel.push(tel);
       }
-      //console.log(this.listaTelefonos);
-      this.persona.telefonos = this.listaTel;
+      this.persona.telefonos = listaCel;
+      //console.log(listaCelular);
 
       //empresa
       this.empresa.nit = this.forma.get('nit').value;
@@ -127,6 +131,16 @@ export class EmpresaAddComponent implements OnInit {
     this.duiRepre = repre.dui;
     this.nombreRepre = repre.nombres + ' ' + repre.apellidos;
     this.repre = repre;
+  }
+
+  buscarPorDUINombreApellido(value: any) {
+    if (value.length >= 3) {
+      this.personaService.buscarPor(value).subscribe((lista: any) => {
+        this.listaRepresentante = lista.body;
+        console.log(this.listaRepresentante);
+      });
+      console.log(value);
+    }
   }
 
   guardar() {

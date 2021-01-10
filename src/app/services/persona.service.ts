@@ -46,4 +46,8 @@ export class PersonaService {
   agregarEmpresa(empresa: EmpresaModel): Observable<any> {
     return this.http.post(`${this.base_uri}/empresa`, empresa, { observe: 'response' });
   }
+
+  buscarPor(busqueda: any): Observable<any> {
+    return this.http.get(`${this.base_uri}/personanatural`, {observe: 'response'});
+  }
 }

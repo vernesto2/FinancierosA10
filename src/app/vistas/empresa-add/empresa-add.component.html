@@ -24,7 +24,7 @@
                         </mat-expansion-panel-header>
                         <mat-form-field appearance="outline" class="example-full-width">
                           <mat-label>Buscar</mat-label>
-                          <input matInput placeholder="Buscar por DUI" type="text">
+                          <input matInput placeholder="Buscar por DUI" (keyup)="buscarPorDUINombreApellido($event.target.value)" type="text">
                         </mat-form-field>
                         <div class="table-responsive">
                           <table class="table">

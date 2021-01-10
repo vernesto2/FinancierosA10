@@ -9,17 +9,12 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-    { path: '/table-list', title: 'Table List',  icon: 'content_paste', class: '' },
-    { path: '/typography', title: 'Typography',  icon: 'library_books', class: '' },
-    { path: '/icons', title: 'Icons',  icon: 'bubble_chart', class: '' }, 
     { path: '/creditopersonal', title: 'Crédito Personal',  icon: 'perm_identity', class: '' },
-    { path: '/creditoempresa', title: 'Crédito Empresarial',  icon: 'account_balance', class: '' },    
-    { path: '/activofijo', title: 'Activo Fijo',  icon: 'style', class: '' },
+    { path: '/creditoempresa', title: 'Crédito Empresarial',  icon: 'account_balance', class: '' },
     { path: '/politicas', title: 'Políticas',  icon: 'privacy_tip', class: '' },
     { path: '/clientes', title: 'Clientes',  icon: 'supervisor_account', class: '' },
-    { path: '/notifications', title: 'Notifications',  icon: 'notifications', class: '' },
-
-]; 
+    { path: '/activofijo', title: 'Activo Fijo',  icon: 'style', class: '' },
+];
 
 @Component({
   selector: 'app-sidebar',
@@ -27,12 +22,21 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+  menuItems: any[] = [];
 
   constructor() { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    let usuario = {
+      tipoUsuario: 'Admin'
+    }
+    for (let i = 0; i < ROUTES.length; i++) {
+      if (usuario.tipoUsuario == "Admin" && (i < 6)) {
+        this.menuItems.push(ROUTES[i]);
+      }
+    }
+    //this.menuItems = ROUTES.filter(menuItem => menuItem);
+    //console.log(ROUTES.length);
   }
   isMobileMenu() {
       if ($(window).width() > 991) {

@@ -4,6 +4,7 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './componentesAntiguos/layouts/admin-layout/admin-layout.component';
+import { BlankComponent } from './components/blank/blank.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
       path: '',
       loadChildren: './componentesAntiguos/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     }]
-  }
+  }, { path: 'reporte',      component: BlankComponent }
 ];
 
 @NgModule({

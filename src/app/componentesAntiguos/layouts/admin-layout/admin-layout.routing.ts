@@ -13,17 +13,10 @@ import { CreditoEmpresaAddComponent } from 'app/vistas/credito-empresa-add/credi
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      redirectTo: 'activofijo' }, //por defecto va mostrar esta ruta en caso que la url este vacia
-    //{ path: 'precredito',         component: PreCreditoComponent },
     { path: 'dashboard',      component: DashboardComponent },
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
     { path: 'activofijo',  component: ActivoFijoListComponent },
     { path: 'clientes',  component: PersonaEmpresaListComponent },
     { path: 'politicas',  component: PoliticasListComponent },
-    { path: 'creditopersonal',  component: PrecreditoAddComponent }, 
-    { path: 'creditoempresa',  component: CreditoEmpresaAddComponent }, 
-    
-    
+    { path: 'creditopersonal',  component: PrecreditoAddComponent },
+    { path: 'creditoempresa',  component: CreditoEmpresaAddComponent },
 ];

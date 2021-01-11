@@ -14,7 +14,9 @@ export class CreditoEmpresaAddComponent implements OnInit {
   secondFormGroup: FormGroup;
   myControl = new FormControl();
   filteredOptions: Observable<true>; //filteredOptions: Observable<User[]>;
- 
+  hipotecario = true;
+  fiador = true;
+
   constructor(public dialog: MatDialog, private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -28,6 +30,18 @@ export class CreditoEmpresaAddComponent implements OnInit {
     });
 
   }
+  cambioFiador(){
+    if(this.hipotecario = true){
+      this.fiador = false;
+    }
+  }
+
+  cambioHipotecario(){
+    if(this.fiador = true){
+      this.hipotecario = false;
+    }
+  }
+  
   crearFormuario() {
     this.forma = this.fb.group({
 

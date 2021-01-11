@@ -23,7 +23,6 @@ import { ActivoFijoAddComponent } from './vistas/activo-fijo-add/activo-fijo-add
 import { ActivoFijoListComponent } from './vistas/activo-fijo-list/activo-fijo-list.component';
 import { PoliticasAddComponent } from './vistas/politicas-add/politicas-add.component';
 import { PoliticasListComponent } from './vistas/politicas-list/politicas-list.component';
-import { PersonaEmpresaListComponent } from './vistas/persona-empresa-list/persona-empresa-list.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -37,6 +36,8 @@ import { DuiPipe } from './pipes/dui.pipe';
 import { CreditoEmpresaAddComponent } from './vistas/credito-empresa-add/credito-empresa-add.component';
 import { PrecreditoAddComponent } from './vistas/precredito-add/precredito-add.component';
 import { NitPipe } from './pipes/nit.pipe';
+import { EmpresaListComponent } from './vistas/empresa-list/empresa-list.component';
+import { PersonaListComponent } from './vistas/persona-list/persona-list.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,6 @@ import { NitPipe } from './pipes/nit.pipe';
     ActivoFijoListComponent,
     PoliticasAddComponent,
     PoliticasListComponent,
-    PersonaEmpresaListComponent,
     PersonaAddComponent,
     EmpresaAddComponent,
     TelefonoPipe,
@@ -71,6 +71,8 @@ import { NitPipe } from './pipes/nit.pipe';
     DuiPipe,
     PrecreditoAddComponent,
     CreditoEmpresaAddComponent,
+    EmpresaListComponent,
+    PersonaListComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

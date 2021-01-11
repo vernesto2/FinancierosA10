@@ -1,0 +1,111 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <button mat-raised-button class="btn btn-primary" (click)="openDialogPersona()">Agregar Persona</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row" *ngIf="!cargando && listaPersonaNatural.length > 0">
+                    <div class="col-md-12">
+                        <div class="card" >
+                            <div class="card-header card-header-danger" style="text-align: center;">
+                                <h4 class="card-title ">Detalles listados</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                            <th>
+                                                DUI
+                                            </th>
+                                            <th>
+                                                NIT
+                                            </th>
+                                            <th>
+                                                Nombres
+                                            </th>
+                                            <th>
+                                                Apellidos
+                                            </th>
+                                            <th>
+                                                Edad
+                                            </th>
+                                            <th>
+                                                Puntuación
+                                            </th>
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let pn of listaPersonaNatural | paginate: { itemsPerPage: 5, currentPage: page }">
+                                                <td>
+                                                    {{pn.dui | dui}}
+                                                </td>
+                                                <td>
+                                                    {{pn.nit | nit}}
+                                                </td>
+                                                <td>
+                                                    {{pn.nombres}}
+                                                </td>
+                                                <td>
+                                                    {{pn.apellidos}}
+                                                </td>
+                                                <td>
+                                                    {{pn.fechaNacimiento | edad}}
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <button mat-icon-button (click)="openDialogPersona(pn)" color="primary">
+                                                        <mat-icon>edit</mat-icon>
+                                                      </button>
+                                                      <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                                                        <mat-icon>home</mat-icon>
+                                                      </button>
+                                                      <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+                                                        <mat-icon>menu</mat-icon>
+                                                      </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center">
+                                        <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+        
+                        <div class="text-center" *ngIf="!cargando && listaPersonaNatural.length === 0">
+                            <mat-card class="alert alert-warning">
+                                No hay datos!
+                                <mat-card-content>
+                                    <mat-icon>warning</mat-icon>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+        
+                        <div class="text-center" *ngIf="cargando">
+                            <mat-card class="alert alert-danger">
+                                Cargando...
+                                <mat-card-content>
+                                    <mat-icon class="fa-spin" >autorenew</mat-icon>
+                                </mat-card-content>
+                                Por favor espere!
+                            </mat-card>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

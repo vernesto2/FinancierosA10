@@ -45,27 +45,30 @@ export class PersonaAddComponent implements OnInit {
     this.crearFormulario();
     this.listarDepartamentos();
     if (data != null) {
-      this.editar = true;
-      this.personaNatural = data;
-      this.valido = false;
-      this.editarCampos = true;
-      this.muniSel = this.personaNatural.persona.direccion.ubicacion;
-      //saco los 2 numeros del codigo para determinar el depto
-      this.personaService.deptoPorCodigo(this.personaNatural.persona.direccion.ubicacion.codigo.toString().substring(0, 2)).subscribe((depto: any) => {
-        this.deptoSeleccionado(depto.body);
-        this.deptoSel = depto.body;
-        //console.log(this.deptoSel);
-        this.llenarFormulario();
-      });
+      this.personaService.buscarNIT(data.nit).subscribe((persona: any) => {
+        this.personaNatural = persona.body;
+        //console.log(persona);
+        this.muniSel = this.personaNatural.persona.direccion.ubicacion;
+        this.editar = true;
+        this.valido = false;
+        this.editarCampos = true;
 
-      this.listaTel = this.personaNatural.persona.telefonos;
-      for (let i = 0; i < this.listaTel.length; i++) {
-        let tel = new TelModel();
-        tel.telefono = this.listaTel[i].id.telefono;
-        tel.tipoContacto = this.listaTel[i].tipoContacto;
-        this.listaTelefonos.push(tel);
-      }
-      this.editarCampos = false;
+        //saco los 2 numeros del codigo para determinar el depto
+        this.personaService.deptoPorCodigo(this.personaNatural.persona.direccion.ubicacion.codigo.toString().substring(0, 2)).subscribe((depto: any) => {
+          this.deptoSeleccionado(depto.body);
+          this.deptoSel = depto.body;
+          //console.log(this.deptoSel);
+          this.llenarFormulario();
+        });
+        this.listaTel = this.personaNatural.persona.telefonos;
+        for (let i = 0; i < this.listaTel.length; i++) {
+          let tel = new TelModel();
+          tel.telefono = this.listaTel[i].id.telefono;
+          tel.tipoContacto = this.listaTel[i].tipoContacto;
+          this.listaTelefonos.push(tel);
+        }
+        this.editarCampos = false;
+      });
     }
     //seteando las fechas minimas y maximas
     const currentYear = new Date().getFullYear(); //obtenemos el año actual

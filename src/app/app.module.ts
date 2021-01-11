@@ -38,6 +38,7 @@ import { PrecreditoAddComponent } from './vistas/precredito-add/precredito-add.c
 import { NitPipe } from './pipes/nit.pipe';
 import { EmpresaListComponent } from './vistas/empresa-list/empresa-list.component';
 import { PersonaListComponent } from './vistas/persona-list/persona-list.component';
+import { RazonesFinancierasComponent } from './vistas/razones-financieras/razones-financieras.component';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import { PersonaListComponent } from './vistas/persona-list/persona-list.compone
     CreditoEmpresaAddComponent,
     EmpresaListComponent,
     PersonaListComponent,
+    RazonesFinancierasComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

@@ -80,12 +80,7 @@
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Buscar empresa por NIT</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{option.name}}
-                          </mat-option>
-                        </mat-autocomplete>
+                        <input type="text" matInput>
                       </mat-form-field>
                     </div>
 
@@ -103,7 +98,7 @@
                       </mat-form-field>
                     </div>
                     <div class="col-md-2" style="margin-top: 12px;">
-                      <button mat-raised-button type="button" color="primary">Razones Financieras <mat-icon>local_atm</mat-icon>
+                      <button mat-raised-button type="button" (click)="openDialogRazones()" color="primary">Razones Financieras <mat-icon>local_atm</mat-icon>
                         </button>
                     </div>
                   </div>

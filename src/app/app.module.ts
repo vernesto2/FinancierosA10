@@ -39,6 +39,7 @@ import { NitPipe } from './pipes/nit.pipe';
 import { EmpresaListComponent } from './vistas/empresa-list/empresa-list.component';
 import { PersonaListComponent } from './vistas/persona-list/persona-list.component';
 import { RazonesFinancierasComponent } from './vistas/razones-financieras/razones-financieras.component';
+import { RazonesComponent } from './reportes/razones/razones.component';
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import { RazonesFinancierasComponent } from './vistas/razones-financieras/razone
     EmpresaListComponent,
     PersonaListComponent,
     RazonesFinancierasComponent,
+    RazonesComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

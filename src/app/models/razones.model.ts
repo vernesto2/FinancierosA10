@@ -7,4 +7,6 @@ export class RazonesModel {
     pc: number;
     pnc: number;
     k: number;
+    gai: number;
+    imp: number;
 }

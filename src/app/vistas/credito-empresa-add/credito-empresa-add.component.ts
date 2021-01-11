@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { RazonesModel } from 'app/models/razones.model';
 import { Observable } from 'rxjs';
+import { RazonesFinancierasComponent } from '../razones-financieras/razones-financieras.component';
 
 @Component({
   selector: 'app-credito-empresa-add',
@@ -30,18 +32,18 @@ export class CreditoEmpresaAddComponent implements OnInit {
     });
 
   }
-  cambioFiador(){
-    if(this.hipotecario = true){
+  cambioFiador() {
+    if (this.hipotecario = true) {
       this.fiador = false;
     }
   }
 
-  cambioHipotecario(){
-    if(this.fiador = true){
+  cambioHipotecario() {
+    if (this.fiador = true) {
       this.hipotecario = false;
     }
   }
-  
+
   crearFormuario() {
     this.forma = this.fb.group({
 
@@ -50,5 +52,7 @@ export class CreditoEmpresaAddComponent implements OnInit {
 
   guardar() { }
 
-  displayFn(): any { } // displayFn(user: User)
+  openDialogRazones(razones?: RazonesModel) {
+    let dialogref = this.dialog.open(RazonesFinancierasComponent, { });
+  }
 }

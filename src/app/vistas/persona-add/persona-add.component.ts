@@ -20,6 +20,7 @@ export class PersonaAddComponent implements OnInit {
 
   @Output() onAgregado = new EventEmitter();
 
+  accion = 'Registro';
   forma: FormGroup;
   persona = new PersonaModel();
   personaNatural = new PersonaNaturalModel();
@@ -45,6 +46,7 @@ export class PersonaAddComponent implements OnInit {
     this.crearFormulario();
     this.listarDepartamentos();
     if (data != null) {
+      this.accion = 'Edicion';
       this.personaService.buscarNIT(data.nit).subscribe((persona: any) => {
         this.personaNatural = persona.body;
         //console.log(persona);

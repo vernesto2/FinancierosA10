@@ -6,7 +6,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary" style="text-align: center;">
-                      <h2 class="card-title">Registro </h2>
+                      <h2 class="card-title">{{accion}}</h2>
                 </div>
                 <div class="card-body">
   
@@ -162,7 +162,7 @@
       </div>
     </div>
     <div mat-dialog-actions class="align-content-end">
-      <button mat-raised-button class="btn btn-danger" (click)="onCancelar()">Cancelar</button>
+      <button mat-raised-button class="btn btn-danger" (click)="onCancelar()" type="button">Cancelar</button>
       <button mat-raised-button class="btn btn-primary" [disabled]="forma.invalid" type="submit" [mat-dialog-close]="">Guardar</button>
     </div>
   </form>

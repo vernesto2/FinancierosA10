@@ -1,0 +1,115 @@
+<form (ngSubmit)="guardar(forma)" #forma="ngForm">
+    <div mat-dialog-content>
+      <div class="main-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card" style="align-content: center;">
+                <div class="card-header card-header-primary" style="text-align: center;">
+                    <h2 class="card-title">Razones Financieras</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3" style="font-weight: bold; text-decoration-line: underline;">
+                          <p>Datos de Balance General</p>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4" style="font-weight: bold; text-decoration-line: underline;">
+                          <p>Datos de Estado de Resultados</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>Efectivo ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-2">           
+                        </div>
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>Ganancia antes de imp. ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>Inventarios ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-2">           
+                        </div>
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>Impuesto sobre la renta ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>Cuentas por cobrar ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>T. Activo corriente ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>T. Activo no corriente ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>T. Pasivo corriente ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>T. Pasivo no corriente ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <mat-form-field class="example-full-width" appearance="standard">
+                            <mat-label>Capital de trabajo ($)</mat-label>
+                            <input matInput type="number" required>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions class="align-content-end">
+      <button mat-raised-button class="btn btn-danger" (click)="onCancelar()">Cancelar</button>
+      <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="forma.invalid" [mat-dialog-close]="true">Guardar</button>
+    </div>
+  </form>

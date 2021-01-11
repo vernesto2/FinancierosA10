@@ -1,4 +1,4 @@
-export class Unidad {
+export class UnidadModel {
     codigo: number;
     nombre: string;
 }

@@ -1,304 +1,214 @@
-<form (ngSubmit)="guardarActivo(forma)" #forma="ngForm"> <!--Se ponen estas lineas para indicar que usaremos angular en este formulario-->
-  <div mat-dialog-content>
-    <div class="main-content">
+ <div class="main-content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header card-header-primary">
-                <center>
+              <div class="card-header card-header-primary" style="text-align: center;">
                   <h2 class="card-title">Registro </h2>
-                </center>
               </div>
               <div class="card-body">
-
-                <!--<div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Código del activo" [value]="activo.codigoGenerado" disabled>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
-                      <mat-label>Fecha de adquisición</mat-label>
-                      <input matInput [matDatepicker]="picker" required
-                      name="fechaAdq"
-                      #fechaAdq="ngModel"
-                      [(ngModel)]="activo.fechaAdquisicion">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
-                      <mat-label>Unidad</mat-label>
-                      <mat-select (selectionChange)="unidadSeleccionada($event.value)" required>
-                        <mat-option *ngFor="let unidad of listaUnidad"  [value]="unidad">{{unidad.nombre}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Nombre del activo" required
-                      name="nombre"
-                      #nombre="ngModel"
-                      [(ngModel)]="activo.nombre">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
-                      <mat-label>Tipo de activo</mat-label>
-                      <mat-select (selectionChange)="tipoASeleccionada($event.value)" required
-                      name="ta"
-                      #ta="ngModel"
-                      [(ngModel)]="activo.tipoActivo">
-                        <mat-option *ngFor="let ta of listatipoactivo" [value]="ta">{{ta.nombre}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy" >
-                      <mat-label>Departamento</mat-label>
-                      <mat-select [disabled]='valido' (selectionChange)="deptoSeleccionada($event.value)" required
-                      name="depto"
-                      #depto="ngModel"
-                      [(ngModel)]="activo.departamento">
-                        <mat-option *ngFor="let depto of listaDeptoPorUnidad" [value]="depto">{{depto.nombre}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-4">
-                    <mat-form-field appearance="legacy">
-                      <mat-label>Tipo de adquisición</mat-label>
-                      <mat-select required
-                      name="tadq"
-                      #tadq="ngModel"
-                      [(ngModel)]="activo.tipoAdquisicion">
-                        <mat-option value="COMPRADO_NUEVO">Comprado / Nuevo</mat-option>
-                        <mat-option value="COMPRADO_USADO">Comprado / Usado</mat-option>
-                        <mat-option value="DONADO_NUEVO">Donado / Nuevo</mat-option>
-                        <mat-option value="DONADO_USADO">Donado / Usado</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Vida util" required
-                      name="vida"
-                      #vida="ngModel"
-                      [(ngModel)]="activo.vidaUtil">
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-md-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput type="number" placeholder="Monto" required
-                      name="monto"
-                      #monto="ngModel"
-                      [(ngModel)]="activo.precioAdquisicion">
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <mat-form-field appearance="fill">
-                      <mat-label>Carácteristica del activo</mat-label>
-                      <textarea matInput 
-                      name="caracteristica"
-                      #caracteristica="ngModel"
-                      [(ngModel)]="activo.descripcion"></textarea>
-                    </mat-form-field>
-                  </div>
-                </div>
-              -->
-              <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
-                <mat-step [stepControl]="firstFormGroup">
-                  <form>
-                    <ng-template matStepLabel>Activo Fio</ng-template>
-                          <div class="row">
-                            <div class="col-md-4">
+                <mat-horizontal-stepper [linear]="valido">
+                  <mat-step state="p1">
+                    <form (ngSubmit)="guardarActivo(forma)" #forma="ngForm">
+                      <ng-template matStepLabel>Activo Fio</ng-template>
+                       <div class="row">
+                          <div class="col-md-4">
                               <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Nombre del activo" required>
+                                  <input matInput placeholder="Nombre del activo" required 
+                                  name="nombre"
+                                  #nombre="ngModel"
+                                  [(ngModel)]="activofijo.nombre">
                               </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
+                          </div>
+                          <div class="col-md-4">
                               <mat-form-field appearance="legacy">
-                                <mat-label>Tipo de activo</mat-label>
-                                <mat-select requireds>
-                                  <mat-option [value]=""></mat-option>
-                                </mat-select>
+                                  <mat-label>Tipo de activo</mat-label>
+                                  <mat-select required name="ta"
+                                  #ta="ngModel"
+                                  [(ngModel)]="activofijo.tipoActivo">
+                                      <mat-option *ngFor="let tactivo of listaTipoActivo" 
+                                      [value]="tactivo">{{tactivo.nombre}}</mat-option>
+                                  </mat-select>
                               </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                <input matInput type="number" placeholder="Vida util" required>
-                              </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-4"></div><div class="col-md-4"></div>
+                          </div>
                           <div class="col-md-4">
                             <div mat-dialog-actions class="align-content-end">
-                              <button mat-button matStepperNext  class="btn btn-primary">Continuar</button>
+                                <button mat-button matStepperNext style="margin-top: -6px;" [disabled]="forma.invalid" type="submit" class="btn btn-primary">Guardar</button>
                             </div>
-                          </div>
                         </div>
-                        <div class="row" style="margin: 10px;">
-                        </div>
-                        <div class="row">
+                       </div>
+                      <div class="row" style="margin: 10px;"></div>
+                      <div class="row" *ngIf="!cargando && listaActivo.length > 0">
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header card-header-danger" style="text-align: center;">
-                                      <h4 class="card-title ">Detalles listados</h4>
+                                      <h4 class="card-title">Detalles listados</h4>
                                   </div>
                                   <div class="card-body">
                                       <div class="table-responsive">
                                           <table class="table">
-                                              <thead class=" text-primary">
+                                              <thead class="text-primary">
                                                   <th>
                                                       Activo
                                                   </th>
                                                   <th>
                                                       Tipo de activo
                                                   </th>
-                                                  <th>
-                                                      Vida util
-                                                  </th>
+                                                  <th>Seleccionar</th>
                                               </thead>
                                               <tbody>
-                                                  <tr>
+                                                  <tr *ngFor="let a of listaActivo | paginate: { itemsPerPage: 5, currentPage: page }">
+                                                      <td>{{a.nombre}}</td>
+                                                      <td>{{a.tipoActivo.nombre}}</td>
                                                       <td>
-                                                          
-                                                      </td>
-                                                      <td>
-                                                          
-                                                      </td>
-                                                      <td>
-                                                          
+                                                          <div mat-dialog-actions class="align-content-end">
+                                                              <button mat-button matStepperNext type="button" class="btn btn-primary" style="
+                                                              margin-top: -30px;" (click)="activoSelecionado(a)">Seleccionar</button>
+                                                          </div>
                                                       </td>
                                                   </tr>
                                               </tbody>
                                           </table>
                                           <div class="text-center">
-                                              <pagination-controls  previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                              <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
                                           </div>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>
-                  </form>
-                </mat-step>
-                <mat-step [stepControl]="secondFormGroup">
-                  <form>
-                    <ng-template matStepLabel>Adquisicion de Activo fijo</ng-template>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Nombre del activo" required>
-                        </mat-form-field>
+                      <div class="row">
+                          <div class="col-md-12">
+              
+                              <div class="card" *ngIf="!cargando && listaActivo.length === 0">
+                                  <mat-card>No hay datos</mat-card>
+                              </div>
+              
+                              <div class="text-center" *ngIf="cargando">
+                                  <mat-card class="alert alert-danger">
+                                      Cargando...
+                                      <mat-card-content>
+                                          <mat-icon class="fa-spin" >autorenew</mat-icon>
+                                      </mat-card-content>
+                                      Por favor espere!
+                                  </mat-card>
+                                  
+                              </div>
+              
+                          </div>
                       </div>
-                      <div class="col-md-4">
-                        <mat-form-field appearance="legacy">
-                          <mat-label>Fecha de inicio</mat-label>
-                          <input matInput [max]="maxDate" [matDatepicker]="picker" required
-                          name="fechaAdquisicion"
-                          #fechaAdquisicion="ngModel" [(ngModel)]="maxDate">
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                        <div class="col-md-4">
-                          <mat-form-field appearance="legacy">
-                            <mat-label>Tipo de adquisición</mat-label>
-                            <mat-select required
-                            name="tadq">
-                              <mat-option value="COMPRADO_NUEVO">Comprado / Nuevo</mat-option>
-                              <mat-option value="COMPRADO_USADO">Comprado / Usado</mat-option>
-                              <mat-option value="DONADO_NUEVO">Donado / Nuevo</mat-option>
-                              <mat-option value="DONADO_USADO">Donado / Usado</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Cantidad" required>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-4">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Precio por unidad" required>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-4">
-                        <mat-form-field class="example-full-width">
-                          <input matInput type="number" placeholder="(%) de recuperacion por unidad" required
-                          name="tInteres">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <mat-form-field appearance="legacy" >
-                          <mat-label>Departamento</mat-label>
-                          <mat-select required
-                          name="depto">
-                            <mat-option></mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-6">
-                        <mat-form-field appearance="legacy" >
-                          <mat-label>Unidad</mat-label>
-                          <mat-select required
-                          name="unidad">
-                            <mat-option></mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <mat-form-field appearance="fill">
-                          <mat-label>Carácteristica del activo</mat-label>
-                          <textarea matInput 
-                          name="caracteristica"></textarea>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6"></div>
-                      <div class="col-md-6">
-                        <div mat-dialog-actions class="align-content-end">
-                          <button mat-raised-button class="btn btn-danger">Cancelar</button>
-                          <button mat-button matStepperNext  class="btn btn-primary" type="submit" [mat-dialog-close]="">Guardar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </mat-step>
-              </mat-horizontal-stepper>
+                   </form>                
+                 </mat-step>
+                  <mat-step state="p2">
+                      <form (ngSubmit)="guardarAdquisicion(forma)" #forma="ngForm">
+                          <ng-template matStepLabel>Adquisicion de Activo fijo</ng-template>
+                          <div class="row">
+                              <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Nombre del responsable" required>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Nombre del activo" required
+                                  name="nombreA"
+                                  #nombreA="ngModel"
+                                  [(ngModel)]="activofijo.nombre">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-4">
+                                <mat-form-field appearance="legacy">
+                                  <mat-label>Fecha de adquisicion</mat-label>
+                                  <input matInput [max]="maxDate" [matDatepicker]="picker" required
+                                  name="fechaAdquisicion"
+                                  #fechaAdquisicion="ngModel" [(ngModel)]="adquisicionActivo.fecha">
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+                                <div class="col-md-4">
+                                  <mat-form-field appearance="legacy">
+                                    <mat-label>Tipo de adquisición</mat-label>
+                                    <mat-select required
+                                    name="tadq" #tadq="ngModel" [(ngModel)]="adquisicionActivo.tipoAdquisicion">
+                                      <mat-option value="COMPRADO_NUEVO">Comprado / Nuevo</mat-option>
+                                      <mat-option value="COMPRADO_USADO">Comprado / Usado</mat-option>
+                                      <mat-option value="DONADO_NUEVO">Donado / Nuevo</mat-option>
+                                      <mat-option value="DONADO_USADO">Donado / Usado</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput type="number" placeholder="Cantidad" required
+                                  name="cantidad"
+                                  #cantidad="ngModel" [(ngModel)]="cantidadadquiridad" min="1" max="100">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Precio por unidad" required
+                                  name="precio"
+                                  #precio="ngModel" [(ngModel)]="adquisicionActivo.precioUnidad">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput type="number" placeholder="Vida util" required
+                                  name="vidaUtil" min="1"
+                                  #vidaUtil="ngModel" [(ngModel)]="adquisicionActivo.vidaUtil">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <mat-form-field appearance="legacy" >
+                                  <mat-label>Unidad</mat-label>
+                                  <mat-select required (selectionChange)="unidadSeleccionada($event.value)"
+                                  name="uni">
+                                    <mat-option *ngFor="let unidad of listaUnidad"  [value]="unidad">{{unidad.nombre}}</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-6">
+                                <mat-form-field appearance="legacy" >
+                                  <mat-label>Departamento</mat-label>
+                                  <mat-select required (selectionChange)="departamentoSeleccionada($event.value)"
+                                  name="depto" #depto="ngModel"
+                                  [(ngModel)]="adquisicionActivo.departamento">
+                                    <mat-option *ngFor="let d of listaDepartamento"  [value]="d">{{d.nombre}}</mat-option>
+                                  </mat-select> 
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <mat-form-field appearance="fill">
+                                  <mat-label>Carácteristica del activo</mat-label>
+                                  <textarea matInput 
+                                  name="caracteristica"  #caracteristica="ngModel" [(ngModel)]="adquisicionActivo.descripcion"></textarea>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6"></div>
+                              <div class="col-md-6">
+                                <div mat-dialog-actions class="align-content-end">
+                                  <button mat-raised-button class="btn btn-danger">Cancelar</button>
+                                  <button mat-button matStepperNext  class="btn btn-primary" type="submit" [mat-dialog-close]="">Guardar</button>
+                                </div>
+                              </div>
+                            </div>
+                      </form>
+                  </mat-step>
+                </mat-horizontal-stepper>
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
-  </div>
-</form>

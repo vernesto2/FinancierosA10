@@ -19,6 +19,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCardModule,
     MatAutocompleteModule,
     MatExpansionModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatSliderModule,
@@ -63,6 +65,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCardModule,
     MatAutocompleteModule,
     MatExpansionModule,
+    MatCheckboxModule,
   ]
 })
 export class MaterialModule { }

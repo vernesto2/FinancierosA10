@@ -22,10 +22,11 @@ export class ActivoFijoListComponent implements OnInit {
       
     }
     let dialogref = this.dialog.open(ActivoFijoAddComponent, {});
-    const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
-      
-    });
     dialogref.afterClosed().subscribe( res => {});
+  }
+
+  filaSelecionada(){
+   
   }
 
 }

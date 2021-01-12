@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { PersonaNaturalModel } from 'app/models/personaNatural.model';
 import { Observable, throwError } from 'rxjs';
 import { EmpresaModel } from 'app/models/empresa.model';
+import { UsuarioModel } from 'app/models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class PersonaService {
 
   constructor(private http: HttpClient) { }
 
+  //EndPoint de Ubicacion y Departamento (Combos)
   listarDepartamento(): Observable<any> {
     return this.http.get(`${this.base_uri}/ubicacion/departamentos`, { observe: 'response' });
   }
@@ -22,6 +24,12 @@ export class PersonaService {
     return this.http.get(`${this.base_uri}/ubicacion/listamunicipios/${codigo}`, { observe: 'response' });
   }
 
+  deptoPorCodigo(codigo: string): Observable<any> {
+    //console.log(codigo);
+    return this.http.get(`${this.base_uri}/ubicacion/${codigo}`, { observe: 'response' });
+  }
+
+  //EndPoint de Persona Natural
   listarPersonas(): Observable<any> {
     return this.http.get(`${this.base_uri}/personanatural`, { observe: 'response' });
   }
@@ -34,11 +42,15 @@ export class PersonaService {
     return this.http.put(`${this.base_uri}/personanatural/${persona.nit}`, persona, { observe: 'response' });
   }
 
-  deptoPorCodigo(codigo: string): Observable<any> {
-    //console.log(codigo);
-    return this.http.get(`${this.base_uri}/ubicacion/${codigo}`, { observe: 'response' });
+  buscarPor(busqueda: any): Observable<any> {
+    return this.http.get(`${this.base_uri}/personanatural`, {observe: 'response'});
   }
 
+  buscarNIT(nit: string): Observable<any> {
+    return this.http.get(`${this.base_uri}/personanatural/nit/${nit}`, {observe: 'response'});
+  }
+
+  //EndPoint de Empresa
   listarEmpresa(): Observable<any> {
     return this.http.get(`${this.base_uri}/empresa`, {observe: 'response'});
   }
@@ -47,11 +59,16 @@ export class PersonaService {
     return this.http.post(`${this.base_uri}/empresa`, empresa, { observe: 'response' });
   }
 
-  buscarPor(busqueda: any): Observable<any> {
-    return this.http.get(`${this.base_uri}/personanatural`, {observe: 'response'});
+  //EndPoint de Usuario
+  agregarUsuario(usuario: UsuarioModel): Observable<any> {
+    return this.http.post(`${this.base_uri}/usuario`, usuario, {observe: 'response'});
   }
 
-  buscarNIT(nit: string): Observable<any> {
-    return this.http.get(`${this.base_uri}/personanatural/nit/${nit}`, {observe: 'response'});
+  listarUsuario(): Observable<any> {
+    return this.http.get(`${this.base_uri}/usuario`, {observe: 'response'});
+  }
+
+  editarUsuario(usuario: UsuarioModel): Observable<any> {
+    return this.http.put(`${this.base_uri}/usuario/${usuario.nit}`, usuario, {observe: 'response'});
   }
 }

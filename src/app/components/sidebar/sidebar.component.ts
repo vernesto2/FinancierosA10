@@ -15,6 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/clientes-persona', title: 'Clientes (Personas)',  icon: 'supervisor_account', class: '' },
     { path: '/clientes-empresa', title: 'Clientes (Empresas)',  icon: 'supervisor_account', class: '' },
     { path: '/activofijo', title: 'Activo Fijo',  icon: 'style', class: '' },
+    { path: '/usuario', title: 'Usuario',  icon: 'style', class: '' },
 ];
 
 @Component({
@@ -32,7 +33,7 @@ export class SidebarComponent implements OnInit {
       tipoUsuario: 'Admin'
     }
     for (let i = 0; i < ROUTES.length; i++) {
-      if (usuario.tipoUsuario == "Admin" && (i < 7)) {
+      if (usuario.tipoUsuario == "Admin" && (i < 8)) {
         this.menuItems.push(ROUTES[i]);
       }
     }

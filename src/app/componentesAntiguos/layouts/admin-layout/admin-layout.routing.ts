@@ -7,6 +7,7 @@ import { PrecreditoAddComponent } from 'app/vistas/precredito-add/precredito-add
 import { CreditoEmpresaAddComponent } from 'app/vistas/credito-empresa-add/credito-empresa-add.component';
 import { PersonaListComponent } from 'app/vistas/persona-list/persona-list.component';
 import { EmpresaListComponent } from 'app/vistas/empresa-list/empresa-list.component';
+import { UsuarioListComponent } from 'app/vistas/usuario-list/usuario-list.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      redirectTo: 'activofijo' }, //por defecto va mostrar esta ruta en caso que la url este vacia
@@ -17,4 +18,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'politicas',  component: PoliticasListComponent },
     { path: 'creditopersonal',  component: PrecreditoAddComponent },
     { path: 'creditoempresa',  component: CreditoEmpresaAddComponent },
+    { path: 'usuario',  component: UsuarioListComponent },
 ];

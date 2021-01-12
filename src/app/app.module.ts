@@ -40,6 +40,8 @@ import { EmpresaListComponent } from './vistas/empresa-list/empresa-list.compone
 import { PersonaListComponent } from './vistas/persona-list/persona-list.component';
 import { RazonesFinancierasComponent } from './vistas/razones-financieras/razones-financieras.component';
 import { RazonesComponent } from './reportes/razones/razones.component';
+import { UsuarioListComponent } from './vistas/usuario-list/usuario-list.component';
+import { UsuarioAddComponent } from './vistas/usuario-add/usuario-add.component';
 
 @NgModule({
   imports: [
@@ -77,6 +79,8 @@ import { RazonesComponent } from './reportes/razones/razones.component';
     PersonaListComponent,
     RazonesFinancierasComponent,
     RazonesComponent,
+    UsuarioListComponent,
+    UsuarioAddComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

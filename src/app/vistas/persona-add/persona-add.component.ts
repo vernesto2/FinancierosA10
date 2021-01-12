@@ -46,7 +46,7 @@ export class PersonaAddComponent implements OnInit {
     this.crearFormulario();
     this.listarDepartamentos();
     if (data != null) {
-      this.accion = 'Edicion';
+      this.accion = 'Edición';
       this.personaService.buscarNIT(data.nit).subscribe((persona: any) => {
         this.personaNatural = persona.body;
         //console.log(persona);

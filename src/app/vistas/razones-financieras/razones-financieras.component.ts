@@ -89,7 +89,22 @@ export class RazonesFinancierasComponent implements OnInit {
   }
 
   onCancelar() {
+    this.removerLocalStorage();
     this.dialogRef.close();
+  }
+
+  removerLocalStorage() {
+    localStorage.removeItem('liquidezCorriente');
+    localStorage.removeItem('razonRapida');
+    localStorage.removeItem('pruebaAcidicima');
+    localStorage.removeItem('capitalTrabajo');
+    localStorage.removeItem('pruebaAcidaDeudores');
+    localStorage.removeItem('razonDeudaAKAccionistas');
+    localStorage.removeItem('razonDeudaTAAT');
+    localStorage.removeItem('razonCargosdeIntFijos');
+    localStorage.removeItem('razonDeudaALPaKT');
+    localStorage.removeItem('proporcionACaK');
+    localStorage.removeItem('fecha');
   }
 
 }

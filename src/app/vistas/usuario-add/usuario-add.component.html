@@ -42,7 +42,7 @@
                                                     </th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let pn of listaPersona | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
+                                                    <tr *ngFor="let pn of listaPersona | paginate: { itemsPerPage: 5, currentPage: pageAdd }; let i = index">
                                                         <td>
                                                             {{pn.dui | dui}}
                                                         </td>
@@ -61,7 +61,7 @@
                                                 </tbody>
                                             </table>
                                             <div class="text-center">
-                                                <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                                <pagination-controls (pageChange)="pageAdd = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
                                             </div>
                                         </div>
                                         </mat-expansion-panel>
@@ -70,6 +70,18 @@
                                   </div>
 
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <mat-form-field appearance="standard">
+                                            <mat-label>Tipo de usuario</mat-label>
+                                            <mat-select required [disabled]="estado" name="tipo" #tipo="ngModel"
+                                                [(ngModel)]="usuario.tipo">
+                                                <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
+                                                <mat-option value="ASESOR">ASESOR</mat-option>
+                                                <mat-option value="COBRO">COBRO</mat-option>
+                                                <mat-option value="ENCARGADO_ACTIVO_FIJO">ENCARGADO DE ACTIVO FIJO</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
                                     <div class="col-md-6">
                                         <mat-form-field class="example-full-width" appearance="standard">
                                             <mat-label>Nombre de usuario</mat-label>
@@ -99,21 +111,6 @@
                                             <button mat-icon-button type="button" matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                             <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <mat-form-field appearance="standard">
-                                            <mat-label>Tipo de usuario</mat-label>
-                                            <mat-select required [disabled]="estado" name="tipo" #tipo="ngModel"
-                                                [(ngModel)]="usuario.tipo">
-                                                <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
-                                                <mat-option value="ASESOR">ASESOR</mat-option>
-                                                <mat-option value="COBRO">COBRO</mat-option>
-                                                <mat-option value="ENCARGADO_ACTIVO_FIJO">ENCARGADO DE ACTIVO FIJO</mat-option>
-                                            </mat-select>
                                         </mat-form-field>
                                     </div>
                                 </div>

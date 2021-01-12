@@ -29,7 +29,7 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                   <tr *ngFor="let p of listaUsuarios | paginate: { itemsPerPage: 5, currentPage: page }">
+                                   <tr *ngFor="let p of listaUsuarios | paginate: { itemsPerPage: 5, currentPage: pageList }">
                                       <td>
                                           {{p.nit | nit}}
                                       </td>
@@ -48,7 +48,7 @@
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                <pagination-controls (pageChange)="pageList = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
                             </div>
                         </div>
                     </div>

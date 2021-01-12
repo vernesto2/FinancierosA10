@@ -33,7 +33,7 @@ export class UsuarioAddComponent implements OnInit {
    nombreRepre = 'Nombre';
    listaPersona: any[];
    persona = new PersonaNaturalModel();
-   page = 1;
+   pageAdd = 1;
    hide = true;
    hide1 = true;
    valido = false;

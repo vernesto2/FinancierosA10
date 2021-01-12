@@ -13,7 +13,7 @@ export class UsuarioListComponent implements OnInit {
 
   listaUsuarios: any[];
   cargando = false;
-  page = 1; //variable que llevara el control de la pagina de la paginacion
+  pageList = 1; //variable que llevara el control de la pagina de la paginacion
 
   constructor(public dialog: MatDialog, public servicePersona: PersonaService) { }
 

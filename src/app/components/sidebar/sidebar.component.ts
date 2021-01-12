@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/clientes-persona', title: 'Clientes (Personas)',  icon: 'supervisor_account', class: '' },
     { path: '/clientes-empresa', title: 'Clientes (Empresas)',  icon: 'supervisor_account', class: '' },
     { path: '/activofijo', title: 'Activo Fijo',  icon: 'style', class: '' },
-    { path: '/usuario', title: 'Usuario',  icon: 'style', class: '' },
+    { path: '/usuario', title: 'Usuario',  icon: 'supervised_user_circle', class: '' },
 ];
 
 @Component({

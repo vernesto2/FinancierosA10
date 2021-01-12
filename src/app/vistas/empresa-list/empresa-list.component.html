@@ -42,15 +42,9 @@
                                                     {{pn.personaNatural.nombres}} {{pn.personaNatural.apellidos}}
                                                 </td>
                                                 <td>
-                                                    <button mat-icon-button color="primary">
-                                                        <mat-icon>remove_red_eye</mat-icon>
-                                                      </button>
-                                                      <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-                                                        <mat-icon>home</mat-icon>
-                                                      </button>
-                                                      <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
-                                                        <mat-icon>menu</mat-icon>
-                                                      </button>
+                                                    <button mat-icon-button type="button" (click)="openDialogEmpresa(pn)" color="info">
+                                                        <mat-icon>edit</mat-icon>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>

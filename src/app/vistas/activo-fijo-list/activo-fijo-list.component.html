@@ -1,137 +1,108 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <button mat-raised-button class="btn btn-primary" (click)="openDialogActivoFijo()">Agregar registro</button>
+            </div>
+        </div>
+        <div class="row" *ngIf="!cargando && listaAdquisicionActivo.length > 0">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger" style="text-align: center;">
+                        <h4 class="card-title">Detalles listados</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                    </th>
+                                    <th>
+                                        Codigo
+                                    </th>
+                                    <th>
+                                        Activo
+                                    </th>
+                                    <th>
+                                        Vida Util
+                                    </th>
+                                    <th>
+                                        Precio
+                                    </th> 
+                                    <th>
+                                        Tipo Adquisicion
+                                    </th> 
+                                    <th>
+                                        Acciones
+                                    </th>
+                                </thead>
+                                <tbody>
+                                   <tr *ngFor="let a of listaAdquisicionActivo | paginate: { itemsPerPage: 5, currentPage: page }">
+                                      <td style="text-align: center;">
+                                        <section class="example-section">
+                                            <mat-checkbox (click)="checkuncheckall(a)" class="example-margin"></mat-checkbox>
+                                        </section>
+                                      </td>
+                                      <td style="text-align: center;">
+                                        {{a.codigoGenerado}}  
+                                      </td>
+                                      <td style="text-align: center;">
+                                        {{a.nombre}}  
+                                      </td>
+                                      <td style="text-align: center;">
+                                        {{a.vidaUtil}} 
+                                      </td>
+                                      <td style="text-align: center;">
+                                        {{a.precioUnidad}}  
+                                      </td>
+                                      <td style="text-align: center;">
+                                        {{a.tipoAdquisicion}}   
+                                      </td>
+                                      <td>
+                                        <button mat-icon-button color="primary">
+                                            <mat-icon>remove_red_eye</mat-icon>
+                                          </button>
+                                      </td>
+                                   </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <p>&nbsp;&nbsp;&nbsp;<button mat-icon-button color="warn">
+                                        <mat-icon>subdirectory_arrow_right</mat-icon>
+                                      </button> Seleccione para dar de baja a los activos fijos</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <button mat-raised-button class="btn btn-danger">Dar de baja</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <mat-tab-group animationDuration="1000ms">
-                    <mat-tab label="Listado de activos adquiridos">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header card-header-danger" style="text-align: center;">
-                                        <h4 class="card-title">Detalles listados</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead class="text-primary">
-                                                    <th>
-                                                        Fecha de adquisición
-                                                    </th>
-                                                    <th>
-                                                        Activo
-                                                    </th>
-                                                    <th>
-                                                        Precio por unidad
-                                                    </th>
-                                                    <th>
-                                                        Tipo de adquisición
-                                                    </th>
-                                                    <th>
-                                                        Vida util
-                                                    </th>
-                                                    <th>
-                                                        Acciones
-                                                    </th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>
-                                                            <button mat-icon-button color="primary">
-                                                                <mat-icon>remove_red_eye</mat-icon>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="Listado de activos depreciados o amortizados">
-                        <div style="margin: 5px;"></div>
-                        <mat-accordion>
-                            <mat-expansion-panel (opened)="true" (closed)="false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title class="btn btn-warning">
-                                        Activos que se le aplica la depreciacion
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <!--Se ponen estas lineas para indicar que usaremos angular en este formulario-->
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                        <div style="margin: 5px;"></div>
-                    </mat-tab>
-                    <mat-tab label="Listado de activos que se le han dado de baja">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header card-header-danger" style="text-align: center;">
-                                        <h4 class="card-title">Detalles listados</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead class="text-primary">
-                                                    <th>
-                                                        Fecha de adquisición
-                                                    </th>
-                                                    <th>
-                                                        Activo
-                                                    </th>
-                                                    <th>
-                                                        Precio por unidad
-                                                    </th>
-                                                    <th>
-                                                        Tipo de adquisición
-                                                    </th>
-                                                    <th>
-                                                        Vida util
-                                                    </th>
-                                                    <th>
-                                                        Acciones
-                                                    </th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>
-                                                            <button mat-icon-button color="primary">
-                                                                <mat-icon>remove_red_eye</mat-icon>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="text-center">
-                                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
+
+                <div class="card" *ngIf="!cargando && listaAdquisicionActivo.length === 0">
+                    <mat-card>No hay datos</mat-card>
+                </div>
+
+                <div class="text-center" *ngIf="cargando">
+                    <mat-card class="alert alert-danger">
+                        Cargando...
+                        <mat-card-content>
+                            <mat-icon class="fa-spin" >autorenew</mat-icon>
+                        </mat-card-content>
+                        Por favor espere!
+                    </mat-card>
+                    
+                </div>
+
             </div>
         </div>
     </div>
-</div>
+  </div>

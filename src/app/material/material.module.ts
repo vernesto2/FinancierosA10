@@ -20,6 +20,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 @NgModule({
@@ -45,6 +47,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatAutocompleteModule,
     MatExpansionModule,
     MatButtonToggleModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatSliderModule,
@@ -66,6 +69,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatAutocompleteModule,
     MatExpansionModule,
     MatButtonToggleModule,
+    MatCheckboxModule,
   ]
 })
 export class MaterialModule { }

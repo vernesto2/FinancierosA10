@@ -37,6 +37,7 @@ export class EmpresaAddComponent implements OnInit {
   editarCampos = false;
   editar = false;
   busqueda = '';
+  accion = 'Registro';
 
   //filtramos los representantes
   repre = new PersonaNaturalModel();
@@ -51,15 +52,73 @@ export class EmpresaAddComponent implements OnInit {
     this.crearFormulario();
 
     if (data != null) {
-      this.editar = true;
-      this.empresa = data;
-      this.editarCampos = true;
+      console.log(data);
+      this.accion = 'Edición';
+        this.empresa = data;
+        console.log();
+        this.repre = data.personaNatural;
+        this.duiRepre = this.repre.dui;
+        this.nombreRepre = this.repre.nombres + ' ' + this.repre.apellidos;
+        //console.log(persona);
+        this.muniSel = this.empresa.persona.direccion.ubicacion;
+        this.editar = true;
+        this.valido = false;
+        this.editarCampos = true;
+
+        //saco los 2 numeros del codigo para determinar el depto
+        this.personaService.deptoPorCodigo(this.empresa.persona.direccion.ubicacion.codigo.toString().substring(0, 2)).subscribe((depto: any) => {
+          this.deptoSeleccionado(depto.body);
+          this.deptoSel = depto.body;
+          //console.log(this.deptoSel);
+          this.llenarFormulario();
+        });
+        this.listaTel = this.empresa.persona.telefonos;
+        for (let i = 0; i < this.listaTel.length; i++) {
+          let tel = new TelModel();
+          tel.telefono = this.listaTel[i].id.telefono;
+          tel.tipoContacto = this.listaTel[i].tipoContacto;
+          this.listaTelefonos.push(tel);
+        }
+        this.editarCampos = false;
     }
   }
 
   ngOnInit(): void {
     this.llenarRepresentantes();
     this.listarDepartamentos();
+  }
+
+  //Con estas funciones comparamos y seteamos un valor a un SELECT
+  compararDeptos(o1: any, o2: any): boolean {
+    return o1.codigo === o2.codigo;
+  }
+
+  compararMuni(o1: any, o2: any): boolean {
+    return o1.codigo === o2.codigo;
+  }
+
+  llenarFormulario() {
+    // si usamos el .setValue tenemos que mandar el caparazon del obj completo en cambio si usamos
+    // .reset no importa sino va completa la estructura del obj
+    this.forma = this.fb.group({
+      nit: [{value: this.empresa.nit, disabled: true}, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
+
+      direccion: [{value: this.empresa.persona.direccion.direccion, disabled: true}, [Validators.required]],
+      ubicacion: [{value: this.empresa.persona.direccion.ubicacion, disabled: true}, [Validators.required]],
+
+      nombre: [{value: this.empresa.nombre, disabled: true}, [Validators.required]],
+
+      telefonos: this.fb.array([]),
+    }, {
+      validators: []
+    });
+
+    for (let i = 0; i < this.listaTelefonos.length; i++) {
+      this.telefonos.push(this.fb.group({
+        'tipoContacto': this.listaTelefonos[i].tipoContacto,
+        'telefono': this.listaTelefonos[i].telefono
+      }));
+    }
   }
 
   crearFormulario() {
@@ -109,7 +168,7 @@ export class EmpresaAddComponent implements OnInit {
         listaCel.push(tel);
       }
       this.persona.telefonos = listaCel;
-      //console.log(listaCelular);
+      console.log(listaCelular);
 
       //empresa
       this.empresa.nit = this.forma.get('nit').value;
@@ -149,11 +208,18 @@ export class EmpresaAddComponent implements OnInit {
     } else {
       //console.log(this.personaNatural);
       if (this.editar) { //si es verdadero EDITAMOS
-
+        this.separarModelos();
+        this.personaService.editarEmpresa(this.empresa).subscribe((res: any) => {
+          if (res.status == 200) {
+            console.log(res.body);
+            this.showNotification('top', 'right', 'Modificado Correctamente.!', 'save', 'success');
+            this.onAgregado1.emit();
+          } else {
+            this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+          }
+        });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
-        //console.log(this.repre);
-        //console.log(this.empresa);
         this.personaService.agregarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
             this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
@@ -217,7 +283,6 @@ export class EmpresaAddComponent implements OnInit {
       })
     );
   }
-
 
   eliminarTelefonos(i: number) {
     this.telefonos.removeAt(i);

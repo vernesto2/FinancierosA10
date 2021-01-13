@@ -59,6 +59,10 @@ export class PersonaService {
     return this.http.post(`${this.base_uri}/empresa`, empresa, { observe: 'response' });
   }
 
+  editarEmpresa(empresa: EmpresaModel): Observable<any> {
+    return this.http.put(`${this.base_uri}/empresa/${empresa.nit}`, empresa, { observe: 'response' });
+  }
+
   //EndPoint de Usuario
   agregarUsuario(usuario: UsuarioModel): Observable<any> {
     return this.http.post(`${this.base_uri}/usuario`, usuario, {observe: 'response'});

@@ -1,61 +1,58 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
-                <button mat-raised-button class="btn btn-primary" (click)="openDialogPoliticas()">Agregar registro</button>
-            </div>
-        </div>
-        <div class="row" *ngIf="!cargando && listaPoliticas.length > 0">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger" style="text-align: center;">
-                        <h4 class="card-title">Detalles listados</h4>
+                        <h4 class="card-title">Proyección de cuotas</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Tipo de crédito
+                                        Número de cuota
                                     </th>
                                     <th>
-                                        Días de cobro
+                                        Cuota a pagar
                                     </th>
                                     <th>
-                                        Tasa de interés
+                                        Interés
                                     </th>
                                     <th>
-                                        Cuota por mora
+                                        Capital amortizado
                                     </th> 
                                     <th>
-                                        Acciones
+                                        Capital vivo
                                     </th>
                                 </thead>
                                 <tbody>
-                                   <tr *ngFor="let p of listaPoliticas | paginate: { itemsPerPage: 5, currentPage: page }">
+                                    <tr>
+                                        <td>0</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>$ {{montoFijo}}</td>
+                                    </tr>
+                                   <tr *ngFor="let p of listaCuotas; let i = index ">
                                       <td>
-                                          {{p.tipoCredito}}
+                                         {{i+1}}
                                       </td>
                                       <td style="text-align: center;">
-                                          {{p.diasCobro}}
+                                        $ {{(p.capitalAmortizado + p.interes) | number: '.0-2'}}
                                       </td>
                                       <td style="text-align: center;">
-                                        {{p.tasaInteres}}%
+                                        $ {{p.interes | number: '.0-2'}}
                                     </td>
                                       <td style="text-align: center;">
-                                          $ {{p.tasaMora}}
+                                        $ {{p.capitalAmortizado | number: '.0-2'}}
                                       </td>
                                       <td>
-                                        <button mat-icon-button color="primary" (click)="openDialogPoliticas(p)">
-                                            <mat-icon>remove_red_eye</mat-icon>
-                                          </button>
+                                        $ {{(monto-((i+1)*p.capitalAmortizado)) | number: '.0-2'}}
                                       </td>
                                    </tr>
                                 </tbody>
                             </table>
-                            <div class="text-center">
-                                <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,8 +61,13 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="card" *ngIf="!cargando && listaPoliticas.length === 0">
-                    <mat-card>No hay datos</mat-card>
+                <div class="text-center" *ngIf="!cargando && listaCuotas.length === 0">
+                    <mat-card class="alert alert-warning">
+                        No hay datos!
+                        <mat-card-content>
+                            <mat-icon>warning</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
 
                 <div class="text-center" *ngIf="cargando">
@@ -76,7 +78,6 @@
                         </mat-card-content>
                         Por favor espere!
                     </mat-card>
-                    
                 </div>
 
             </div>

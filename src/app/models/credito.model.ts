@@ -2,7 +2,6 @@ import { CreditoPersonalModel } from './creditoPersonal.model';
 import { CreditoEmpresaModel } from './creditoEmpresa.model';
 import { PoliticaModel } from './politica.model';
 import { BienGarantiaModel } from "./bienGarantia.model";
-import { CobrosModel } from "./cobros.model";
 import { UsuarioModel } from './usuario.model';
 
 export class CreditoModel{
@@ -12,10 +11,10 @@ export class CreditoModel{
     fechaCancelado: Date;
     fechaSolicitud: Date;
     monto: number;
-    para: string;
-    cobro: Array<CobrosModel>;
+    tiempo: number;
     puntos: number;
-    bienGarantias: Array<BienGarantiaModel>;
+    //bienGarantias: Array<BienGarantiaModel>;
+    bienGarantia = new BienGarantiaModel();
     politica: PoliticaModel;
     usuario: UsuarioModel;
     creditoEmpresa: CreditoEmpresaModel;

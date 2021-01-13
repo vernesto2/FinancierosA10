@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
 
-        <form [formGroup]="forma" (ngSubmit)="guardar()">
+        <form (ngSubmit)="guardarCP(forma)" #forma="ngForm">
           <mat-vertical-stepper [linear]="false" #stepper>
 
             <mat-step label="pa1" state="p1">
@@ -14,29 +14,40 @@
                     <div class="col-md-3">
                       <mat-form-field appearance="standard">
                         <mat-label>Tipo de crédito</mat-label>
-                        <mat-select required>
+                        <mat-select required (selectionChange)="seleccionarTipo($event.value)">
                           <mat-option value="HIPOTECARIO">Hipotecario</mat-option>
-                          <mat-option value="HIPOTECARIO">Consumo</mat-option>
+                          <mat-option value="CONSUMO">Consumo</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
 
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Monto solicitado" type="number" required>
+                        <input matInput placeholder="Monto solicitado" type="number" required
+                        name="monto"
+                        #monto="ngModel"
+                        [(ngModel)]="credito.monto">
                       </mat-form-field>
                     </div>
 
                     <div class="col-md-2">
                       <mat-form-field appearance="standard">
                         <mat-label>Tiempo</mat-label>
-                        <input matInput placeholder="Tiempo en meses">
+                        <input matInput placeholder="Tiempo en meses" required
+                        (keyup)="calcular($event.target.value)"
+                        name="tiempo"
+                        #tiempo="ngModel"
+                        [(ngModel)]="credito.tiempo">
                       </mat-form-field>
                     </div>
+                    
                     <div class="col-md-3">
                       <mat-form-field appearance="standard">
-                        <mat-label>Fecha de solicitud</mat-label>
-                        <input matInput [matDatepicker]="picker">
+                        <mat-label>Fecha de inicio</mat-label>
+                        <input matInput [matDatepicker]="picker"
+                        name="fecha" disabled
+                        #fecha="ngModel"
+                        [(ngModel)]="credito.fechaAprobacion">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
@@ -45,22 +56,22 @@
                   <div class="row">
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Cuota Mensual">
+                        <input matInput placeholder="Cuota Mensual" disabled>
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Intereses">
+                        <input matInput placeholder="Intereses" disabled>
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Capital">
+                        <input matInput placeholder="Capital" disabled>
                       </mat-form-field>
                     </div>
 
                     <div class="col-md-2" style="margin-top: 12px;">
-                      <button mat-raised-button type="button" color="primary">Proyección <mat-icon>trending_up</mat-icon></button>
+                      <button mat-raised-button type="button" [disabled]="activarProyeccion" color="primary" (click)="openDialogProyecciones()">Proyección <mat-icon>trending_up</mat-icon></button>
                     </div>
                   </div>
                 </div>
@@ -75,18 +86,9 @@
             <mat-step label="pa2" state="p2">
               <div class="card">
                 <div class="card-body">
-                  <ng-template matStepLabel>Solicitud de Crédito</ng-template>
+                  <ng-template matStepLabel>Formulario de Crédito</ng-template>
                   <div class="row">
                     <div class="col-md-3">
-                      <mat-form-field class="example-full-width" appearance="standard">
-                        <mat-label>Buscar cliente por DUI</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{option.name}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
                     </div>
 
                     <div class="col-md-4">
@@ -103,31 +105,42 @@
                       </mat-form-field>
                     </div>
 
-                    <div class="col-md-3">
-                      <mat-form-field class="example-full-width" appearance="standard">
-                        <mat-label>Ocupación</mat-label>
-                        <input matInput type="text" required>
-                      </mat-form-field>
-                    </div>
-
                   </div>
                   <div class="row">
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
+                        <mat-label>Ocupación</mat-label>
+                        <input matInput type="text" required
+                        name="ocupacion"
+                        #ocupacion="ngModel"
+                        [(ngModel)]="ingresos.ocupacion">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Ingresos totales ($)</mat-label>
-                        <input matInput type="number" required>
+                        <input matInput type="number" required
+                        name="ingresost"
+                        #ingresost="ngModel"
+                        [(ngModel)]="ingresos.ingresosTotales">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Otros ingresos ($)</mat-label>
-                        <input matInput type="number" required>
+                        <input matInput type="number" required
+                        name="otrosingresos"
+                        #otrosingresos="ngModel"
+                        [(ngModel)]="ingresos.otrosIngresos">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Egresos totales ($)</mat-label>
-                        <input matInput type="number" required>
+                        <input matInput type="number" required
+                        name="egresos"
+                        #egresos="ngModel"
+                        [(ngModel)]="ingresos.egreso">
                       </mat-form-field>
                     </div>
                   </div>
@@ -187,15 +200,6 @@
                   <div [hidden]="fiador">
                     <div class="row">
                       <div class="col-md-3">
-                        <mat-form-field class="example-full-width" appearance="standard">
-                          <mat-label>Buscar FIADOR por DUI</mat-label>
-                          <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                              {{option.name}}
-                            </mat-option>
-                          </mat-autocomplete>
-                        </mat-form-field>
                       </div>
                       <div class="col-md-4">
                         <mat-form-field class="example-full-width" appearance="standard">
@@ -206,7 +210,10 @@
                       <div class="col-md-3">
                         <mat-form-field class="example-full-width" appearance="standard">
                           <mat-label>Ocupación</mat-label>
-                          <input matInput type="text" required>
+                          <input matInput type="text" required
+                          name="ocupacion"
+                          #ocupacion="ngModel"
+                         [(ngModel)]="creditoPersonal.garantiaFiador.ingresoEgreso.ocupacion">
                         </mat-form-field>
                       </div>
                     </div>
@@ -214,19 +221,28 @@
                       <div class="col-md-3">
                         <mat-form-field class="example-full-width" appearance="standard">
                           <mat-label>Ingresos totales ($)</mat-label>
-                          <input matInput type="number" required>
+                          <input matInput type="number" required
+                          name="ingresostf"
+                          #ingresostf="ngModel"
+                         [(ngModel)]="creditoPersonal.garantiaFiador.ingresoEgreso.ingresosTotales">
                         </mat-form-field>
                       </div>
                       <div class="col-md-3">
                         <mat-form-field class="example-full-width" appearance="standard">
                           <mat-label>Otros ingresos ($)</mat-label>
-                          <input matInput type="number" required>
+                          <input matInput type="number" required
+                          name="otrosingresosf"
+                          #otrosingresosf="ngModel"
+                         [(ngModel)]="creditoPersonal.garantiaFiador.ingresoEgreso.otrosIngresos">
                         </mat-form-field>
                       </div>
                       <div class="col-md-3">
                         <mat-form-field class="example-full-width" appearance="standard">
                           <mat-label>Egresos totales ($)</mat-label>
-                          <input matInput type="number" required>
+                          <input matInput type="number" required
+                          name="egresos"
+                          #egresos="ngModel"
+                         [(ngModel)]="creditoPersonal.garantiaFiador.ingresoEgreso.egreso">
                         </mat-form-field>
                       </div>
                     </div>
@@ -238,7 +254,10 @@
                       <div class="col-md-3">
                         <mat-form-field appearance="standard">
                           <mat-label>Tipo de bien</mat-label>
-                          <mat-select required>
+                          <mat-select required
+                          name="tipobien"
+                          #tipobien="ngModel"
+                         [(ngModel)]="credito.bienGarantia.tipoBien">
                             <mat-option value="HIPOTECARIO">Terreno</mat-option>
                             <mat-option value="HIPOTECARIO">Mobiliario</mat-option>
                           </mat-select>
@@ -247,7 +266,10 @@
                       <div class="col-md-3">
                         <mat-form-field class="example-full-width" appearance="standard">
                           <mat-label>valorado en ($)</mat-label>
-                          <input matInput type="number" required>
+                          <input matInput type="number" required
+                          name="tipobien"
+                          #tipobien="ngModel"
+                         [(ngModel)]="credito.bienGarantia.valoradoEn">
                         </mat-form-field>
                       </div>                      
                     </div>
@@ -255,7 +277,10 @@
                         <div class="col-md-6">
                           <mat-form-field appearance="fill">
                             <mat-label>Descripción</mat-label>
-                            <textarea matInput></textarea>
+                            <textarea matInput required
+                            name="tipobien"
+                            #tipobien="ngModel"
+                            [(ngModel)]="credito.bienGarantia.descripcion"></textarea>
                           </mat-form-field>
                         </div>
                       </div>

@@ -43,6 +43,7 @@ import { RazonesComponent } from './reportes/razones/razones.component';
 import { UsuarioListComponent } from './vistas/usuario-list/usuario-list.component';
 import { UsuarioAddComponent } from './vistas/usuario-add/usuario-add.component';
 import { LoginComponent } from './vistas/login/login.component';
+import { ProyeccionesComponent } from './vistas/proyecciones/proyecciones.component';
 
 @NgModule({
   imports: [
@@ -83,6 +84,7 @@ import { LoginComponent } from './vistas/login/login.component';
     UsuarioListComponent,
     UsuarioAddComponent,
     LoginComponent,
+    ProyeccionesComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

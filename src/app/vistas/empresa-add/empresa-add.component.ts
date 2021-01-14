@@ -168,7 +168,7 @@ export class EmpresaAddComponent implements OnInit {
         listaCel.push(tel);
       }
       this.persona.telefonos = listaCel;
-      console.log(listaCelular);
+      console.log(listaCel);
 
       //empresa
       this.empresa.nit = this.forma.get('nit').value;
@@ -196,22 +196,22 @@ export class EmpresaAddComponent implements OnInit {
     if (value.length >= 3) {
       this.personaService.buscarPor(value).subscribe((lista: any) => {
         this.listaRepresentante = lista.body;
-        console.log(this.listaRepresentante);
+        //console.log(this.listaRepresentante);
       });
-      console.log(value);
+      //console.log(value);
     }
   }
 
   guardar() {
     if (this.forma.invalid) {
-      console.log('Campos invalidos');
+      this.showNotification('bottom', 'right', 'Registro cancelado!', 'cancel', 'warning');
     } else {
       //console.log(this.personaNatural);
       if (this.editar) { //si es verdadero EDITAMOS
         this.separarModelos();
         this.personaService.editarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
-            console.log(res.body);
+            //console.log(res);
             this.showNotification('top', 'right', 'Modificado Correctamente.!', 'save', 'success');
             this.onAgregado1.emit();
           } else {

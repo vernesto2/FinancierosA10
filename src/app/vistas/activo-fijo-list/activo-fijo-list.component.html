@@ -37,10 +37,10 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                   <tr *ngFor="let a of listaAdquisicionActivo | paginate: { itemsPerPage: 5, currentPage: page }">
+                                   <tr *ngFor="let a of listaAdquisicionActivo | paginate: { itemsPerPage: 5, currentPage: page }; let i= index">
                                       <td style="text-align: center;">
                                         <section class="example-section">
-                                            <mat-checkbox (click)="checkuncheckall(a)" class="example-margin"></mat-checkbox>
+                                            <mat-checkbox (change)="checkuncheckall(a,$event,i)" class="example-margin"></mat-checkbox>
                                         </section>
                                       </td>
                                       <td style="text-align: center;">
@@ -76,7 +76,16 @@
                                       </button> Seleccione para dar de baja a los activos fijos</p>
                                 </div>
                                 <div class="col-md-2">
-                                    <button mat-raised-button class="btn btn-danger">Dar de baja</button>
+                                    <button mat-raised-button class="btn btn-danger" (click)="openDialogDetalleBaja()">Dar de baja</button>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <p> Ver activos 
+                                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                                        <mat-button-toggle value="bold" (click)="disponible()" >Disponible</mat-button-toggle>
+                                        <mat-button-toggle value="italic" (click)="baja()" >De baja</mat-button-toggle>
+                                      </mat-button-toggle-group>
+                                    </p>
                                 </div>
                             </div>
                         </div>

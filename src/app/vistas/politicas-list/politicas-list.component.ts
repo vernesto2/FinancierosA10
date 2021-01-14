@@ -25,7 +25,6 @@ export class PoliticasListComponent implements OnInit {
     this.servicePoliticas.listarPoliticas().subscribe((res: any) => {
       this.listaPoliticas = res.body;
       this.cargando = false;
-      
     })
   }
 

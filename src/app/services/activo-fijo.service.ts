@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { AdquisicionActivoModel } from 'app/models/adquisicionActivo.model';
+import { BasePortalOutlet } from '@angular/cdk/portal';
+import { BajaActivoModel } from 'app/models/bajaActivo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,10 @@ export class ActivoFijoService {
     return this.http.post(`${this.base_uri}/activofijo`, activo,{observe: 'response'});
   }
 
+  bajaActivo(baja: BajaActivoModel): Observable<any>  {
+    return this.http.post(`${this.base_uri}/bajaactivofijo`, baja,{observe: 'response'});
+  }
+ 
   agregarAdquisicionActivo(adquisicion: AdquisicionActivoModel): Observable<any>  {
     return this.http.post(`${this.base_uri}/adquisicionactivofijo`, adquisicion,{observe: 'response'});
   }

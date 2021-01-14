@@ -26,6 +26,7 @@ export class ActivoFijoAddComponent implements OnInit {
   activofijo=new ActivoFijoModel();
   adquisicionActivo= new AdquisicionActivoModel();
   nombreactivo:string;
+  page=1;
   //combox
   listaDepartamento: any[];
   listaActivo: any[];

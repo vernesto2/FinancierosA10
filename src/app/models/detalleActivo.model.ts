@@ -5,7 +5,8 @@ import { DetalleActivoPKModel } from "./detalleActivoPK.model";
 export class DetalleActivoModel {
     id: DetalleActivoPKModel;
     precio: number;
-    codigoGenerado: number;
-    adquisicionActivoFijo: AdquisicionActivoModel;
-    bajaActivoFijo: BajaActivoModel;
+    nombre: string;
+    codigoGenerado: string;
+    idAdquisicion: number;
+    correlativo:number;
 }

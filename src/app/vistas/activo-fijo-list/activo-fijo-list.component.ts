@@ -1,10 +1,13 @@
-import { Router, NavigationEnd } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivoFijoService } from 'app/services/activo-fijo.service';
 import { ActivoFijoAddComponent } from '../../vistas/activo-fijo-add/activo-fijo-add.component';
-import { DetalleActivoModel } from 'app/models/detalleActivo.model';
 import { detalleAModel } from 'app/models/detalleAct.model';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { Output } from '@angular/core';import { DetalleBajaActivoComponent } from '../detalle-baja-activo/detalle-baja-activo.component';
+import { DetalleActivoPKModel } from 'app/models/detalleActivoPK.model';
+import { DetalleActivoModel } from 'app/models/detalleActivo.model';
+;
 
 @Component({
   selector: 'app-activo-fijo-list',
@@ -13,32 +16,39 @@ import { detalleAModel } from 'app/models/detalleAct.model';
 })
 export class ActivoFijoListComponent implements OnInit {
   cargando = false;
-  arrayDetalleActivo: Array<DetalleActivoModel>;
+  arrayDetalleActivo: DetalleActivoModel[] = [];
   listaAdquisicionActivo: any[];
-  array: Array<string>;
+  codigoGenerado: string;
+  page = 1;
   constructor(public dialog: MatDialog, public servicioDetalleAdquisicion: ActivoFijoService) {
   }
 
   ngOnInit(): void {
     this.llenarAdquisicionActivo();
   }
-  checkuncheckall(a:DetalleActivoModel)
+  checkuncheckall(a:DetalleActivoModel,e,i:number)
   {
-    /*if(this.array==null && this.arrayDetalleActivo==null){
-      this.array.push(a.codigoGenerado);
-      this.arrayDetalleActivo.push(a);
-    }
-    if(this.array.indexOf(a.codigoGenerado)==-1){
-      this.array.push(a.codigoGenerado);
-      this.arrayDetalleActivo.push(a);
+    let idPK= new DetalleActivoPKModel();
+    let det= new DetalleActivoModel();
+    det.codigoGenerado=a.codigoGenerado;
+    det.nombre=a.nombre;
+    det.idAdquisicion=a.idAdquisicion;
+    det.correlativo=a.correlativo;
+    idPK.idAdquisicion=a.idAdquisicion;
+    idPK.correlativo=a.correlativo;
+    det.id=idPK;
+    det.precio=0.0;
+    if(e.checked){
+      this.arrayDetalleActivo.push(det);
     }else{
-      this.array.splice(this.array.push(a.codigoGenerado),1);
-    }*/
-    console.log(a.codigoGenerado);
+      this.arrayDetalleActivo.splice(i,1);
+    }
     console.log("Separar");
-    console.log(JSON.stringify(a));
-
+    console.log(JSON.stringify(this.arrayDetalleActivo));
   } 
+  detalledebaja(){
+    this.arrayDetalleActivo;
+  }
   llenarAdquisicionActivo() {
     this.cargando = true;
     this.servicioDetalleAdquisicion.listarAdquisicion().subscribe((listaA: any) => {
@@ -46,7 +56,20 @@ export class ActivoFijoListComponent implements OnInit {
       this.cargando = false;
     })
   } 
-
+  openDialogDetalleBaja(){
+    const data={
+      onAgrego: this.onAgrego,
+    }
+    let dialogref = this.dialog.open(DetalleBajaActivoComponent, {data: this.arrayDetalleActivo});
+    const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
+      this.onAgrego();
+    });
+    dialogref.beforeClosed().subscribe( res => {});
+  }
+ onAgrego(){
+    this.llenarAdquisicionActivo() ;
+  }
+  
   openDialogActivoFijo() {
     const data = {
       
@@ -56,6 +79,14 @@ export class ActivoFijoListComponent implements OnInit {
       
     });
     dialogref.afterClosed().subscribe( res => {});
+  }
+
+  disponible(){
+    this.llenarAdquisicionActivo() ;
+  }
+
+  baja(){
+
   }
 
 }

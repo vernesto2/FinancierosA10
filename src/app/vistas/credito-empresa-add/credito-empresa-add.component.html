@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
 
-        <form [formGroup]="forma" (ngSubmit)="guardar()">
+        <form (ngSubmit)="guardarCE(forma)" #forma="ngForm">
           <mat-vertical-stepper [linear]="false" #stepper>
 
             <mat-step label="pa1" state="p1">
@@ -14,7 +14,8 @@
                     <div class="col-md-3">
                       <mat-form-field appearance="standard">
                         <mat-label>Tipo de crédito</mat-label>
-                        <mat-select required>
+                        <mat-select required
+                        >
                           <mat-option value="HIPOTECARIO">Hipotecario</mat-option>
                           <mat-option value="HIPOTECARIO">Consumo</mat-option>
                         </mat-select>

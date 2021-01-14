@@ -1,9 +1,13 @@
+import { EmpresaModel } from 'app/models/empresa.model';
+import { CreditoEmpresaModel } from './../../models/creditoEmpresa.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RazonesModel } from 'app/models/razones.model';
 import { Observable } from 'rxjs';
 import { RazonesFinancierasComponent } from '../razones-financieras/razones-financieras.component';
+import { CreditoModel } from 'app/models/credito.model';
+import { CreditosService } from 'app/services/creditos.service';
 
 @Component({
   selector: 'app-credito-empresa-add',
@@ -11,6 +15,10 @@ import { RazonesFinancierasComponent } from '../razones-financieras/razones-fina
   styleUrls: ['./credito-empresa-add.component.css']
 })
 export class CreditoEmpresaAddComponent implements OnInit {
+  creditoempresa = new CreditoEmpresaModel();
+  credito = new CreditoModel();
+  empresa = new EmpresaModel();
+
   forma: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -19,17 +27,10 @@ export class CreditoEmpresaAddComponent implements OnInit {
   hipotecario = true;
   fiador = true;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder) { }
+  constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCE: CreditosService) { }
 
   ngOnInit(): void {
     this.crearFormuario();
-
-    this.firstFormGroup = this.fb.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this.fb.group({
-      secondCtrl: ['', Validators.required]
-    });
 
   }
   cambioFiador() {
@@ -50,7 +51,7 @@ export class CreditoEmpresaAddComponent implements OnInit {
     });
   }
 
-  guardar() { }
+  guardarCE() { }
 
   openDialogRazones(razones?: RazonesModel) {
     let dialogref = this.dialog.open(RazonesFinancierasComponent, { });

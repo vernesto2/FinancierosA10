@@ -19,16 +19,13 @@
                                         Tipo de crédito
                                     </th>
                                     <th>
-                                        Tipo de cliente
-                                    </th>
-                                    <th>
                                         Días de cobro
                                     </th>
                                     <th>
                                         Tasa de interés
                                     </th>
                                     <th>
-                                        Interés por mora
+                                        Cuota por mora
                                     </th> 
                                     <th>
                                         Acciones
@@ -40,16 +37,13 @@
                                           {{p.tipoCredito}}
                                       </td>
                                       <td style="text-align: center;">
-                                          {{p.tipoPersona}}
-                                      </td>
-                                      <td style="text-align: center;">
                                           {{p.diasCobro}}
                                       </td>
                                       <td style="text-align: center;">
                                         {{p.tasaInteres}}%
                                     </td>
                                       <td style="text-align: center;">
-                                          {{p.tasaMora}}%
+                                          $ {{p.tasaMora}}
                                       </td>
                                       <td>
                                         <button mat-icon-button color="primary" (click)="openDialogPoliticas(p)">

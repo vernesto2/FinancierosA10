@@ -6,5 +6,5 @@ export class IngresoEgresoModel {
     nota: string;
     ocupacion: string;
     otrosIngresos: number;
-    garantiaFiador: Array<GarantiaFiadorModel>;
+    egreso: number;
 }

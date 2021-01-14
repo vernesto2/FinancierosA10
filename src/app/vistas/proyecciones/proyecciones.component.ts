@@ -11,6 +11,8 @@ export class ProyeccionesComponent implements OnInit {
   cargando = false;
   monto = 0;
   montoFijo = 0;
+  interesTotal = 0;
+  totalNeto = 0;
 
   constructor(public dialogRef: MatDialogRef<ProyeccionesComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     if(data.lista != null){
@@ -22,6 +24,20 @@ export class ProyeccionesComponent implements OnInit {
    }
   
   ngOnInit(): void {
+    if (this.listaCuotas.length > 0) {
+      this.calcularResumen();
+    }
   }
 
+  calcularResumen() {
+    for (let i = 0; i < this.listaCuotas.length; i++) {
+      this.interesTotal += this.listaCuotas[i].interes;
+      
+    }
+    this.totalNeto += this.interesTotal + this.montoFijo;
+  }
+
+  onCancelar() {
+    this.dialogRef.close();
+  }
 }

@@ -23,7 +23,9 @@
 
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Monto solicitado" type="number" required
+                        <mat-label>Monto solicitado</mat-label>
+                        <input matInput placeholder="$500 - $20,000" type="number" required
+                        (keyup)="calcularMonto($event.target.value)"
                         name="monto"
                         #monto="ngModel"
                         [(ngModel)]="credito.monto">
@@ -34,7 +36,7 @@
                       <mat-form-field appearance="standard">
                         <mat-label>Tiempo</mat-label>
                         <input matInput placeholder="Tiempo en meses" required
-                        (keyup)="calcular($event.target.value)"
+                        (keyup)="calcularTiempo($event.target.value)"
                         name="tiempo"
                         #tiempo="ngModel"
                         [(ngModel)]="credito.tiempo">
@@ -56,17 +58,20 @@
                   <div class="row">
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Cuota Mensual" disabled>
+                        <mat-label>Cuota mensual $</mat-label>
+                        <input matInput placeholder="Cuota Mensual" [value]="cuota | number: '.0-2'" disabled>
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Intereses" disabled>
+                        <mat-label>Intereses $</mat-label>
+                        <input matInput placeholder="Intereses" [value]="interes | number: '.0-2'" disabled>
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <input matInput placeholder="Capital" disabled>
+                        <mat-label>Capital $</mat-label>
+                        <input matInput placeholder="Capital" [value]="capital | number: '.0-2'"   disabled>
                       </mat-form-field>
                     </div>
 

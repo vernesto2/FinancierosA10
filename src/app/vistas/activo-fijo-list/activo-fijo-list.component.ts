@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { Output } from '@angular/core';import { DetalleBajaActivoComponent } from '../detalle-baja-activo/detalle-baja-activo.component';
 import { DetalleActivoPKModel } from 'app/models/detalleActivoPK.model';
 import { DetalleActivoModel } from 'app/models/detalleActivo.model';
+import { DepreamorComponent } from '../depreamor/depreamor.component';
 ;
 
 @Component({
@@ -20,6 +21,7 @@ export class ActivoFijoListComponent implements OnInit {
   listaAdquisicionActivo: any[];
   codigoGenerado: string;
   page = 1;
+  d="DEPRECIA";
   constructor(public dialog: MatDialog, public servicioDetalleAdquisicion: ActivoFijoService) {
   }
 
@@ -71,12 +73,10 @@ export class ActivoFijoListComponent implements OnInit {
   }
   
   openDialogActivoFijo() {
-    const data = {
-      
+    const data = {  
     }
     let dialogref = this.dialog.open(ActivoFijoAddComponent, {});
     const sub = dialogref.componentInstance.onAgregado.subscribe(() => {
-      
     });
     dialogref.afterClosed().subscribe( res => {});
   }
@@ -87,6 +87,10 @@ export class ActivoFijoListComponent implements OnInit {
 
   baja(){
 
+  }
+
+  deprecia(a:any){
+    let dialogref = this.dialog.open(DepreamorComponent, {data: a});
   }
 
 }

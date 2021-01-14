@@ -45,6 +45,8 @@ import { UsuarioAddComponent } from './vistas/usuario-add/usuario-add.component'
 import { LoginComponent } from './vistas/login/login.component';
 import { DetalleBajaActivoComponent } from './vistas/detalle-baja-activo/detalle-baja-activo.component';
 import { ProyeccionesComponent } from './vistas/proyecciones/proyecciones.component';
+import { CobroComponent } from './vistas/cobro/cobro.component';
+import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
 
 @NgModule({
   imports: [
@@ -87,6 +89,8 @@ import { ProyeccionesComponent } from './vistas/proyecciones/proyecciones.compon
     LoginComponent,
     DetalleBajaActivoComponent,
     ProyeccionesComponent,
+    CobroComponent,
+    DepreamorComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

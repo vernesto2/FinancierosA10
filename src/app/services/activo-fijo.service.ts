@@ -51,4 +51,8 @@ export class ActivoFijoService {
   listarAdquisicion(): Observable<any> {
     return this.http.get(`${this.base_uri}/detalleactivofijo/disponibles`,{observe: 'response'});
   }
+
+  listardebaja(): Observable<any> {
+    return this.http.get(`${this.base_uri}/detalleactivofijo/baja`,{observe: 'response'});
+  }
 }

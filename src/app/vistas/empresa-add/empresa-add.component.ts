@@ -45,7 +45,6 @@ export class EmpresaAddComponent implements OnInit {
   duiRepre = 'DUI'
   nombreRepre = 'Nombre de representante';
   //filtro y paginacion del representante
-  page = 1;
 
   constructor(public dialogRef: MatDialogRef<EmpresaAddComponent>, @Inject(MAT_DIALOG_DATA) public data: EmpresaModel,
     private fb: FormBuilder, public personaService: PersonaService) {
@@ -85,7 +84,6 @@ export class EmpresaAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.llenarRepresentantes();
     this.listarDepartamentos();
   }
 
@@ -191,13 +189,19 @@ export class EmpresaAddComponent implements OnInit {
     this.duiRepre = repre.dui;
     this.nombreRepre = repre.nombres + ' ' + repre.apellidos;
     this.repre = repre;
+    this.showNotification('top', 'right', 'Representante seleccionado', 'check', 'info');
   }
 
-  buscarPorDUINombreApellido(value: any) {
-    if (value.length >= 3) {
+  buscarPorDUI(value: any) {
+    if (value.length == 10) {
       this.personaService.buscarPor(value).subscribe((lista: any) => {
-        this.listaRepresentante = lista.body;
+        if (lista.status == 200) {
+          this.listaRepresentante = lista.body;
+          this.showNotification('top', 'right', 'DUI encontrado', 'search', 'success');
+        }
         //console.log(this.listaRepresentante);
+      }, err => {
+        this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
       });
       //console.log(value);
     }
@@ -212,26 +216,29 @@ export class EmpresaAddComponent implements OnInit {
         this.separarModelos();
         this.personaService.editarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
-            //console.log(res);
-            this.showNotification('top', 'right', 'Modificado Correctamente.!', 'save', 'success');
+            console.log(res);
+            this.showNotification('top', 'right', 'Modificado Correctamente.!', 'sync', 'success');
             this.onAgregado1.emit();
           } else {
+            console.log('else ', res);
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
-          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
         this.personaService.agregarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
+            console.log(res);
             this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
             this.onAgregado1.emit();
           } else {
+            console.log('else ', res);
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
-          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       }
     }

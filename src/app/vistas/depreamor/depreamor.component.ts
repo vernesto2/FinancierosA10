@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CalculoModel } from 'app/models/calculo.model';
 
 @Component({
   selector: 'app-depreamor',
@@ -9,35 +10,88 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DepreamorComponent implements OnInit {
   cal="";
   titulo:string;
-  lista:any;
+  listaA=new CalculoModel();
+  listaM:any;
+  listaDia:any;
   codigo:string;
   activo:string;
   tipo:string;
   departamento:string;
   unidad:string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
-    if(data.tipoCalculo==="DEPRECIA"){
+  listaTabla: Array<CalculoModel>=[]
+  fecha:Date;
+  fech:Date;
+  fec:Date;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: CalculoModel) { 
+    this.listaA=data;
+    if(this.listaA.calc==="DEPRECIA"){
       this.titulo="depreciacion";
     }else{
       this.titulo="amortizacion";
     }
-    this.lista=data;
+    this.cal=this.listaA.ver;
+    this.fecha=new Date(this.listaA.fecha);
+    if(this.listaA.ver=="año"){
+      console.log(data.vidaUtil/12);
+      this.llenarTable(this.listaA.vidaUtil/12,this.listaA);
+    }
+    if(this.listaA.ver=="dia"){
+      console.log(this.listaA.vidaUtil*30);
+      this.llenarTable(this.listaA.vidaUtil*30,this.listaA);
+    }
+    if(this.listaA.ver=="mes"){
+      console.log(this.listaA.vidaUtil);
+      this.llenarTable(this.listaA.vidaUtil,this.listaA);
+    }
+    
   }
-
+llenarTable(n:number,list:any){
+  let cal=new CalculoModel();
+  if(this.cal==="año"){
+    cal.fecha=new Date(this.fecha.setFullYear(this.fecha.getFullYear()+1));
+  }
+  if(this.cal==="mes"){
+    cal.fecha=new Date(this.fecha.setMonth(this.fecha.getMonth()+1));
+  }
+  if(this.cal==="dia"){
+    cal.fecha=new Date(this.fecha.setDate(this.fecha.getDate()+1));
+  }
+  cal.monto=null;
+  cal.acumulada=null;
+  cal.valor=list.valor;
+  this.listaTabla.push(cal);
+  var monto=Number((list.valor/n).toFixed(6));
+  var inc=0;
+  for (let i = 1; i <=n; i++) {
+    let calc=new CalculoModel();
+    if(this.cal==="año"){
+      calc.fecha=new Date(this.fecha.setFullYear(this.fecha.getFullYear()+1));
+    }
+    if(this.cal==="mes"){
+      calc.fecha=new Date(this.fecha.setMonth(this.fecha.getMonth()+1));
+    }
+    if(this.cal==="dia"){
+      calc.fecha=new Date(this.fecha.setDate(this.fecha.getDate()+1));
+    }
+    calc.monto=monto;
+    inc=inc+monto;
+    calc.acumulada=inc;
+    list.valor=list.valor-monto;
+    calc.valor=list.valor;
+    this.listaTabla.push(calc);
+  }
+  console.log(this.listaTabla);
+}
   ngOnInit(): void {
     this.llenarcampos();
   }
 
   llenarcampos(){
-    this.codigo=this.lista.codigoGenrado;
-    this.tipo=this.lista.tipoActivo;
-    this.activo=this.lista.nombre;
-    this.departamento=this.lista.departamento;
-    this.unidad=this.lista.unidad;
-  }
-
-  anio() {
-    
+    this.codigo=this.listaA.codigo;
+    this.tipo=this.listaA.tipo;
+    this.activo=this.listaA.activo;
+    this.departamento=this.listaA.departamento;
+    this.unidad=this.listaA.unidad;
   }
 
 }

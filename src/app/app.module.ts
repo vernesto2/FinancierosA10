@@ -47,6 +47,8 @@ import { DetalleBajaActivoComponent } from './vistas/detalle-baja-activo/detalle
 import { ProyeccionesComponent } from './vistas/proyecciones/proyecciones.component';
 import { ContratoPersonaComponent } from './reportes/contrato-persona/contrato-persona.component';
 import { RefinanciarComponent } from './vistas/refinanciar/refinanciar.component';
+import { CobroComponent } from './vistas/cobro/cobro.component';
+import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
 
 @NgModule({
   imports: [
@@ -90,6 +92,9 @@ import { RefinanciarComponent } from './vistas/refinanciar/refinanciar.component
     DetalleBajaActivoComponent,
     ProyeccionesComponent,
     ContratoPersonaComponent,
+    RefinanciarComponent,
+    CobroComponent,
+    DepreamorComponent,
     RefinanciarComponent,
   ],
   entryComponents: [

@@ -225,11 +225,7 @@ export class EmpresaAddComponent implements OnInit {
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
-<<<<<<< HEAD
-          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
-=======
           this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
->>>>>>> 836209d647320a454ef675d77428b2f2450f6a45
         });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
@@ -243,12 +239,8 @@ export class EmpresaAddComponent implements OnInit {
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
-<<<<<<< HEAD
-          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
-=======
           console.log(err);
           this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
->>>>>>> 836209d647320a454ef675d77428b2f2450f6a45
         });
       }
     }

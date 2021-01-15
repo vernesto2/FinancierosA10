@@ -51,34 +51,35 @@ export class EmpresaAddComponent implements OnInit {
     this.crearFormulario();
 
     if (data != null) {
+      this.cargandoEmpresa();
       this.personaService.buscarEmpresaNit(data.nit).subscribe((empresa: any) => {
         this.accion = 'Edición';
-      this.empresa = empresa.body;
-      this.repre = empresa.body.personaNatural;
-      this.duiRepre = this.repre.dui;
-      this.nombreRepre = this.repre.nombres + ' ' + this.repre.apellidos;
-      //console.log(persona);
-      this.muniSel = this.empresa.persona.direccion.ubicacion;
-      this.editar = true;
-      this.valido = false;
-      this.editarCampos = true;
+        this.empresa = empresa.body;
+        this.repre = empresa.body.personaNatural;
+        this.duiRepre = this.repre.dui;
+        this.nombreRepre = this.repre.nombres + ' ' + this.repre.apellidos;
+        //console.log(persona);
+        this.muniSel = this.empresa.persona.direccion.ubicacion;
+        this.editar = true;
+        this.valido = false;
+        this.editarCampos = true;
 
-      //saco los 2 numeros del codigo para determinar el depto
-      this.personaService.deptoPorCodigo(this.empresa.persona.direccion.ubicacion.codigo.toString().substring(0, 2)).subscribe((depto: any) => {
-        this.deptoSeleccionado(depto.body);
-        this.deptoSel = depto.body;
-        //console.log(this.deptoSel);
-        this.llenarFormulario();
-      });
-      this.listaTel = this.empresa.persona.telefonos;
-      for (let i = 0; i < this.listaTel.length; i++) {
-        let tel = new TelModel();
-        tel.telefono = this.listaTel[i].id.telefono;
-        tel.tipoContacto = this.listaTel[i].tipoContacto;
-        this.listaTelefonos.push(tel);
-      }
-      this.editarCampos = false;
-
+        //saco los 2 numeros del codigo para determinar el depto
+        this.personaService.deptoPorCodigo(this.empresa.persona.direccion.ubicacion.codigo.toString().substring(0, 2)).subscribe((depto: any) => {
+          this.deptoSeleccionado(depto.body);
+          this.deptoSel = depto.body;
+          //console.log(this.deptoSel);
+          this.llenarFormulario();
+        });
+        this.listaTel = this.empresa.persona.telefonos;
+        for (let i = 0; i < this.listaTel.length; i++) {
+          let tel = new TelModel();
+          tel.telefono = this.listaTel[i].id.telefono;
+          tel.tipoContacto = this.listaTel[i].tipoContacto;
+          this.listaTelefonos.push(tel);
+        }
+        this.editarCampos = false;
+        this.showNotification('top', 'right', 'Datos encontrados', 'done_all', 'success');
       });
     }
   }
@@ -273,6 +274,25 @@ export class EmpresaAddComponent implements OnInit {
   listarDepartamentos() {
     this.personaService.listarDepartamento().subscribe((lista: any) => {
       this.listaDepartamento = lista.body;
+    });
+  }
+
+  cargandoEmpresa() {
+    $.notify({
+      icon: 'refresh',
+      message: 'Cargando...'
+
+    }, {
+      type: 'info',
+      placement: {
+        from: 'top',
+        align: 'right'
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons fa-spin" data-notify="icon">refresh</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>'
     });
   }
 

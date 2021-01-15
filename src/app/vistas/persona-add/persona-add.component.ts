@@ -47,6 +47,7 @@ export class PersonaAddComponent implements OnInit {
     this.listarDepartamentos();
     if (data != null) {
       this.accion = 'Edición';
+      this.cargandoPersona();
       this.personaService.buscarNIT(data.nit).subscribe((persona: any) => {
         this.personaNatural = persona.body;
         //console.log(persona);
@@ -70,6 +71,7 @@ export class PersonaAddComponent implements OnInit {
           this.listaTelefonos.push(tel);
         }
         this.editarCampos = false;
+        this.showNotification('top', 'right', 'Datos encontrados', 'done_all', 'success');
       });
     }
     //seteando las fechas minimas y maximas
@@ -163,17 +165,16 @@ export class PersonaAddComponent implements OnInit {
     } else {
       //console.log(this.personaNatural);
       if (this.editar) { //si es verdadero EDITAMOS
-        //console.log(this.persona.telefonos);
         this.separarModelos();
-
-        //console.log(this.persona.telefonos);
         this.personaService.editarPersona(this.personaNatural).subscribe((res: any) => {
           if (res.status == 200) {
-            this.showNotification('top', 'right', 'Modificado correctamente!', 'save', 'success');
+            this.showNotification('top', 'right', 'Modificado Correctamente.!', 'sync', 'success');
             this.onAgregado.emit();
           } else {
             this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
           }
+        }, err => {
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
@@ -184,9 +185,30 @@ export class PersonaAddComponent implements OnInit {
           } else {
             this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
           }
+        }, err => {
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       }
     }
+  }
+
+  cargandoPersona() {
+    $.notify({
+      icon: 'refresh',
+      message: 'Cargando...'
+
+    }, {
+      type: 'info',
+      placement: {
+        from: 'top',
+        align: 'right'
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons fa-spin" data-notify="icon">refresh</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>'
+    });
   }
 
   separarModelos() {

@@ -8,6 +8,7 @@ import { CreditoEmpresaAddComponent } from 'app/vistas/credito-empresa-add/credi
 import { PersonaListComponent } from 'app/vistas/persona-list/persona-list.component';
 import { EmpresaListComponent } from 'app/vistas/empresa-list/empresa-list.component';
 import { UsuarioListComponent } from 'app/vistas/usuario-list/usuario-list.component';
+import { CobroComponent } from 'app/vistas/cobro/cobro.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      redirectTo: 'activofijo' }, //por defecto va mostrar esta ruta en caso que la url este vacia
@@ -19,4 +20,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'creditopersonal',  component: PrecreditoAddComponent },
     { path: 'creditoempresa',  component: CreditoEmpresaAddComponent },
     { path: 'usuario',  component: UsuarioListComponent },
+    { path: 'cobro',  component: CobroComponent},
 ];

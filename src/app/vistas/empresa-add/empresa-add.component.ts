@@ -45,18 +45,17 @@ export class EmpresaAddComponent implements OnInit {
   duiRepre = 'DUI'
   nombreRepre = 'Nombre de representante';
   //filtro y paginacion del representante
-  page = 1;
 
   constructor(public dialogRef: MatDialogRef<EmpresaAddComponent>, @Inject(MAT_DIALOG_DATA) public data: EmpresaModel,
-  private fb: FormBuilder, public personaService: PersonaService) {
+    private fb: FormBuilder, public personaService: PersonaService) {
     this.crearFormulario();
 
     if (data != null) {
-      console.log(data);
-      this.accion = 'Edición';
-        this.empresa = data;
-        console.log();
-        this.repre = data.personaNatural;
+      this.cargandoEmpresa();
+      this.personaService.buscarEmpresaNit(data.nit).subscribe((empresa: any) => {
+        this.accion = 'Edición';
+        this.empresa = empresa.body;
+        this.repre = empresa.body.personaNatural;
         this.duiRepre = this.repre.dui;
         this.nombreRepre = this.repre.nombres + ' ' + this.repre.apellidos;
         //console.log(persona);
@@ -80,11 +79,12 @@ export class EmpresaAddComponent implements OnInit {
           this.listaTelefonos.push(tel);
         }
         this.editarCampos = false;
+        this.showNotification('top', 'right', 'Datos encontrados', 'done_all', 'success');
+      });
     }
   }
 
   ngOnInit(): void {
-    this.llenarRepresentantes();
     this.listarDepartamentos();
   }
 
@@ -101,12 +101,12 @@ export class EmpresaAddComponent implements OnInit {
     // si usamos el .setValue tenemos que mandar el caparazon del obj completo en cambio si usamos
     // .reset no importa sino va completa la estructura del obj
     this.forma = this.fb.group({
-      nit: [{value: this.empresa.nit, disabled: true}, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
+      nit: [{ value: this.empresa.nit, disabled: true }, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
 
-      direccion: [{value: this.empresa.persona.direccion.direccion, disabled: true}, [Validators.required]],
-      ubicacion: [{value: this.empresa.persona.direccion.ubicacion, disabled: true}, [Validators.required]],
+      direccion: [{ value: this.empresa.persona.direccion.direccion, disabled: true }, [Validators.required]],
+      ubicacion: [{ value: this.empresa.persona.direccion.ubicacion, disabled: true }, [Validators.required]],
 
-      nombre: [{value: this.empresa.nombre, disabled: true}, [Validators.required]],
+      nombre: [{ value: this.empresa.nombre, disabled: true }, [Validators.required]],
 
       telefonos: this.fb.array([]),
     }, {
@@ -130,8 +130,8 @@ export class EmpresaAddComponent implements OnInit {
 
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       telefonos: this.fb.array([
-          this.fb.group({
-          tipoContacto: ['', ],
+        this.fb.group({
+          tipoContacto: ['',],
           telefono: ['', [Validators.minLength(8), Validators.maxLength(8)]]
         })
       ]),
@@ -190,13 +190,19 @@ export class EmpresaAddComponent implements OnInit {
     this.duiRepre = repre.dui;
     this.nombreRepre = repre.nombres + ' ' + repre.apellidos;
     this.repre = repre;
+    this.showNotification('top', 'right', 'Representante seleccionado', 'check', 'info');
   }
 
-  buscarPorDUINombreApellido(value: any) {
-    if (value.length >= 3) {
+  buscarPorDUI(value: any) {
+    if (value.length == 10) {
       this.personaService.buscarPor(value).subscribe((lista: any) => {
-        this.listaRepresentante = lista.body;
+        if (lista.status == 200) {
+          this.listaRepresentante = lista.body;
+          this.showNotification('top', 'right', 'DUI encontrado', 'search', 'success');
+        }
         //console.log(this.listaRepresentante);
+      }, err => {
+        this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
       });
       //console.log(value);
     }
@@ -212,25 +218,37 @@ export class EmpresaAddComponent implements OnInit {
         this.personaService.editarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
             //console.log(res);
-            this.showNotification('top', 'right', 'Modificado Correctamente.!', 'save', 'success');
+            this.showNotification('top', 'right', 'Modificado Correctamente.!', 'sync', 'success');
             this.onAgregado1.emit();
           } else {
+            //console.log('else ', res);
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
+<<<<<<< HEAD
           this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+=======
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+>>>>>>> 836209d647320a454ef675d77428b2f2450f6a45
         });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
         this.personaService.agregarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
+            //console.log(res);
             this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
             this.onAgregado1.emit();
           } else {
+            //console.log('else ', res);
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
+<<<<<<< HEAD
           this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+=======
+          console.log(err);
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+>>>>>>> 836209d647320a454ef675d77428b2f2450f6a45
         });
       }
     }
@@ -238,25 +256,25 @@ export class EmpresaAddComponent implements OnInit {
 
   showNotification(from, align, message, icon, type) {
     $.notify({
-        icon: icon,
-        message: message
+      icon: icon,
+      message: message
 
     }, {
-        type: type,
-        timer: 4000,
-        placement: {
-            from: from,
-            align: align
-        },
-        template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
-          '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-          '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
-          '<span data-notify="title">{1}</span> ' +
-          '<span data-notify="message">{2}</span>' +
-          '<div class="progress" data-notify="progressbar">' +
-            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-          '</div>' +
-          '<a href="{3}" target="{4}" data-notify="url"></a>' +
+      type: type,
+      timer: 4000,
+      placement: {
+        from: from,
+        align: align
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
         '</div>'
     });
   }
@@ -264,6 +282,25 @@ export class EmpresaAddComponent implements OnInit {
   listarDepartamentos() {
     this.personaService.listarDepartamento().subscribe((lista: any) => {
       this.listaDepartamento = lista.body;
+    });
+  }
+
+  cargandoEmpresa() {
+    $.notify({
+      icon: 'refresh',
+      message: 'Cargando...'
+
+    }, {
+      type: 'info',
+      placement: {
+        from: 'top',
+        align: 'right'
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons fa-spin" data-notify="icon">refresh</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>'
     });
   }
 

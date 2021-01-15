@@ -1,0 +1,219 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary" style="text-align: center;">
+                <h2 class="card-title">Registro </h2>
+            </div>
+            <div class="card-body">
+              <mat-horizontal-stepper linear="false">
+                <mat-step state="p1">
+                    <ng-template matStepLabel>Clientes con creditos</ng-template> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-danger" style="text-align: center;">
+                                    <h4 class="card-title">Detalles listados</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class="text-primary">
+                                                <th class="text-center">
+                                                    NIT
+                                                </th> 
+                                                <th class="text-center">
+                                                    Cliente
+                                                </th>
+                                                <th class="text-center">Seleccionar</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center">
+                                                        <div mat-dialog-actions class="align-content-end">
+                                                            <button mat-button matStepperNext type="button" color="primary" style="
+                                                            margin-top: -60px;"><mat-icon>check_box_outline_blank</mat-icon></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center">
+                                            <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+               </mat-step>
+                <mat-step state="p2">
+                    <form>
+                        <ng-template matStepLabel>Cobro</ng-template>
+                        <div class="text-center" *ngIf="mostrar">
+                            <mat-card class="alert alert-warning">
+                            <mat-card-content>
+                                <mat-icon>warning</mat-icon>
+                            </mat-card-content>
+                            ¡ALERTA! Debe seleccionar una persona para poder hacer el cobro
+                        </mat-card>
+                        </div>
+                        <div *ngIf="!mostrar">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="NIT" required disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Cliente" required disabled>
+                                    </mat-form-field>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="legacy">
+                                        <mat-label>Fecha de pago</mat-label>
+                                        <input matInput  [min]="fecha" [matDatepicker]="picker" required
+                                        name="fechaAdquisicion"
+                                        #fechaAdquisicion="ngModel" [(ngModel)]="fecha" disabled>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                      </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Cuota N°" required disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Pago ($)" required disabled>
+                                    </mat-form-field>
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Interes" required disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Mora" required disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Dias" required disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-1">
+                                    <mat-card class="alert alert-success">
+                                        Antes
+                                    </mat-card>
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Monto recibido ($)" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Monto a pagar ($)" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Interes a pagar ($)" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Cuota a pagar ($)" required disabled> 
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Capital actual" required disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Cambio ($)" required disabled>
+                                    </mat-form-field>
+                                </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-md-2">
+                                    <div mat-dialog-actions class="align-content-end">
+                                        <button mat-raised-button class="btn btn-primary" type="submit" [mat-dialog-close]="true">Registrar pago</button>
+                                    </div>
+                                 </div>
+                             </div>
+                            <div class="row" style="margin: 10px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header card-header-danger" style="text-align: center;">
+                                            <h4 class="card-title">Detalles listados</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead class="text-primary">
+                                                        <th>
+                                                            Cuota N°
+                                                        </th>
+                                                        <th>
+                                                            Fecha a pagar
+                                                        </th>
+                                                        <th>
+                                                            Cuota a pagar
+                                                        </th>
+                                                        <th>
+                                                            Interés
+                                                        </th>
+                                                        <th>
+                                                            Capital amortizado
+                                                        </th>
+                                                        <th>
+                                                            Capital vivo
+                                                        </th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td> 
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="text-center">
+                                                    <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-step>
+              </mat-horizontal-stepper>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

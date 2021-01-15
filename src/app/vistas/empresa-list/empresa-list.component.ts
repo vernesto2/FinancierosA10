@@ -11,9 +11,13 @@ import { EmpresaAddComponent } from '../empresa-add/empresa-add.component';
 })
 export class EmpresaListComponent implements OnInit {
 
-  listaEmpresa: any[];
+  listaEmpresa: any[] = [];
   cargando1 = false;
   page1 = 1;
+  page = 1;
+  cargando = false;
+
+  listaClientes: any[] = [];
 
   constructor(public dialog: MatDialog, public personaService: PersonaService) { }
 
@@ -25,12 +29,30 @@ export class EmpresaListComponent implements OnInit {
     this.llenarEmpresa();
   }
 
+  LE(value: any) {
+    if (value.index == 0) {
+      this.listaClientes.length = 0;
+      this.llenarEmpresa();
+    } else if (value.index == 1) {
+      this.listaEmpresa.length = 0;
+      this.llenarCliente();
+    }
+  }
+
+  llenarCliente() {
+    this.cargando = true;
+    this.personaService.listarPersonas().subscribe((lista: any) => {
+      this.listaClientes = lista.body;
+      console.log(this.listaClientes);
+      this.cargando = false;
+    });
+  }
 
   llenarEmpresa() {
     this.cargando1 = true;
     this.personaService.listarEmpresa().subscribe((lista: any) => {
       this.listaEmpresa = lista.body;
-      //console.log(this.listaEmpresa);
+      console.log(lista.body);
       this.cargando1 = false;
     });
   }

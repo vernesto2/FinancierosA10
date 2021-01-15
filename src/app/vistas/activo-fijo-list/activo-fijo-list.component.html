@@ -56,12 +56,19 @@
                                         {{a.precioUnidad}}  
                                       </td>
                                       <td style="text-align: center;">
-                                        {{a.tipoAdquisicion}}   
+                                        {{a.tipoAdquisicion}}
                                       </td>
                                       <td>
-                                        <button mat-icon-button color="primary">
-                                            <mat-icon>remove_red_eye</mat-icon>
-                                          </button>
+                                        <div *ngIf="a.tipoCalculo==d">
+                                            <button mat-icon-button color="warn" (click)="deprecia(a)">
+                                                <mat-icon>trending_down</mat-icon>
+                                            </button>
+                                        </div>
+                                        <div *ngIf="a.tipoCalculo!=d">
+                                            <button mat-icon-button color="primary">
+                                                <mat-icon>trending_down</mat-icon>
+                                            </button>
+                                        </div>
                                       </td>
                                    </tr>
                                 </tbody>

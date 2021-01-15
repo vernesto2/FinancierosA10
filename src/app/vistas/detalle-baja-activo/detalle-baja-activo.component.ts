@@ -26,7 +26,7 @@ export class DetalleBajaActivoComponent implements OnInit {
   baja:Array<DetalleActivoModel>=[];
   //activobaja= new detalleAModel();
 
-  constructor(public activoServicio:ActivoFijoService, public dialogRef: MatDialogRef<DetalleBajaActivoComponent>, @Inject(MAT_DIALOG_DATA) public data: detalleAModel) { 
+  constructor(public activoServicio:ActivoFijoService, public dialogRef: MatDialogRef<DetalleBajaActivoComponent>, @Inject(MAT_DIALOG_DATA) public data: DetalleActivoModel) { 
     if(data != null){
       this.listadarbaja=data;
       console.log(JSON.stringify(data));
@@ -59,8 +59,9 @@ export class DetalleBajaActivoComponent implements OnInit {
   console.log(JSON.stringify(this.activobaja)); 
   this.activoServicio.bajaActivo(this.activobaja).subscribe(res => {
     console.log(res);
+    this.listadarbaja=null;
+    console.log(this.listadarbaja);
       if (res.status == 200) {
-
         this.showNotification('top', 'right', 'Agregado Correctamente!', 'save', 'success');
         this.onAgregado.emit();
       } else {

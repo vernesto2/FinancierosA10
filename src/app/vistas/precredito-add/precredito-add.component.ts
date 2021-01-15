@@ -174,9 +174,29 @@ export class PrecreditoAddComponent implements OnInit {
     });
   }
 
+  cargandoPolitica() {
+    $.notify({
+      icon: 'replay',
+      message: 'Cargando...'
+
+    }, {
+      type: '',
+      placement: {
+        from: 'top',
+        align: 'right'
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons fa-spin" data-notify="icon">replay</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>'
+    });
+  }
+
   seleccionarTipo(tipo: string) {
     this.tipoCredito = tipo;
     if (this.credito.monto != null && this.credito.tiempo != null) {
+      ////////////////////////
       this.servicesCP.calcularPrecredito(this.credito, this.tipoCredito).subscribe((obj: any) => {
         //console.log(obj);
         if (obj.status == 200) {

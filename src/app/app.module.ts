@@ -45,13 +45,10 @@ import { UsuarioAddComponent } from './vistas/usuario-add/usuario-add.component'
 import { LoginComponent } from './vistas/login/login.component';
 import { DetalleBajaActivoComponent } from './vistas/detalle-baja-activo/detalle-baja-activo.component';
 import { ProyeccionesComponent } from './vistas/proyecciones/proyecciones.component';
-<<<<<<< HEAD
 import { ContratoPersonaComponent } from './reportes/contrato-persona/contrato-persona.component';
 import { RefinanciarComponent } from './vistas/refinanciar/refinanciar.component';
-=======
 import { CobroComponent } from './vistas/cobro/cobro.component';
 import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
->>>>>>> 836209d647320a454ef675d77428b2f2450f6a45
 
 @NgModule({
   imports: [
@@ -94,13 +91,11 @@ import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
     LoginComponent,
     DetalleBajaActivoComponent,
     ProyeccionesComponent,
-<<<<<<< HEAD
     ContratoPersonaComponent,
     RefinanciarComponent,
-=======
     CobroComponent,
     DepreamorComponent,
->>>>>>> 836209d647320a454ef675d77428b2f2450f6a45
+    RefinanciarComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

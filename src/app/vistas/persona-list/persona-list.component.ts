@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PersonaNaturalModel } from 'app/models/personaNatural.model';
 import { PersonaService } from 'app/services/persona.service';
 import { PersonaAddComponent } from '../persona-add/persona-add.component';
+import { RefinanciarComponent } from '../refinanciar/refinanciar.component';
 
 @Component({
   selector: 'app-persona-list',
@@ -44,4 +45,9 @@ export class PersonaListComponent implements OnInit {
     dialogref.afterClosed().subscribe( res => {});
   }
 
+  
+  openDialogRefinanciar() {
+    let dialogref = this.dialog.open(RefinanciarComponent);
+    dialogref.afterClosed().subscribe( res => {});
+  }
 }

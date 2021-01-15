@@ -216,11 +216,11 @@ export class EmpresaAddComponent implements OnInit {
         this.separarModelos();
         this.personaService.editarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
-            console.log(res);
+            //console.log(res);
             this.showNotification('top', 'right', 'Modificado Correctamente.!', 'sync', 'success');
             this.onAgregado1.emit();
           } else {
-            console.log('else ', res);
+            //console.log('else ', res);
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
@@ -230,14 +230,15 @@ export class EmpresaAddComponent implements OnInit {
         this.separarModelos();
         this.personaService.agregarEmpresa(this.empresa).subscribe((res: any) => {
           if (res.status == 200) {
-            console.log(res);
+            //console.log(res);
             this.showNotification('top', 'right', 'Agregado Correctamente.!', 'save', 'success');
             this.onAgregado1.emit();
           } else {
-            console.log('else ', res);
+            //console.log('else ', res);
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
         }, err => {
+          console.log(err);
           this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       }

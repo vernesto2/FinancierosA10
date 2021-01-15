@@ -217,6 +217,8 @@ export class EmpresaAddComponent implements OnInit {
           } else {
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
+        }, err => {
+          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
         });
       } else { //Si es falso AGREGAMOS
         this.separarModelos();
@@ -227,6 +229,8 @@ export class EmpresaAddComponent implements OnInit {
           } else {
             this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
           }
+        }, err => {
+          this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
         });
       }
     }

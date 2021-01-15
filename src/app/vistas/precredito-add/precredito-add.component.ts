@@ -1,3 +1,5 @@
+import { PersonaService } from 'app/services/persona.service';
+import { PersonaNaturalModel } from './../../models/personaNatural.model';
 import { ProyeccionesComponent } from './../proyecciones/proyecciones.component';
 import { BienGarantiaModel } from './../../models/bienGarantia.model';
 import { Component, OnInit } from '@angular/core';
@@ -34,8 +36,21 @@ export class PrecreditoAddComponent implements OnInit {
   cuota = '';
   interes = '';
   capital = '';
+  tipoTiempo = '';
+  disTiempo = true;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService) { }
+  //Para seleccionar Cliente y Fiador
+  listaCliente: any[] = [];
+  clienteSel = new PersonaNaturalModel();
+  listaFiador: any[] = [];
+  fiadorSel = new PersonaNaturalModel();
+  duiCliente = 'DUI';
+  nombreCliente = 'Nombres';
+  duiFiador = 'DUI';
+  nombreFiador = 'Nombres';
+
+  constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService,
+    private personaService: PersonaService) { }
   fecha: Date;
   ngOnInit(): void {
     const dias = new Date().getDate(); //sacamos los dias actual
@@ -72,7 +87,57 @@ export class PrecreditoAddComponent implements OnInit {
       } else {
         this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
       }
-    })
+    }, err => {
+      this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+    });
+  }
+
+  seleccionoCliente(cliente: PersonaNaturalModel) {
+    this.showNotification('top', 'right', 'Cliente seleccionado', 'check', 'info');
+    this.clienteSel = cliente;
+    this.duiCliente = cliente.dui;
+    this.nombreCliente = cliente.nombres + ' ' + cliente.apellidos;
+  }
+
+  buscarDUICliente(value: any) {
+    console.log(value.length);
+    if (value.length == 10) {
+      //aqui tiene q ir en EndPoint de buscar por DUI
+      this.personaService.buscarPor(value).subscribe((lista: any) => {
+        this.listaCliente = lista.body;
+        console.log(this.listaCliente);
+      }, err => {
+        this.showNotification('bottom', 'right', 'Cliente no encontrado!', 'cancel', 'danger');
+      });
+    }
+  }
+
+  seleccionoFiador(fiador: PersonaNaturalModel) {
+    this.showNotification('top', 'right', 'Fiador seleccionado', 'check', 'info');
+    this.fiadorSel = fiador;
+    this.duiFiador = fiador.dui;
+    this.nombreFiador = fiador.nombres + ' ' + fiador.apellidos;
+  }
+
+  buscarDUIFiador(value: any) {
+    if (value.length == 9) {
+      //aqui tiene q ir en EndPoint de buscar por DUI
+      this.personaService.buscarPor(value).subscribe((lista: any) => {
+        this.listaFiador = lista.body;
+        console.log(this.listaFiador);
+      }, err => {
+        this.showNotification('bottom', 'right', 'Fiador no encontrado!', 'cancel', 'danger');
+      });
+    }
+  }
+
+  llamarContrato() {
+    if (this.clienteSel != null && this.fiadorSel != null) {
+
+      window.open("http://localhost:4200/reportes/contrato-credito", "_blank");
+    } else {
+
+    }
   }
 
   openDialogProyecciones() {
@@ -116,6 +181,7 @@ export class PrecreditoAddComponent implements OnInit {
         //console.log(obj);
         if (obj.status == 200) {
           this.listaCuotas = obj.body.cuotas;
+          console.log(obj);
           this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
           this.interes = this.listaCuotas[0].interes;
           this.capital = this.listaCuotas[0].capitalAmortizado;
@@ -132,8 +198,9 @@ export class PrecreditoAddComponent implements OnInit {
   }
 
   calcularTiempo(value: number) {
+
     if (this.tipoCredito != '' && this.credito.monto != null) {
-      if (value > 5 && value < 73) {
+      if (value > 0 && value < 73) {
         this.servicesCP.calcularPrecredito(this.credito, this.tipoCredito).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {
@@ -177,4 +244,19 @@ export class PrecreditoAddComponent implements OnInit {
     }
   }
 
+  openDialogPersona(persona?: PersonaNaturalModel) {
+    let dialogref = this.dialog.open(PersonaAddComponent, { data: persona });
+
+    dialogref.afterClosed().subscribe(res => { });
+  }
+
+  seleccionarTiempo(value: string) {
+    this.disTiempo = false;
+    this.tipoTiempo = value;
+    console.log(this.tipoTiempo);
+  }
+
+  validarRangos() {
+    
+  }
 }

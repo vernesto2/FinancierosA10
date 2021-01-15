@@ -32,4 +32,8 @@ export class CreditosService {
     console.log(fechas);
     return this.http.get(`${this.base_uri}/credito/precredito/${credito.monto}/${credito.tiempo}/${tipoCredito}/${fechas}`, { observe: 'response'});
   }
+
+  rangoPolitica(): Observable<any> {
+    return this.http.get(`${this.base_uri}/politica/rangopolitica`,  { observe: 'response'});
+  }
 }

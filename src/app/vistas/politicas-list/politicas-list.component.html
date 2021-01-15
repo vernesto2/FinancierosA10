@@ -64,8 +64,13 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="card" *ngIf="!cargando && listaPoliticas.length === 0">
-                    <mat-card>No hay datos</mat-card>
+                <div class="text-center" *ngIf="!cargando && listaPoliticas.length === 0">
+                    <mat-card class="alert alert-warning">
+                        No hay datos!
+                        <mat-card-content>
+                            <mat-icon>warning</mat-icon>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
 
                 <div class="text-center" *ngIf="cargando">
@@ -76,7 +81,6 @@
                         </mat-card-content>
                         Por favor espere!
                     </mat-card>
-                    
                 </div>
 
             </div>

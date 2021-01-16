@@ -165,7 +165,4 @@ export class ActivoFijoAddComponent implements OnInit {
     }
   }
 
-  activo(){
-    
-  }
 }

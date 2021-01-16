@@ -60,6 +60,7 @@ export class PrecreditoAddComponent implements OnInit {
   //ingresosEgresos
   ingresosEgresosCliente = new IngresoEgresoModel();
   ingresoEgresoFiador = new IngresoEgresoModel();
+  mensaje = '';
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService,
     private personaService: PersonaService) { }
@@ -149,6 +150,7 @@ export class PrecreditoAddComponent implements OnInit {
       console.log(this.ingresosEgresosCliente, this.ingresoEgresoFiador);
       this.servicesCP.comprobarIngresos(this.ingresosEgresosCliente, this.ingresoEgresoFiador).subscribe((res: any) => {
         console.log(res);
+        this.mensaje = res.body.mensaje;
       });
     }
   }

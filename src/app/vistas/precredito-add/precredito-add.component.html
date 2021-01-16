@@ -294,8 +294,13 @@
                               [(ngModel)]="ingresoEgresoFiador.egresos">
                             </mat-form-field>
                           </div>
+                        </div>
+                        <div class="row">
                           <div class="col-md-3">
                             <button mat-raised-button class="btn btn-primary" type="button" (click)="comprobarIngresos()">Comprobar ingresos</button>
+                          </div>
+                          <div class="col-md-5">
+                            <h2 color="primary">{{mensaje}}</h2>
                           </div>
                         </div>
                       </div>

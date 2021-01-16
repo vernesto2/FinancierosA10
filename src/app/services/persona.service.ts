@@ -43,7 +43,7 @@ export class PersonaService {
   }
 
   buscarPor(busqueda: any): Observable<any> {
-    return this.http.get(`${this.base_uri}/personanatural`, {observe: 'response'});
+    return this.http.get(`${this.base_uri}/personanatural/buscarpor/${busqueda}`, {observe: 'response'});
   }
 
   buscarNIT(nit: string): Observable<any> {

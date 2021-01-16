@@ -61,6 +61,10 @@ export class PrecreditoAddComponent implements OnInit {
   ingresosEgresosCliente = new IngresoEgresoModel();
   ingresoEgresoFiador = new IngresoEgresoModel();
   mensaje = '';
+  mensajeHipotecario = '';
+
+  //hipotecario
+  valorFinanciado = 0;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService,
     private personaService: PersonaService) { }
@@ -151,7 +155,24 @@ export class PrecreditoAddComponent implements OnInit {
       this.servicesCP.comprobarIngresos(this.ingresosEgresosCliente, this.ingresoEgresoFiador).subscribe((res: any) => {
         console.log(res);
         this.mensaje = res.body.mensaje;
+      }, err => {
+        this.mensaje = err.error.mensaje;
       });
+    }
+  }
+
+  montoFinanciado(valor: number) {
+    if (valor != null) {
+      console.log(valor);
+      this.valorFinanciado = (Number(valor) * 0.90);
+
+      if (this.credito.monto != null) {
+        if (this.credito.monto >= this.valorFinanciado) {
+          this.mensajeHipotecario = 'El monto solicitado es mayor que el valor financiado';
+        } else {
+          this.mensajeHipotecario = 'El monto solicitado es menor que el valor financiado';
+        }
+      }
     }
   }
 

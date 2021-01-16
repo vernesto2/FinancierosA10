@@ -299,8 +299,8 @@
                           <div class="col-md-3">
                             <button mat-raised-button class="btn btn-primary" type="button" (click)="comprobarIngresos()">Comprobar ingresos</button>
                           </div>
-                          <div class="col-md-5">
-                            <h2 color="primary">{{mensaje}}</h2>
+                          <div class="col-md-7">
+                            <h3>{{mensaje}}</h3>
                           </div>
                         </div>
                       </div>
@@ -313,7 +313,7 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="row">
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <mat-form-field appearance="standard">
                               <mat-label>Tipo de bien</mat-label>
                               <mat-select >
@@ -322,15 +322,30 @@
                               </mat-select>
                             </mat-form-field>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <mat-form-field class="example-full-width" appearance="standard">
                               <mat-label>valorado en ($)</mat-label>
-                              <input matInput type="number" >
+                              <input matInput type="number" (keyup)="montoFinanciado($event.target.value)" >
                             </mat-form-field>
+                          </div>
+                          <div class="col-md-2">
+                            <mat-form-field class="example-full-width" appearance="standard">
+                              <mat-label>% Financiado</mat-label>
+                              <input matInput type="number" value="90" disabled>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-2">
+                            <mat-form-field class="example-full-width" appearance="standard">
+                              <mat-label>Valor financiado</mat-label>
+                              <input matInput type="number" [value]="valorFinanciado" disabled>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <h3>{{mensajeHipotecario}}</h3>
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-8">
                             <mat-form-field appearance="fill">
                               <mat-label>Descripción</mat-label>
                               <textarea matInput ></textarea>

@@ -18,14 +18,15 @@ import { CalculoModel } from 'app/models/calculo.model';
 })
 export class ActivoFijoListComponent implements OnInit {
   cargando = false;
+  cargando1 = false;
   arrayDetalleActivo: DetalleActivoModel[] = [];
-  listaAdquisicionActivo: any[];
+  listaAdquisicionActivo: any[]=[];
   codigoGenerado: string;
   page = 1;
   d=null;
   mostrarA=true;
   mostrarB=false;
-  listabaja:any[];
+  listabaja:any[]=[];
   array=new CalculoModel();
   constructor(public dialog: MatDialog, public servicioDetalleAdquisicion: ActivoFijoService) {
   }
@@ -93,13 +94,23 @@ export class ActivoFijoListComponent implements OnInit {
   }
 
   baja(){
-    this.cargando = true;
+    this.cargando1 = true;
     this.mostrarA=false;
     this.mostrarB=true;
     this.servicioDetalleAdquisicion.listardebaja().subscribe((listaA: any) => {
       this.listabaja = listaA.body;
-      this.cargando = false;
+      this.cargando1 = false;
     })
+  }
+
+  LE(value: any) {
+    if (value.index == 0) {
+      this.listabaja.length = 0;
+      this.llenarAdquisicionActivo();
+    } else if (value.index == 1) {
+      this.listaAdquisicionActivo.length = 0;
+      this.baja();
+    }
   }
 
   deprecia(a:any[]){

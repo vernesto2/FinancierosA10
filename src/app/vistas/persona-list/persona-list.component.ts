@@ -30,7 +30,7 @@ export class PersonaListComponent implements OnInit {
     this.llenarPersonaNatural();
   }
   onAgregoRefinanciar() {
-    this.llenarRefinanciar();
+   // this.llenarRefinanciar();
   }
 
   llenarPersonaNatural() {
@@ -41,14 +41,14 @@ export class PersonaListComponent implements OnInit {
     });
   }
 
-  llenarRefinanciar() {
+ /* llenarRefinanciar() {
     this.cargando = true;
     this.serviceCP.listarCredito().subscribe((res: any) => {
       this.listaCredito = res.body;
       this.cargando = false;
     });
 
-  }
+  }*/
 
   openDialogPersona(persona?: PersonaNaturalModel) {
     const data = {

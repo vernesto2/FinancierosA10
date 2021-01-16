@@ -6,5 +6,5 @@ export class IngresoEgresoModel {
     nota: string;
     ocupacion: string;
     otrosIngresos: number;
-    egreso: number;
+    egresos: number;
 }

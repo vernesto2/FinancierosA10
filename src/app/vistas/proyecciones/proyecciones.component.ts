@@ -20,7 +20,7 @@ export class ProyeccionesComponent implements OnInit {
       this.monto = data.monto;
       this.montoFijo = data.monto;
     }
-    console.log(data);
+    //console.log(data);
    }
   
   ngOnInit(): void {

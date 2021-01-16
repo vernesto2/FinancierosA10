@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreditoPersonalModel } from 'app/models/creditoPersonal.model';
 import { environment } from 'environments/environment';
+import { IngresoEgresoModel } from 'app/models/ingresoEgreso.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class CreditosService {
 
   rangoPolitica(): Observable<any> {
     return this.http.get(`${this.base_uri}/politica/rangopolitica`,  { observe: 'response'});
+  }
+
+  comprobarIngresos(ingresosEgresosCliente: IngresoEgresoModel, ingresosEgresosFiador: IngresoEgresoModel): Observable<any> {
+    return this.http.post(`${this.base_uri}/credito/ingresosegresos`, {ingresosEgresosFiador, ingresosEgresosCliente}, {observe: 'response'});
   }
 }

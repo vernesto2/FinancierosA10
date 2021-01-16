@@ -23,16 +23,16 @@
 
                     <div class="col-md-2">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <mat-label>Monto solicitado</mat-label>
-                        <input matInput placeholder="$500 - $20,000" type="number" required
+                        <mat-label>Monto solicitado ($)</mat-label>
+                        <input matInput [placeholder]="montoInferior + ' - ' + montoSuperior" type="number" required
                           (keyup)="calcularMonto($event.target.value)" name="monto" #monto="ngModel"
-                          [(ngModel)]="credito.monto">
+                          [(ngModel)]="credito.monto" [min]="montoInferior" [max]="montoSuperior">
                       </mat-form-field>
                     </div>
 
                     <div class="col-md-2">
                       <mat-form-field appearance="standard">
-                        <mat-label>Tiempo</mat-label>
+                        <mat-label>Meses/Años</mat-label>
                         <mat-select required (selectionChange)="seleccionarTiempo($event.value)">
                           <mat-option value="mes">Meses</mat-option>
                           <mat-option value="año">Años</mat-option>
@@ -42,8 +42,9 @@
                     <div class="col-md-2">
                       <mat-form-field appearance="standard">
                         <mat-label>Tiempo</mat-label>
-                        <input matInput placeholder="Tiempo" required [disabled]="disTiempo"
-                          (keyup)="calcularTiempo($event.target.value)" type="number">
+                        <input matInput [placeholder]="tiempoInferior + ' - ' + tiempoSuperior" required [disabled]="disTiempo"
+                          (keyup)="calcularTiempo($event.target.value)" type="number" [min]="tiempoInferior" [max]="tiempoSuperior"
+                          name="tiempo" #tiempo="ngModel" [(ngModel)]="credito.tiempo">
                       </mat-form-field>
                     </div>
 
@@ -61,7 +62,7 @@
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Interés anual %</mat-label>
-                        <input matInput placeholder="Intereses" [value]="interes | percent: '2.2-2'" disabled>
+                        <input matInput placeholder="Intereses" [value]="interes | number: '.0-2'" disabled>
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
@@ -109,8 +110,8 @@
                           </mat-expansion-panel-header>
                           <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Buscar</mat-label>
-                            <input matInput placeholder="Buscar por DUI" (keyup)="buscarDUICliente($event.target.value)"
-                              type="text" mask="00000000-0">
+                            <input matInput placeholder="Buscar por DUI, Nombres y Apellidos" (keyup)="buscarDUICliente($event.target.value)"
+                              type="text">
                           </mat-form-field>
                           <div class="table-responsive">
                             <table class="table">
@@ -158,29 +159,29 @@
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Ocupación</mat-label>
-                        <input matInput type="text" required name="ocupacion" #ocupacion="ngModel"
-                          [(ngModel)]="ingresos.ocupacion">
+                        <input matInput type="text" required name="ocupacionCliente" #ocupacionCliente="ngModel"
+                          [(ngModel)]="ingresosEgresosCliente.ocupacion">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Ingresos totales ($)</mat-label>
-                        <input matInput type="number" required name="ingresost" #ingresost="ngModel"
-                          [(ngModel)]="ingresos.ingresosTotales">
+                        <input matInput type="number" required name="ingresostCliente" #ingresostCliente="ngModel"
+                          [(ngModel)]="ingresosEgresosCliente.ingresosTotales">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Otros ingresos ($)</mat-label>
-                        <input matInput type="number" required name="otrosingresos" #otrosingresos="ngModel"
-                          [(ngModel)]="ingresos.otrosIngresos">
+                        <input matInput type="number" required name="otrosingresosCliente" #otrosingresosCliente="ngModel"
+                          [(ngModel)]="ingresosEgresosCliente.otrosIngresos">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
                         <mat-label>Egresos totales ($)</mat-label>
-                        <input matInput type="number" required name="egresos" #egresos="ngModel"
-                          [(ngModel)]="ingresos.egreso">
+                        <input matInput type="number" required name="egresosCliente" #egresosCliente="ngModel"
+                          [(ngModel)]="ingresosEgresosCliente.egresos">
                       </mat-form-field>
                     </div>
                   </div>
@@ -196,21 +197,6 @@
               <div class="card">
                 <div class="card-body">
                   <ng-template matStepLabel>Tipo de Garantía</ng-template>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <mat-label>Seleccione un tipo: </mat-label>
-                    </div>
-                    <div class="col-md-3">
-                      <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                        <mat-button-toggle type="button" (click)="cambioFiador()"
-                          style="color: #819720; font-weight: bold; ">
-                          Fiduciario</mat-button-toggle>
-                        <mat-button-toggle type="button" (click)="cambioHipotecario()"
-                          style="color: #b85687; font-weight: bold;">
-                          Hipotecario</mat-button-toggle>
-                      </mat-button-toggle-group>
-                    </div>
-                  </div>
                   <!-- FIADOR-->
                   <div [hidden]="fiador">
                     <div class="row">
@@ -235,8 +221,8 @@
                                 </mat-expansion-panel-header>
                                 <mat-form-field appearance="outline" class="example-full-width">
                                   <mat-label>Buscar</mat-label>
-                                  <input matInput placeholder="Buscar por DUI"
-                                    (keyup)="buscarDUIFiador($event.target.value)" type="text" mask="00000000-0">
+                                  <input matInput placeholder="Buscar por DUI, Nombres y Apellidos"
+                                    (keyup)="buscarDUIFiador($event.target.value)" type="text">
                                 </mat-form-field>
                                 <div class="table-responsive">
                                   <table class="table">
@@ -255,7 +241,7 @@
                                       </th>
                                     </thead>
                                     <tbody>
-                                      <tr *ngFor="let pn of listaCliente; let i = index">
+                                      <tr *ngFor="let pn of listaFiador; let i = index">
                                         <td>
                                           {{pn.dui | dui}}
                                         </td>
@@ -283,27 +269,33 @@
                           <div class="col-md-3">
                             <mat-form-field class="example-full-width" appearance="standard">
                               <mat-label>Ocupación</mat-label>
-                              <input matInput type="text" name="ocupacion" #ocupacion="ngModel"
-                                [(ngModel)]="creditoPersonal.garantiaFiador.ingresoEgreso.ocupacion">
+                              <input matInput type="text" name="ocupacionFiador" #ocupacionFiador="ngModel"
+                                [(ngModel)]="ingresoEgresoFiador.ocupacion">
                             </mat-form-field>
                           </div>
                           <div class="col-md-3">
                             <mat-form-field class="example-full-width" appearance="standard">
                               <mat-label>Ingresos mensuales ($)</mat-label>
-                              <input matInput type="number">
+                              <input matInput type="number" name="ingresostFiador" #ingresostFiador="ngModel"
+                              [(ngModel)]="ingresoEgresoFiador.ingresosTotales">
                             </mat-form-field>
                           </div>
                           <div class="col-md-3">
                             <mat-form-field class="example-full-width" appearance="standard">
                               <mat-label>Otros ingresos mensuales ($)</mat-label>
-                              <input matInput type="number">
+                              <input matInput type="number" name="otrosingresosFiador" #otrosingresosFiador="ngModel"
+                              [(ngModel)]="ingresoEgresoFiador.otrosIngresos">
                             </mat-form-field>
                           </div>
                           <div class="col-md-3">
                             <mat-form-field class="example-full-width" appearance="standard">
                               <mat-label>Egresos totales mensuales ($)</mat-label>
-                              <input matInput type="number" >
+                              <input matInput type="number" name="egresosFiador" #egresosFiador="ngModel"
+                              [(ngModel)]="ingresoEgresoFiador.egresos">
                             </mat-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <button mat-raised-button class="btn btn-primary" type="button" (click)="comprobarIngresos()">Comprobar ingresos</button>
                           </div>
                         </div>
                       </div>
@@ -312,6 +304,7 @@
 
                   <!-- HIPOTECARIO-->
                   <div [hidden]="hipotecario">
+                    <h3>Datos del bien a hipotecar</h3>
                     <div class="card">
                       <div class="card-body">
                         <div class="row">
@@ -354,8 +347,8 @@
               </div>
               <div class="row">
                 <div class="col-md-12" style="text-align: center;">
-                  <button mat-raised-button color="primary" (click)="llamarContrato()" style="margin-right: 5px;" type="button"><mat-icon>wysiwyg</mat-icon>Contrato</button>
-                  <button mat-raised-button color="warn" type="submit"><mat-icon>save</mat-icon>Guardar</button>
+                  <button mat-raised-button class="btn btn-info" (click)="llamarContrato()" style="margin-right: 5px;" type="button">Contrato</button>
+                  <button mat-raised-button class="btn btn-primary" type="submit">Guardar</button>
                 </div>
               </div>
             </mat-step>

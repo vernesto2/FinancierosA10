@@ -49,6 +49,7 @@ import { CobroComponent } from './vistas/cobro/cobro.component';
 import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
 import { RefinanciarComponent } from './vistas/refinanciar/refinanciar.component';
 import { ContratoPersonaComponent } from './reportes/contrato-persona/contrato-persona.component';
+import { InicioComponent } from './vistas/inicio/inicio.component';
 
 @NgModule({
   imports: [
@@ -95,6 +96,7 @@ import { ContratoPersonaComponent } from './reportes/contrato-persona/contrato-p
     RefinanciarComponent,
     CobroComponent,
     DepreamorComponent,
+    InicioComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

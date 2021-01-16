@@ -29,4 +29,10 @@ export class RefinanciarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  guardar() {
+
+  }
+  onCancelar() {
+    this.dialogRef.close();
+  }
 }

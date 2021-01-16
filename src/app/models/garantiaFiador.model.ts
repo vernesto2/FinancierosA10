@@ -8,5 +8,5 @@ export class GarantiaFiadorModel {
     creditoPersona: CreditoPersonalModel;
     //ingresoEgreso: Array<IngresoEgresoModel>;
     ingresoEgreso = new IngresoEgresoModel();
-    personaNatual: PersonaNaturalModel;
+    personaNatual = new PersonaNaturalModel();
 }

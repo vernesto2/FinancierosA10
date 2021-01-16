@@ -5,5 +5,5 @@ export class BienGarantiaModel {
     descripcion: string;
     valoradoEn: number;
     tipoBien: string;
-    creditos: Array<CreditoModel>;
+    creditos: CreditoModel;
 }

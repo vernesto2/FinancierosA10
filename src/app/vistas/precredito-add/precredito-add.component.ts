@@ -12,6 +12,8 @@ import { IngresoEgresoModel } from 'app/models/ingresoEgreso.model';
 import { CreditosService } from 'app/services/creditos.service';
 import { Observable } from 'rxjs';
 import { PersonaAddComponent } from '../persona-add/persona-add.component';
+import { UsuarioModel } from 'app/models/usuario.model';
+
 declare var $: any;
 
 @Component({
@@ -25,6 +27,8 @@ export class PrecreditoAddComponent implements OnInit {
   credito = new CreditoModel();
   garantiaFiador = new GarantiaFiadorModel();
   tipoCredito = '';
+
+  usuario = new UsuarioModel();
 
   forma: FormGroup;
   filteredOptions: Observable<true>; //filteredOptions: Observable<User[]>;
@@ -57,6 +61,11 @@ export class PrecreditoAddComponent implements OnInit {
   tiempoSuperior = 0;
   rangos: any;
 
+  //validacion para guardar
+  validarConsulta = true;
+  validarFormuladio = true;
+  validarGarantia = true;
+
   //ingresosEgresos
   ingresosEgresosCliente = new IngresoEgresoModel();
   ingresoEgresoFiador = new IngresoEgresoModel();
@@ -65,6 +74,8 @@ export class PrecreditoAddComponent implements OnInit {
 
   //hipotecario
   valorFinanciado = 0;
+  bienHipotecado = new BienGarantiaModel();
+  listaBien: any[] = [];
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService,
     private personaService: PersonaService) { }
@@ -76,8 +87,9 @@ export class PrecreditoAddComponent implements OnInit {
     //const fecha = año + '-' + mes + 1 + '-' + dias + 1;
 
     this.fecha = new Date(año, mes, dias);
-    this.credito.fechaAprobacion = new Date(this.fecha);
-    //console.log(this.fecha);
+    this.credito.fechaAprobacion = new Date(this.fecha.toString());
+
+    this.usuario.nit = '10060309961011';
     this.validarRangos();
   }
 
@@ -93,20 +105,64 @@ export class PrecreditoAddComponent implements OnInit {
     }
   }
 
+  separarModeloConsumo() {
+    this.creditoPersonal.personaNatural = this.clienteSel;
+    this.garantiaFiador.personaNatual = this.fiadorSel;
+    this.ingresoEgresoFiador.nota = '';
+    this.garantiaFiador.ingresoEgreso = this.ingresoEgresoFiador;
+    this.creditoPersonal.garantiaFiadors.push(this.garantiaFiador);
+    this.credito.fechaSolicitud = this.credito.fechaAprobacion;
+    this.credito.usuario = this.usuario;
+    this.credito.creditoPersona = this.creditoPersonal;
+  }
+
+  separarModeloHipoteca() {
+    this.creditoPersonal.personaNatural = this.clienteSel;
+    this.credito.bienGarantias.push(this.bienHipotecado);
+    this.credito.fechaSolicitud = this.credito.fechaAprobacion;
+    this.credito.usuario = this.usuario;
+    this.credito.creditoPersona = this.creditoPersonal;
+  }
+
+  resetearForm() {
+    this.creditoPersonal = null;
+    this.credito = null;
+    this.ingresoEgresoFiador = null;
+    this.ingresosEgresosCliente = null;
+    this.garantiaFiador = null;
+    this.clienteSel = null;
+    this.fiadorSel = null;
+    this.bienHipotecado = null;
+  }
+
   guardarCP(forma: NgForm) {
     if (forma.invalid) {
       return;
     }
-    //console.log(this.creditoPersonal);
-    this.servicesCP.agregarCreditoPersona(this.creditoPersonal).subscribe(res => {
-      //console.log(res);
+
+    if (this.tipoCredito == 'CONSUMO') {
+      this.separarModeloConsumo();
+      if (this.tipoTiempo = 'mes') {
+
+      }
+    } else {
+      this.separarModeloHipoteca();
+    }
+    this.cargandoPrecredito();
+    console.log(JSON.stringify(this.credito));
+    this.servicesCP.agregarCreditoPersona(this.credito, this.tipoCredito, this.tipoTiempo).subscribe(res => {
       if (res.status == 200) {
+        console.log(res);
         this.showNotification('top', 'right', 'Agregado Correctamente!', 'save', 'success');
+        this.resetearForm();
+        this.forma.reset();
       } else {
         this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
       }
     }, err => {
-      this.showNotification('bottom', 'right', 'Ocurrio un problema.!', 'cancel', 'danger');
+      this.resetearForm();
+      this.forma.reset();
+      this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
     });
   }
 
@@ -149,16 +205,32 @@ export class PrecreditoAddComponent implements OnInit {
     }
   }
 
+  buscarCodigoBien(value: string) {
+    if (value.length > 5) {
+      //aqui tiene q ir en EndPoint de buscar por codigo del bien
+    }
+  }
+
+  seleccionarBien(bien: BienGarantiaModel) {
+    this.bienHipotecado = bien;
+  }
+
   comprobarIngresos() {
     if (this.ingresosEgresosCliente != null && this.ingresoEgresoFiador != null) {
       console.log(this.ingresosEgresosCliente, this.ingresoEgresoFiador);
+      this.validarGarantia = false;
       this.servicesCP.comprobarIngresos(this.ingresosEgresosCliente, this.ingresoEgresoFiador).subscribe((res: any) => {
         console.log(res);
         this.mensaje = res.body.mensaje;
       }, err => {
+        this.validarGarantia = true;
         this.mensaje = err.error.mensaje;
       });
     }
+  }
+
+  validarEgresosCliente(value: string) {
+    this.validarFormuladio = false;
   }
 
   montoFinanciado(valor: number) {
@@ -168,8 +240,10 @@ export class PrecreditoAddComponent implements OnInit {
 
       if (this.credito.monto != null) {
         if (this.credito.monto >= this.valorFinanciado) {
+          this.validarGarantia = true;
           this.mensajeHipotecario = 'El monto solicitado es mayor que el valor financiado';
         } else {
+          this.validarGarantia = false;
           this.mensajeHipotecario = 'El monto solicitado es menor que el valor financiado';
         }
       }
@@ -219,20 +293,20 @@ export class PrecreditoAddComponent implements OnInit {
     });
   }
 
-  cargandoPolitica() {
+  cargandoPrecredito() {
     $.notify({
-      icon: 'replay',
+      icon: 'refresh',
       message: 'Cargando...'
 
     }, {
-      type: '',
+      type: 'info',
       placement: {
         from: 'top',
         align: 'right'
       },
       template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
         '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-        '<i class="material-icons fa-spin" data-notify="icon">replay</i> ' +
+        '<i class="material-icons fa-spin" data-notify="icon">refresh</i> ' +
         '<span data-notify="title">{1}</span> ' +
         '<span data-notify="message">{2}</span>'
     });
@@ -243,14 +317,16 @@ export class PrecreditoAddComponent implements OnInit {
     if (this.credito.monto != null && this.credito.tiempo != null) {
       ////////////////////////
       let meses;
-        if (this.tipoTiempo == 'año') {
-          meses = this.meses * 12;
-        } else {
-          meses = this.credito.tiempo;
-        }
+      if (this.tipoTiempo == 'año') {
+        meses = this.meses * 12;
+      } else {
+        meses = this.credito.tiempo;
+      }
+      console.log(meses);
       this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
         //console.log(obj);
         if (obj.status == 200) {
+          this.validarConsulta = false;
           this.listaCuotas = obj.body.cuotas;
           //console.log(obj);
           this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
@@ -261,6 +337,7 @@ export class PrecreditoAddComponent implements OnInit {
           this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
         }
       }, err => {
+        this.validarConsulta = true;
         this.activarProyeccion = true;
         this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
       });
@@ -284,21 +361,25 @@ export class PrecreditoAddComponent implements OnInit {
         } else {
           meses = this.credito.tiempo;
         }
-
+        console.log(meses);
         this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {
+            this.validarConsulta = false;
             this.listaCuotas = obj.body.cuotas;
             this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
             this.interes = obj.body.politica.tasaInteres;
             this.activarProyeccion = false;
             this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
+            this.forma.reset();
           } else {
             this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
+          this.validarConsulta = true;
           this.activarProyeccion = true;
-          this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
+          this.showNotification('top', 'right', err.error.mensaje, 'cancel', 'danger');
+          this.forma.reset();
         });
       }
     }
@@ -313,9 +394,11 @@ export class PrecreditoAddComponent implements OnInit {
         } else {
           meses = this.credito.tiempo;
         }
+        console.log(meses);
         this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {
+            this.validarConsulta = false;
             this.listaCuotas = obj.body.cuotas;
             this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
             this.interes = obj.body.politica.tasaInteres;
@@ -325,6 +408,7 @@ export class PrecreditoAddComponent implements OnInit {
             this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
+          this.validarConsulta = true;
           this.activarProyeccion = true;
           this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
         });

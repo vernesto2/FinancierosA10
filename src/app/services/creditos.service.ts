@@ -16,8 +16,12 @@ export class CreditosService {
   
   constructor(private http: HttpClient) { }
 
-  agregarCreditoPersona(creditoPersonal: CreditoPersonalModel): Observable<any> {
-    return this.http.post(`${this.base_uri}/credito`, creditoPersonal, { observe: 'response'});
+  agregarCreditoPersona(credito: CreditoModel, tipoCredito: string, tipoTiempo: string): Observable<any> {
+    if (tipoTiempo == 'año') {
+      credito.tiempo = credito.tiempo * 12;
+    }
+    console.log(credito.tiempo);
+    return this.http.post(`${this.base_uri}/credito/PERSONA/${tipoCredito}`, credito, { observe: 'response'});
   }
 
   agregarCreditoEmpresa(creditoEmp: CreditoPersonalModel): Observable<any> {

@@ -27,6 +27,7 @@ export class ActivoFijoAddComponent implements OnInit {
   adquisicionActivo= new AdquisicionActivoModel();
   nombreactivo:string;
   page=1;
+  mostrar = false;
   //combox
   listaDepartamento: any[];
   listaActivo: any[];
@@ -81,6 +82,7 @@ export class ActivoFijoAddComponent implements OnInit {
   }
 
   guardarActivo(forma: NgForm){
+    this.mostrar = true;
     if(forma.invalid){
       return;
     }
@@ -116,6 +118,7 @@ export class ActivoFijoAddComponent implements OnInit {
   }
 
   activoSelecionado(a:ActivoFijoModel){
+    this.mostrar = true;
     this.activofijo.nombre=a.nombre;
     this.activofijo=a;
     console.log(JSON.stringify(a));
@@ -125,7 +128,6 @@ export class ActivoFijoAddComponent implements OnInit {
     $.notify({
         icon: icon,
         message: message
-
     }, {
         type: type,
         timer: 4000,
@@ -152,5 +154,18 @@ export class ActivoFijoAddComponent implements OnInit {
   pasarMeses(){
     this.meses=this.vidautil;
     console.log(this.meses);
+  }
+  selectionChange(e){
+    if(e.selectedIndex==0){
+      this.mostrar=false;
+      this.activofijo.nombre="";
+    }
+    if(e.selectedIndex==1){
+      this.mostrar=false;
+    }
+  }
+
+  activo(){
+    
   }
 }

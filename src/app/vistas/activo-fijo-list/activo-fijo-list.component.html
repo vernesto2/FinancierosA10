@@ -85,7 +85,7 @@
                                                       </button> Seleccione para dar de baja a los activos fijos</p>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <button mat-raised-button class="btn btn-danger" (click)="openDialogDetalleBaja()">Dar de baja</button>
+                                                    <button mat-raised-button class="btn btn-danger" [disabled]="disable" (click)="openDialogDetalleBaja()">Dar de baja</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,6 +195,42 @@
                                     </mat-card>
                                 </div>
                 
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Agrupacion de activos">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header card-header-danger" style="text-align: center;">
+                                        <h4 class="card-title">Activos</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
+                                                    <th>
+                                                        Tipo activo
+                                                    </th>
+                                                    <th>
+                                                        Total
+                                                    </th> 
+                                                </thead>
+                                                <tbody>
+                                                   <tr (click)="activo()">
+                                                      <td style="text-align: center;"> 
+                                                      </td>
+                                                      <td style="text-align: center;">
+                                                      </td>
+                                                   </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center">
+                                                <pagination-controls (pageChange)="page = $event" previousLabel="Atras" nextLabel="Sig."></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </mat-tab>

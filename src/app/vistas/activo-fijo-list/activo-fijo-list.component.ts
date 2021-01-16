@@ -24,8 +24,7 @@ export class ActivoFijoListComponent implements OnInit {
   codigoGenerado: string;
   page = 1;
   d=null;
-  mostrarA=true;
-  mostrarB=false;
+  disable=true;
   listabaja:any[]=[];
   array=new CalculoModel();
   constructor(public dialog: MatDialog, public servicioDetalleAdquisicion: ActivoFijoService) {
@@ -36,6 +35,7 @@ export class ActivoFijoListComponent implements OnInit {
   }
   checkuncheckall(a:DetalleActivoModel,e,i:number)
   {
+    this.disable=false;
     let idPK= new DetalleActivoPKModel();
     let det= new DetalleActivoModel();
     det.codigoGenerado=a.codigoGenerado;
@@ -59,14 +59,13 @@ export class ActivoFijoListComponent implements OnInit {
   }
   llenarAdquisicionActivo() {
     this.cargando = true;
-    this.mostrarB=false;
-      this.mostrarA=true;
     this.servicioDetalleAdquisicion.listarAdquisicion().subscribe((listaA: any) => {
       this.listaAdquisicionActivo = listaA.body;
       this.cargando = false;
     })
   } 
   openDialogDetalleBaja(){
+    this.disable=true;
     const data={
       onAgrego: this.onAgrego,
     }
@@ -95,8 +94,6 @@ export class ActivoFijoListComponent implements OnInit {
 
   baja(){
     this.cargando1 = true;
-    this.mostrarA=false;
-    this.mostrarB=true;
     this.servicioDetalleAdquisicion.listardebaja().subscribe((listaA: any) => {
       this.listabaja = listaA.body;
       this.cargando1 = false;

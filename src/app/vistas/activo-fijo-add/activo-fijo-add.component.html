@@ -7,9 +7,9 @@
               <h2 class="card-title">Registro </h2>
           </div>
           <div class="card-body">
-            <mat-horizontal-stepper [linear]="valido">
+            <mat-horizontal-stepper [linear]="valido" (selectionChange)="selectionChange($event)">
               <mat-step state="p1">
-                <form (ngSubmit)="guardarActivo(forma)" #forma="ngForm">
+                <form (ngSubmit)="guardarActivo(forma)" #forma="ngForm" autocomplete="on">
                   <ng-template matStepLabel>Activo Fio</ng-template>
                    <div class="row">
                       <div class="col-md-4">
@@ -100,8 +100,17 @@
                </form>                
              </mat-step>
               <mat-step state="p2">
-                  <form (ngSubmit)="guardarAdquisicion(forma)" #forma="ngForm">
+                  <form (ngSubmit)="guardarAdquisicion(forma)" #forma="ngForm" autocomplete="off">
                       <ng-template matStepLabel>Adquisicion de Activo fijo</ng-template>
+                      <div class="text-center" *ngIf="!mostrar">
+                        <mat-card class="alert alert-warning">
+                        <mat-card-content>
+                            <mat-icon>warning</mat-icon>
+                        </mat-card-content>
+                        ¡ALERTA! Debe seleccionar o registrar un activo para poder agregar adquisicion
+                    </mat-card>
+                    </div>
+                    <div *ngIf="mostrar">
                       <div class="row">
                           <div class="col-md-6">
                             <mat-form-field appearance="legacy" >
@@ -214,6 +223,7 @@
                             </div>
                           </div>
                         </div>
+                      </div>
                   </form>
               </mat-step>
             </mat-horizontal-stepper>

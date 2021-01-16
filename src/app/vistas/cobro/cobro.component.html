@@ -64,95 +64,112 @@
                         </div>
                         <div *ngIf="!mostrar">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="NIT" required disabled>
+                                        <mat-label>DUI del cliente</mat-label>
+                                        <input matInput placeholder="Dui" disabled>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Cliente" required disabled>
+                                        <mat-label>Nombre del cliente</mat-label>
+                                        <input matInput placeholder="Cliente" disabled>
                                     </mat-form-field>
                                 </div> 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <mat-form-field appearance="legacy">
                                         <mat-label>Fecha de pago</mat-label>
-                                        <input matInput  [min]="fecha" [matDatepicker]="picker" required
-                                        name="fechaAdquisicion"
-                                        #fechaAdquisicion="ngModel" [(ngModel)]="fecha" disabled>
+                                        <input matInput  [min]="fecha" [matDatepicker]="picker" disabled>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                       </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Cuota N°" required disabled>
+                                        <mat-label>Cuota N°</mat-label>
+                                        <input matInput placeholder="Cuota N°" disabled>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Pago ($)" required disabled>
+                                        <mat-label>Monto de cuota</mat-label>
+                                        <input matInput placeholder="Monto" disabled>
                                     </mat-form-field>
-                                </div>
-                             </div>
-                             <div class="row">
-                                <div class="col-md-4">
+                                </div>                                
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <input matInput placeholder="Interes" required disabled>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
+                                        <mat-label>Abono a capital</mat-label>
+                                        <input matInput placeholder="Capital" disabled>
+                                    </mat-form-field>
+                                </div>
+                            </div>                            
+                             <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Saldo en mora</mat-label>
                                         <input matInput placeholder="Mora" required disabled>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <input matInput placeholder="Dias" required disabled>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <mat-card class="alert alert-success">
                                         Antes
                                     </mat-card>
                                 </div>
                              </div>
                              <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
+                                        <mat-label>"Efectivo recibido ($)"</mat-label>
                                         <input matInput placeholder="Monto recibido ($)" required>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
+                                        <mat-label>Monto a cancelar ($)</mat-label>
                                         <input matInput placeholder="Monto a pagar ($)" required>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
+                                        <mat-label>Interés a cancelar ($)</mat-label>
                                         <input matInput placeholder="Interes a pagar ($)" required>
                                     </mat-form-field>
-                                </div>
-                                <div class="col-md-2">
+                                </div>                                
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Cuota a pagar ($)" required disabled> 
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-2">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Capital actual" required disabled>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-2">
-                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Cambio ($)</mat-label>
                                         <input matInput placeholder="Cambio ($)" required disabled>
                                     </mat-form-field>
                                 </div>
                              </div>
+                             <div class="row">                                 
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Cuota a cancelar</mat-label>
+                                        <input matInput placeholder="Cuota a pagar ($)" disabled> 
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Capital actual</mat-label>
+                                        <input matInput placeholder="Capital actual" required disabled>
+                                    </mat-form-field>
+                                </div>
+                             </div>
                              <div class="row">
-                                 <div class="col-md-2">
+                                 <div class="col-md-3">
                                     <div mat-dialog-actions class="align-content-end">
                                         <button mat-raised-button class="btn btn-primary" type="submit" [mat-dialog-close]="true">Registrar pago</button>
                                     </div>

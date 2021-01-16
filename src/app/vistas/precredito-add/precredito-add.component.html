@@ -8,7 +8,7 @@
 
             <mat-step label="pa1" state="p1">
               <ng-template matStepLabel> Consulta de Crédito</ng-template>
-              <div class="card">
+              <div class="card" style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-2">
@@ -82,22 +82,16 @@
                 </div>
               </div>
               <div>
-                <button mat-stroked-button type="button" color="primary" matStepperNext>Siguiente</button>
+                <button mat-stroked-button type="button" color="primary" matStepperNext style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;">Siguiente</button>
               </div>
             </mat-step>
 
             <mat-step label="pa2" state="p2">
-              <div class="row">
-                <div class="col-md-3 mt-3">
-                  <button mat-stroked-button type="button" class="btn btn-primary mr-1"
-                    (click)="openDialogPersona()">Agregar Cliente</button>
-                </div>
-              </div>
-              <div class="card">
+              <div class="card" style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;">
                 <div class="card-body">
                   <ng-template matStepLabel>Formulario de Crédito</ng-template>
                   <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-9">
                       <mat-accordion>
                         <mat-expansion-panel>
                           <mat-expansion-panel-header>
@@ -153,7 +147,12 @@
                         </mat-expansion-panel>
                       </mat-accordion>
                     </div>
-                  </div>
+                    <div class="col-md-2 pt-2">
+                      <button mat-stroked-button type="button" class="btn btn-primary mr-1"
+                        (click)="openDialogPersona()">Agregar Cliente</button>
+                    </div>
+                  </div>            
+               
 
                   <div class="row">
                     <div class="col-md-3">
@@ -188,23 +187,19 @@
                 </div>
               </div>
               <div>
-                <button mat-stroked-button type="button" color="primary" class="mr-1" matStepperPrevious>Atrás</button>
-                <button mat-stroked-button type="button" color="primary" matStepperNext>Siguiente</button>
+                <button mat-stroked-button type="button" color="primary" style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;"
+                class="mr-1" matStepperPrevious>Atrás</button>
+                <button mat-stroked-button type="button" color="primary" style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;"
+                matStepperNext>Siguiente</button>
               </div>
             </mat-step>
 
             <mat-step label="pa3" state="p3">
-              <div class="card">
+              <div class="card" style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;">
                 <div class="card-body">
-                  <ng-template matStepLabel>Tipo de Garantía</ng-template>
+                  <ng-template matStepLabel>Datos de Garantía</ng-template>
                   <!-- FIADOR-->
                   <div [hidden]="fiador">
-                    <div class="row">
-                      <div class="col-md-3 pt-2">
-                        <button mat-stroked-button type="button" class="btn btn-primary"
-                          (click)="openDialogPersona()">Agregar Fiador</button>
-                      </div>
-                    </div>
                     <div class="card">
                       <div class="card-body">
                         <div class="row">
@@ -263,7 +258,11 @@
                                 </div>
                               </mat-expansion-panel>
                             </mat-accordion>
-                          </div>
+                          </div>                          
+                      <div class="col-md-2 pt-2">
+                        <button mat-stroked-button type="button" class="btn btn-primary"
+                          (click)="openDialogPersona()">Agregar Fiador</button>
+                      </div>
                         </div>
                         <div class="row">
                           <div class="col-md-3">
@@ -309,7 +308,7 @@
 
                   <!-- HIPOTECARIO-->
                   <div [hidden]="hipotecario">
-                    <h3>Datos del bien a hipotecar</h3>
+                      <h3 style="color: rgb(38, 0, 255); text-decoration: underline; text-align: center; font-weight: bold;">Datos del bien a hipotecar</h3>
                     <div class="card">
                       <div class="card-body">
                         <div class="row">
@@ -355,12 +354,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-4" style="margin-top: 12px;">
+                  <div class="row" style="margin-top: -15px;">
+                    <div class="col-md-4">
                       <button mat-stroked-button color="primary" type="button" class="mr-1"
-                        matStepperPrevious>Atrás</button>
+                      style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;" 
+                      matStepperPrevious>Atrás</button>
                       <button mat-stroked-button color="primary" type="button"
-                        (click)="stepper.reset()">Cancelar</button>
+                      style="border-color: rgb(124, 195, 207); border-style: solid; border-width: 1px;"  
+                      (click)="stepper.reset()">Cancelar</button>
                     </div>
                   </div>
                 </div>

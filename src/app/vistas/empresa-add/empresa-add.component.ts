@@ -194,10 +194,11 @@ export class EmpresaAddComponent implements OnInit {
   }
 
   buscarPorDUI(value: any) {
-    if (value.length > 5) {
+    if (value.length == 10) {
       this.personaService.buscarPor(value).subscribe((lista: any) => {
         if (lista.status == 200) {
           this.listaRepresentante = lista.body;
+          this.showNotification('top', 'right', 'DUI encontrado', 'search', 'success');
         }
         //console.log(this.listaRepresentante);
       }, err => {

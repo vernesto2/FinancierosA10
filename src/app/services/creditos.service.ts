@@ -24,13 +24,14 @@ export class CreditosService {
     return this.http.post(`${this.base_uri}/`, creditoEmp, { observe: 'response'});
   }
 
-  calcularPrecredito(monto: number, tiempo: number, tipoCredito: string, fecha: Date): Observable<any> {
-    const dias = fecha.getDate(); //sacamos los dias actual
-    const mes = fecha.getMonth(); // sacamos los meses actual
-    const año = fecha.getFullYear(); // sacamos el año actual
+  calcularPrecredito(credito: CreditoModel, tipoCredito: string): Observable<any> {
+    const dias = credito.fechaAprobacion.getDate(); //sacamos los dias actual
+    const mes = credito.fechaAprobacion.getMonth(); // sacamos los meses actual
+    const año = credito.fechaAprobacion.getFullYear(); // sacamos el año actual
 
     let fechas = año + '-' + mes+1 + '-' + dias;
-    return this.http.get(`${this.base_uri}/credito/precredito/${monto}/${tiempo}/${tipoCredito}/${fechas}`, { observe: 'response'});
+    console.log(fechas);
+    return this.http.get(`${this.base_uri}/credito/precredito/${credito.monto}/${credito.tiempo}/${tipoCredito}/${fechas}`, { observe: 'response'});
   }
 
   rangoPolitica(): Observable<any> {

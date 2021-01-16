@@ -48,7 +48,7 @@ export class EmpresaAddComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EmpresaAddComponent>, @Inject(MAT_DIALOG_DATA) public data: EmpresaModel,
     private fb: FormBuilder, public personaService: PersonaService) {
-    this.crearFormulario();
+    this.crearFormulario(); 
 
     if (data != null) {
       this.cargandoEmpresa();

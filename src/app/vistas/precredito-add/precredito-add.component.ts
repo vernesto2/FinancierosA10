@@ -2,7 +2,7 @@ import { PersonaService } from 'app/services/persona.service';
 import { PersonaNaturalModel } from './../../models/personaNatural.model';
 import { ProyeccionesComponent } from './../proyecciones/proyecciones.component';
 import { BienGarantiaModel } from './../../models/bienGarantia.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CreditoModel } from 'app/models/credito.model';
@@ -20,6 +20,7 @@ declare var $: any;
   styleUrls: ['./precredito-add.component.css']
 })
 export class PrecreditoAddComponent implements OnInit {
+  
   creditoPersonal = new CreditoPersonalModel();
   credito = new CreditoModel();
   garantiaFiador = new GarantiaFiadorModel();
@@ -52,6 +53,7 @@ export class PrecreditoAddComponent implements OnInit {
   constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService,
     private personaService: PersonaService) { }
   fecha: Date;
+
   ngOnInit(): void {
     const dias = new Date().getDate(); //sacamos los dias actual
     const mes = new Date().getMonth(); // sacamos los meses actual

@@ -36,4 +36,8 @@ export class CreditosService {
   rangoPolitica(): Observable<any> {
     return this.http.get(`${this.base_uri}/politica/rangopolitica`,  { observe: 'response'});
   }
+
+  listarCredito(): Observable<any> {
+    return this.http.get(`${this.base_uri}/politica/rangopolitica`,  { observe: 'response'});
+  }
 }

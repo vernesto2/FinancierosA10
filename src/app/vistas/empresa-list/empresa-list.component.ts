@@ -28,7 +28,7 @@ export class EmpresaListComponent implements OnInit {
   onAgrego1() {
     this.llenarEmpresa();
   }
-
+ 
   LE(value: any) {
     if (value.index == 0) {
       this.listaClientes.length = 0;

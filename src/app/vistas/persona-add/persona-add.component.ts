@@ -18,7 +18,7 @@ declare var $: any;
 })
 export class PersonaAddComponent implements OnInit {
 
-  @Output() onAgregado = new EventEmitter();
+  @Output() onAgregado = new EventEmitter(); 
 
   accion = 'Registro';
   forma: FormGroup;

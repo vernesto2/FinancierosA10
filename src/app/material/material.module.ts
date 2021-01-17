@@ -21,6 +21,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 
@@ -48,6 +49,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatExpansionModule,
     MatButtonToggleModule,
     MatCheckboxModule,
+    MatRadioModule,
   ],
   exports: [
     MatSliderModule,
@@ -70,6 +72,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatExpansionModule,
     MatButtonToggleModule,
     MatCheckboxModule,
+    MatRadioModule,
   ]
 })
 export class MaterialModule { }

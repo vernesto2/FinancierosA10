@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class CobroComponent implements OnInit {
 
   mostrar = false;
+  vercampos = true;
+
   fecha:Date;
   constructor() { 
     this.fecha=new Date();
@@ -20,4 +22,11 @@ export class CobroComponent implements OnInit {
     console.log(this.mostrar);
   }
 
+  habilitarMontos(value: number){
+    if (value == 2) { 
+      this.vercampos = false;
+    } else {
+      this.vercampos = true;
+    }
+  }
 }

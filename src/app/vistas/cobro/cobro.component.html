@@ -94,18 +94,19 @@
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <mat-label>Monto de cuota</mat-label>
+                                        <mat-label>Monto de cuota ($)</mat-label>
                                         <input matInput placeholder="Monto" disabled>
                                     </mat-form-field>
                                 </div>                                
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Interes" required disabled>
+                                        <mat-label>Abono a Interés ($)</mat-label>
+                                        <input matInput placeholder="Interes" disabled>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <mat-label>Abono a capital</mat-label>
+                                        <mat-label>Abono a capital ($)</mat-label>
                                         <input matInput placeholder="Capital" disabled>
                                     </mat-form-field>
                                 </div>
@@ -113,7 +114,7 @@
                              <div class="row">
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <mat-label>Saldo en mora</mat-label>
+                                        <mat-label>Saldo en mora ($)</mat-label>
                                         <input matInput placeholder="Mora" required disabled>
                                     </mat-form-field>
                                 </div>
@@ -128,6 +129,15 @@
                                     </mat-card>
                                 </div>
                              </div>
+                             <div class="row">                                 
+                                <div class="col-md-6">
+                                    <mat-radio-group aria-label="Select an option" (change)="habilitarMontos($event.value)">
+                                        <mat-label>Opción de pago:</mat-label>
+                                        <mat-radio-button class="ml-3" value="1">Cancelar monto mensual</mat-radio-button>
+                                        <mat-radio-button class="ml-3" value="2">Cancelar otro monto</mat-radio-button>
+                                      </mat-radio-group>
+                                </div>
+                             </div>
                              <div class="row">
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
@@ -138,27 +148,27 @@
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Monto a cancelar ($)</mat-label>
-                                        <input matInput placeholder="Monto a pagar ($)" required>
+                                        <input matInput placeholder="Monto a pagar ($)" [disabled]="vercampos" required>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Interés a cancelar ($)</mat-label>
-                                        <input matInput placeholder="Interes a pagar ($)" required>
+                                        <input matInput placeholder="Interes a pagar ($)" [disabled]="vercampos" required>
                                     </mat-form-field>
                                 </div>                                
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <mat-label>Cambio ($)</mat-label>
-                                        <input matInput placeholder="Cambio ($)" required disabled>
+                                        <mat-label>Abono a capital ($)</mat-label>
+                                        <input matInput placeholder="Abono a capital ($)" required disabled>
                                     </mat-form-field>
                                 </div>
                              </div>
                              <div class="row">                                 
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                        <mat-label>Cuota a cancelar</mat-label>
-                                        <input matInput placeholder="Cuota a pagar ($)" disabled> 
+                                        <mat-label>Cambio ($)</mat-label>
+                                        <input matInput placeholder="Cambio ($)" disabled> 
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">

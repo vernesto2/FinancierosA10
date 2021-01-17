@@ -31,7 +31,6 @@ export class PrecreditoAddComponent implements OnInit {
   usuario = new UsuarioModel();
 
   forma: FormGroup;
-  filteredOptions: Observable<true>; //filteredOptions: Observable<User[]>;
   hipotecario = true;
   fiador = true;
 

@@ -32,6 +32,14 @@ export class CreditosService {
     return this.http.post(`${this.base_uri}/credito/EMPRESA/${tipoCredito}`, credito, { observe: 'response'});
   }
 
+  consultarSiPersonaPoseeCredito(dui: string): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/librecredito/PERSONA/${dui}`, {observe: 'response'});
+  }
+
+  consultarSiEmpresaPoseeCredito(nit: string): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/librecredito/EMPRESA/${nit}`, {observe: 'response'});
+  }
+
   calcularPrecredito(monto: number, tiempo: number, tipoCredito: string, fecha: Date): Observable<any> {
     const dias = fecha.getDate(); //sacamos los dias actual
     const mes = fecha.getMonth(); // sacamos los meses actual

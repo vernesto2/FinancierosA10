@@ -22,7 +22,7 @@ declare var $: any;
   styleUrls: ['./precredito-add.component.css']
 })
 export class PrecreditoAddComponent implements OnInit {
-  
+
   creditoPersonal = new CreditoPersonalModel();
   credito = new CreditoModel();
   garantiaFiador = new GarantiaFiadorModel();
@@ -61,15 +61,12 @@ export class PrecreditoAddComponent implements OnInit {
   rangos: any;
 
   //validacion para guardar
-  validarConsulta = true;
-  validarFormuladio = true;
-  validarGarantia = true;
+  validarBoton = true;
+  clienteValido = true;
 
   //ingresosEgresos
   ingresosEgresosCliente = new IngresoEgresoModel();
   ingresoEgresoFiador = new IngresoEgresoModel();
-  mensaje = '';
-  mensajeHipotecario = '';
 
   //hipotecario
   valorFinanciado = 0;
@@ -80,7 +77,7 @@ export class PrecreditoAddComponent implements OnInit {
     private personaService: PersonaService) { }
 
   ngOnInit(): void {
-    
+
     this.iniciarFecha();
     this.usuario.nit = '10060309961011';
     this.validarRangos();
@@ -151,6 +148,8 @@ export class PrecreditoAddComponent implements OnInit {
     this.tipoTiempo = '';
     this.disTiempo = true;
     this.meses = 0;
+    this.valorFinanciado = 0;
+    this.validarBoton = true;
   }
 
   guardarCP(forma: NgForm) {
@@ -182,6 +181,17 @@ export class PrecreditoAddComponent implements OnInit {
     this.clienteSel = cliente;
     this.duiCliente = cliente.dui;
     this.nombreCliente = cliente.nombres + ' ' + cliente.apellidos;
+    this.servicesCP.consultarSiPersonaPoseeCredito(cliente.dui).subscribe((res: any) => {
+      //console.log(res);
+      if (res.status == 200) {
+        this.clienteValido = false;
+        this.showNotification('top', 'right', res.body.mensaje, 'done_all', 'success');
+      }
+    }, err => {
+      this.clienteValido = true;
+      //console.log(err);
+      this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+    });
   }
 
   buscarDUICliente(value: any) {
@@ -228,34 +238,30 @@ export class PrecreditoAddComponent implements OnInit {
 
   comprobarIngresos() {
     if (this.ingresosEgresosCliente != null && this.ingresoEgresoFiador != null) {
-      //console.log(this.ingresosEgresosCliente, this.ingresoEgresoFiador);
-      this.validarGarantia = false;
       this.servicesCP.comprobarIngresos(this.ingresosEgresosCliente, this.ingresoEgresoFiador).subscribe((res: any) => {
         //console.log(res);
-        this.mensaje = res.body.mensaje;
+        this.validarBoton = false;
+        if (res.status == 200) {
+          this.showNotification('top', 'right', res.body.mensaje, 'done_all', 'success');
+        }
       }, err => {
-        this.validarGarantia = true;
-        this.mensaje = err.error.mensaje;
+        this.validarBoton = true;
+        this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
       });
     }
   }
 
-  validarEgresosCliente(value: string) {
-    this.validarFormuladio = false;
-  }
-
   montoFinanciado(valor: number) {
     if (valor != null) {
-      //console.log(valor);
       this.valorFinanciado = (Number(valor) * 0.90);
 
       if (this.credito.monto != null) {
         if (this.credito.monto >= this.valorFinanciado) {
-          this.validarGarantia = true;
-          this.mensajeHipotecario = 'El monto solicitado es mayor que el valor financiado';
+          this.validarBoton = true;
+          this.showNotification('top', 'right', 'El monto solicitado no puede ser financiado', 'cancel', 'danger');
         } else {
-          this.validarGarantia = false;
-          this.mensajeHipotecario = 'El monto solicitado es menor que el valor financiado';
+          this.validarBoton = false;
+          this.showNotification('top', 'right', 'El monto solicitado si puede ser financiado', 'done_all', 'success');
         }
       }
     }
@@ -337,7 +343,6 @@ export class PrecreditoAddComponent implements OnInit {
       this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
         //console.log(obj);
         if (obj.status == 200) {
-          this.validarConsulta = false;
           this.listaCuotas = obj.body.cuotas;
           //console.log(obj);
           this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
@@ -348,9 +353,8 @@ export class PrecreditoAddComponent implements OnInit {
           this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
         }
       }, err => {
-        this.validarConsulta = true;
         this.activarProyeccion = true;
-        this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
+        this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
       });
     }
 
@@ -376,7 +380,6 @@ export class PrecreditoAddComponent implements OnInit {
         this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {
-            this.validarConsulta = false;
             this.listaCuotas = obj.body.cuotas;
             this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
             this.interes = obj.body.politica.tasaInteres;
@@ -386,9 +389,8 @@ export class PrecreditoAddComponent implements OnInit {
             this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
-          this.validarConsulta = true;
           this.activarProyeccion = true;
-          this.showNotification('top', 'right', err.error.mensaje, 'cancel', 'danger');
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       }
     }
@@ -407,7 +409,6 @@ export class PrecreditoAddComponent implements OnInit {
         this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {
-            this.validarConsulta = false;
             this.listaCuotas = obj.body.cuotas;
             this.cuota = this.listaCuotas[0].interes + this.listaCuotas[0].capitalAmortizado;
             this.interes = obj.body.politica.tasaInteres;
@@ -417,9 +418,8 @@ export class PrecreditoAddComponent implements OnInit {
             this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
-          this.validarConsulta = true;
           this.activarProyeccion = true;
-          this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
+          this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
         });
       }
     }

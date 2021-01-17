@@ -41,6 +41,8 @@ export class CreditoEmpresaAddComponent implements OnInit {
   tipoTiempo = '';
   disTiempo = true;
   meses = 0;
+  validarBoton = true;
+  clienteValido = true;
 
   //Para seleccionar Cliente y Fiador
   listaCliente: any[] = [];
@@ -116,6 +118,9 @@ export class CreditoEmpresaAddComponent implements OnInit {
     this.tipoTiempo = '';
     this.disTiempo = true;
     this.meses = 0;
+    this.validarBoton = true;
+    this.mensajeHipotecario = '';
+    this.valorFinanciado = 0;
   }
 
   guardarCP(forma: NgForm) {
@@ -128,8 +133,6 @@ export class CreditoEmpresaAddComponent implements OnInit {
         this.showNotification('top', 'right', 'Agregado Correctamente!', 'save', 'success');
         this.resetearForm();
         this.iniciarFecha();
-      } else {
-        this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
       }
     }, err => {
       this.resetearForm();
@@ -143,6 +146,17 @@ export class CreditoEmpresaAddComponent implements OnInit {
     this.clienteSel = cliente;
     this.duiCliente = cliente.nit;
     this.nombreCliente = cliente.nombre;
+    this.servicesCP.consultarSiEmpresaPoseeCredito(cliente.nit).subscribe((res: any) => {
+      //console.log(res);
+      if (res.status == 200) {
+        this.clienteValido = false;
+        this.showNotification('top', 'right', res.body.mensaje, 'done_all', 'success');
+      }
+    }, err => {
+      this.clienteValido = true;
+      //console.log(err);
+      this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+    });
   }
 
   buscarDUICliente(value?: any) {
@@ -172,11 +186,15 @@ export class CreditoEmpresaAddComponent implements OnInit {
       this.valorFinanciado = (Number(valor) * 0.90);
 
       if (this.credito.monto != null) {
-        if (this.credito.monto >= this.valorFinanciado) {
-          this.mensajeHipotecario = 'El monto solicitado es mayor que el valor financiado';
+        if ((this.credito.monto >= this.valorFinanciado)) {
+          this.validarBoton = true;
+          this.showNotification('bottom', 'right', 'El monto solicitado no puede ser financiado', 'cancel', 'danger');
         } else {
-          this.mensajeHipotecario = 'El monto solicitado es menor que el valor financiado';
+          this.validarBoton = false;
+          this.showNotification('top', 'right', 'El monto solicitado si puede ser financiado', 'done_all', 'success');
         }
+      } else {
+        this.showNotification('bottom', 'right', 'No se ingreso un monto a solicitar', 'cancel', 'danger');
       }
     }
   }
@@ -245,7 +263,6 @@ export class CreditoEmpresaAddComponent implements OnInit {
   seleccionarTipo(tipo: string) {
     this.tipoCredito = tipo;
     if (this.credito.monto != null && this.credito.tiempo != null) {
-      ////////////////////////
       let meses;
       if (this.tipoTiempo == 'año') {
         meses = this.meses * 12;
@@ -262,12 +279,10 @@ export class CreditoEmpresaAddComponent implements OnInit {
           this.interes = obj.body.politica.tasaInteres;
           this.activarProyeccion = false;
           this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-        } else {
-          this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
         }
       }, err => {
         this.activarProyeccion = true;
-        this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
+        this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
       });
     }
   }
@@ -292,19 +307,17 @@ export class CreditoEmpresaAddComponent implements OnInit {
             this.interes = obj.body.politica.tasaInteres;
             this.activarProyeccion = false;
             this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-          } else {
-            this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
           this.activarProyeccion = true;
-          this.showNotification('top', 'right', err.error.mensaje, 'cancel', 'danger');
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
         });
       }
     }
   }
 
   calcularMonto(value: number) {
-    if (this.tipoCredito != '' && this.credito.tiempo != null) {
+    if (this.tipoCredito !== '' && this.credito.tiempo != null) {
       if (value >= this.montoInferior && value <= this.montoSuperior) {
         let meses;
         if (this.tipoTiempo == 'año') {
@@ -321,15 +334,28 @@ export class CreditoEmpresaAddComponent implements OnInit {
             this.interes = obj.body.politica.tasaInteres;
             this.activarProyeccion = false;
             this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-          } else {
-            this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
           this.activarProyeccion = true;
-          this.showNotification('top', 'right', 'Política no encontrada', 'cancel', 'danger');
+          this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
         });
       }
     }
+
+    if (this.valorFinanciado !== 0) {
+      if (this.credito.monto != null) {
+        if (this.credito.monto >= this.valorFinanciado) {
+          this.validarBoton = true;
+          this.showNotification('bottom', 'right', 'El monto solicitado no puede ser financiado', 'cancel', 'danger');
+        } else {
+          this.validarBoton = false;
+          this.showNotification('top', 'right', 'El monto solicitado si puede ser financiado', 'done_all', 'success');
+        }
+      } else {
+        this.showNotification('bottom', 'right', 'No se ingreso un monto a solicitar', 'cancel', 'danger');
+      }
+    }
+
   }
 
   seleccionarTiempo(value: string) {

@@ -24,8 +24,12 @@ export class CreditosService {
     return this.http.post(`${this.base_uri}/credito/PERSONA/${tipoCredito}`, credito, { observe: 'response'});
   }
 
-  agregarCreditoEmpresa(creditoEmp: CreditoPersonalModel): Observable<any> {
-    return this.http.post(`${this.base_uri}/`, creditoEmp, { observe: 'response'});
+  agregarCreditoEmpresa(credito: CreditoModel, tipoCredito: string, tipoTiempo: string): Observable<any> {
+    if (tipoTiempo == 'año') {
+      credito.tiempo = credito.tiempo * 12;
+    }
+    console.log(credito.tiempo);
+    return this.http.post(`${this.base_uri}/credito/EMPRESA/${tipoCredito}`, credito, { observe: 'response'});
   }
 
   calcularPrecredito(monto: number, tiempo: number, tipoCredito: string, fecha: Date): Observable<any> {

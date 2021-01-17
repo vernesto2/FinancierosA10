@@ -81,6 +81,13 @@ export class PrecreditoAddComponent implements OnInit {
     private personaService: PersonaService) { }
 
   ngOnInit(): void {
+    
+    this.iniciarFecha();
+    this.usuario.nit = '10060309961011';
+    this.validarRangos();
+  }
+
+  iniciarFecha() {
     const dias = new Date().getDate(); //sacamos los dias actual
     const mes = new Date().getMonth(); // sacamos los meses actual
     const año = new Date().getFullYear(); // sacamos el año actual
@@ -88,9 +95,6 @@ export class PrecreditoAddComponent implements OnInit {
 
     this.fecha = new Date(año, mes, dias);
     this.credito.fechaAprobacion = new Date(this.fecha.toString());
-
-    this.usuario.nit = '10060309961011';
-    this.validarRangos();
   }
 
   cambioFiador() {
@@ -125,40 +129,51 @@ export class PrecreditoAddComponent implements OnInit {
   }
 
   resetearForm() {
-    this.creditoPersonal = null;
-    this.credito = null;
-    this.ingresoEgresoFiador = null;
-    this.ingresosEgresosCliente = null;
-    this.garantiaFiador = null;
-    this.clienteSel = null;
-    this.fiadorSel = null;
-    this.bienHipotecado = null;
+    this.creditoPersonal = new CreditoPersonalModel();
+    this.credito = new CreditoModel();
+    this.ingresoEgresoFiador = new IngresoEgresoModel();
+    this.ingresosEgresosCliente = new IngresoEgresoModel();
+    this.garantiaFiador = new GarantiaFiadorModel();
+    this.clienteSel = new PersonaNaturalModel();
+    this.fiadorSel = new PersonaNaturalModel();
+    this.bienHipotecado = new BienGarantiaModel();
+    this.duiCliente = 'DUI';
+    this.duiFiador = 'DUI';
+    this.nombreCliente = 'Nombres';
+    this.nombreFiador = 'Nombres';
+    this.montoInferior = 0;
+    this.montoSuperior = 0;
+    this.tiempoInferior = 0;
+    this.tiempoSuperior = 0;
+    this.activarProyeccion = true;
+    this.cuota = '';
+    this.interes = '';
+    this.capital = '';
+    this.tipoTiempo = '';
+    this.disTiempo = true;
+    this.meses = 0;
   }
 
   guardarCP(forma: NgForm) {
 
     if (this.tipoCredito == 'CONSUMO') {
       this.separarModeloConsumo();
-      if (this.tipoTiempo = 'mes') {
-
-      }
     } else {
       this.separarModeloHipoteca();
     }
     this.cargandoPrecredito();
-    console.log(JSON.stringify(this.credito));
     this.servicesCP.agregarCreditoPersona(this.credito, this.tipoCredito, this.tipoTiempo).subscribe(res => {
       if (res.status == 200) {
-        console.log(res);
+        //console.log(res);
         this.showNotification('top', 'right', 'Agregado Correctamente!', 'save', 'success');
         this.resetearForm();
-        this.forma.reset();
+        this.iniciarFecha();
       } else {
         this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
       }
     }, err => {
       this.resetearForm();
-      this.forma.reset();
+      this.iniciarFecha();
       this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
     });
   }
@@ -214,10 +229,10 @@ export class PrecreditoAddComponent implements OnInit {
 
   comprobarIngresos() {
     if (this.ingresosEgresosCliente != null && this.ingresoEgresoFiador != null) {
-      console.log(this.ingresosEgresosCliente, this.ingresoEgresoFiador);
+      //console.log(this.ingresosEgresosCliente, this.ingresoEgresoFiador);
       this.validarGarantia = false;
       this.servicesCP.comprobarIngresos(this.ingresosEgresosCliente, this.ingresoEgresoFiador).subscribe((res: any) => {
-        console.log(res);
+        //console.log(res);
         this.mensaje = res.body.mensaje;
       }, err => {
         this.validarGarantia = true;
@@ -232,7 +247,7 @@ export class PrecreditoAddComponent implements OnInit {
 
   montoFinanciado(valor: number) {
     if (valor != null) {
-      console.log(valor);
+      //console.log(valor);
       this.valorFinanciado = (Number(valor) * 0.90);
 
       if (this.credito.monto != null) {
@@ -319,7 +334,7 @@ export class PrecreditoAddComponent implements OnInit {
       } else {
         meses = this.credito.tiempo;
       }
-      console.log(meses);
+      //console.log(meses);
       this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
         //console.log(obj);
         if (obj.status == 200) {
@@ -358,7 +373,7 @@ export class PrecreditoAddComponent implements OnInit {
         } else {
           meses = this.credito.tiempo;
         }
-        console.log(meses);
+        //console.log(meses);
         this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {
@@ -389,7 +404,7 @@ export class PrecreditoAddComponent implements OnInit {
         } else {
           meses = this.credito.tiempo;
         }
-        console.log(meses);
+        //console.log(meses);
         this.servicesCP.calcularPrecredito(this.credito.monto, meses, this.tipoCredito, this.credito.fechaAprobacion).subscribe((obj: any) => {
           //console.log(obj);
           if (obj.status == 200) {

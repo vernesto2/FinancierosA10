@@ -79,7 +79,8 @@
                                 <div class="col-md-3">
                                     <mat-form-field appearance="legacy">
                                         <mat-label>Fecha de pago</mat-label>
-                                        <input matInput  [min]="fecha" [matDatepicker]="picker" disabled>
+                                        <input matInput  [min]="fecha" [matDatepicker]="picker" 
+                                        [value]="fecha" disabled>
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                       </mat-form-field>
@@ -131,7 +132,7 @@
                              </div>
                              <div class="row">                                 
                                 <div class="col-md-6">
-                                    <mat-radio-group aria-label="Select an option" (change)="habilitarMontos($event.value)">
+                                    <mat-radio-group color="warn" aria-label="Select an option" (change)="habilitarMontos($event.value)">
                                         <mat-label>Opción de pago:</mat-label>
                                         <mat-radio-button class="ml-3" value="1">Cancelar monto mensual</mat-radio-button>
                                         <mat-radio-button class="ml-3" value="2">Cancelar otro monto</mat-radio-button>
@@ -142,25 +143,29 @@
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>"Efectivo recibido ($)"</mat-label>
-                                        <input matInput placeholder="Monto recibido ($)" required>
+                                        <input matInput placeholder="Monto recibido ($)" 
+                                         type="number" (keyup)="efectivoEstablecer($event.target.value)" required>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Monto a cancelar ($)</mat-label>
-                                        <input matInput placeholder="Monto a pagar ($)" [disabled]="vercampos" required>
+                                        <input matInput placeholder="Monto a pagar ($)" [disabled]="vercampos" 
+                                        type="number" (keyup)="calcularCambio($event.target.value)" required>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Interés a cancelar ($)</mat-label>
-                                        <input matInput placeholder="Interes a pagar ($)" [disabled]="vercampos" required>
+                                        <input matInput placeholder="Interes a pagar ($)" [disabled]="vercampos" 
+                                        type="number" required>
                                     </mat-form-field>
                                 </div>                                
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Abono a capital ($)</mat-label>
-                                        <input matInput placeholder="Abono a capital ($)" required disabled>
+                                        <input matInput placeholder="Abono a capital ($)" 
+                                        type="number" required disabled>
                                     </mat-form-field>
                                 </div>
                              </div>
@@ -168,7 +173,8 @@
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Cambio ($)</mat-label>
-                                        <input matInput placeholder="Cambio ($)" disabled> 
+                                        <input matInput placeholder="Cambio ($)" type="number" 
+                                        [value]="cambio" disabled> 
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">

@@ -10,23 +10,51 @@ export class CobroComponent implements OnInit {
   mostrar = false;
   vercampos = true;
 
-  fecha:Date;
+  efectivo: any;
+  montoCancelar: any;
+  cambio: any;
+  fecha: Date;
+
   constructor() { 
-    this.fecha=new Date();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.iniciarFecha();
   }
 
-  mensaje(){
+  mensaje() {
     console.log(this.mostrar);
   }
 
-  habilitarMontos(value: number){
-    if (value == 2) { 
+  habilitarMontos(value: number) {
+    if (value == 2) {
       this.vercampos = false;
     } else {
       this.vercampos = true;
     }
+  }
+
+  calcularCambio(value: number) {
+    this.montoCancelar = value;
+    if (this.efectivo != null) {
+      this.cambio = this.efectivo - this.montoCancelar;
+    }
+    
+  }
+
+  efectivoEstablecer(value: number) { 
+    this.efectivo = value;
+    if (this.montoCancelar != null) {
+      this.cambio = this.efectivo - this.montoCancelar;
+    }
+  }
+
+  iniciarFecha() {
+    const dias = new Date().getDate(); //sacamos los dias actual
+    const mes = new Date().getMonth(); // sacamos los meses actual
+    const año = new Date().getFullYear(); // sacamos el año actual
+    //const fecha = año + '-' + mes + 1 + '-' + dias + 1;
+
+    this.fecha = new Date(año, mes, dias);
   }
 }

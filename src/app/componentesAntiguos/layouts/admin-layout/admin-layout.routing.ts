@@ -12,8 +12,7 @@ import { CobroComponent } from 'app/vistas/cobro/cobro.component';
 import { InicioComponent } from 'app/vistas/inicio/inicio.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: '',      redirectTo: 'activofijo' }, //por defecto va mostrar esta ruta en caso que la url este vacia
-    { path: 'dashboard',      component: DashboardComponent },
+    { path: '',      redirectTo: 'inicio' }, //por defecto va mostrar esta ruta en caso que la url este vacia
     { path: 'activofijo',  component: ActivoFijoListComponent },
     { path: 'clientes-persona',  component: PersonaListComponent },
     { path: 'clientes-empresa',  component: EmpresaListComponent },

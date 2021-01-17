@@ -35,7 +35,7 @@ export class SidebarComponent implements OnInit {
       tipoUsuario: 'Admin'
     }
     for (let i = 0; i < ROUTES.length; i++) {
-      if (usuario.tipoUsuario == "Admin" && (i < 9)) {
+      if (usuario.tipoUsuario == "Admin" && (i < 10)) {
         this.menuItems.push(ROUTES[i]);
       }
     }

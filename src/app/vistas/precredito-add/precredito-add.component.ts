@@ -136,9 +136,6 @@ export class PrecreditoAddComponent implements OnInit {
   }
 
   guardarCP(forma: NgForm) {
-    if (forma.invalid) {
-      return;
-    }
 
     if (this.tipoCredito == 'CONSUMO') {
       this.separarModeloConsumo();
@@ -371,7 +368,6 @@ export class PrecreditoAddComponent implements OnInit {
             this.interes = obj.body.politica.tasaInteres;
             this.activarProyeccion = false;
             this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-            this.forma.reset();
           } else {
             this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
@@ -379,7 +375,6 @@ export class PrecreditoAddComponent implements OnInit {
           this.validarConsulta = true;
           this.activarProyeccion = true;
           this.showNotification('top', 'right', err.error.mensaje, 'cancel', 'danger');
-          this.forma.reset();
         });
       }
     }

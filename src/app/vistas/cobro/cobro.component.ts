@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CreditosService } from 'app/services/creditos.service';
 
 @Component({
   selector: 'app-cobro',
@@ -9,17 +10,21 @@ export class CobroComponent implements OnInit {
 
   mostrar = false;
   vercampos = true;
+  cargando = false;
+  listaCreditoPersonal: any[] = [];
+  page = 1;
 
   efectivo: any;
   montoCancelar: any;
   cambio: any;
   fecha: Date;
 
-  constructor() { 
+  constructor(public serviceCP: CreditosService) { 
   }
 
   ngOnInit(): void { 
     this.iniciarFecha();
+    this.llenarCreditoPersonal();
   }
 
   mensaje() {
@@ -57,4 +62,14 @@ export class CobroComponent implements OnInit {
 
     this.fecha = new Date(año, mes, dias);
   }
+
+  llenarCreditoPersonal() {
+    this.cargando = true;
+    this.serviceCP.listaCreditoPersonaEnCurso().subscribe((res: any) => {
+      this.listaCreditoPersonal = res.body;
+      console.log(this.listaCreditoPersonal);
+      this.cargando = false;
+    });
+  }
+ 
 }

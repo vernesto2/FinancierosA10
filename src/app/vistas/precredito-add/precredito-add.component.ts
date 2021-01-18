@@ -72,6 +72,8 @@ export class PrecreditoAddComponent implements OnInit {
   valorFinanciado = 0;
   bienHipotecado = new BienGarantiaModel();
   listaBien: any[] = [];
+  codigoBienSel = 'Código';
+  tipoBienSel = 'Tipo de bien';
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public servicesCP: CreditosService,
     private personaService: PersonaService) { }
@@ -150,6 +152,8 @@ export class PrecreditoAddComponent implements OnInit {
     this.meses = 0;
     this.valorFinanciado = 0;
     this.validarBoton = true;
+    this.codigoBienSel = 'Código';
+    this.tipoBienSel = 'Tipo de bien';
   }
 
   guardarCP(forma: NgForm) {
@@ -189,7 +193,7 @@ export class PrecreditoAddComponent implements OnInit {
       }
     }, err => {
       this.clienteValido = true;
-      //console.log(err);
+      console.log(err);
       this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
     });
   }
@@ -234,6 +238,19 @@ export class PrecreditoAddComponent implements OnInit {
 
   seleccionarBien(bien: BienGarantiaModel) {
     this.bienHipotecado = bien;
+    this.codigoBienSel = bien.codigo;
+    this.tipoBienSel = bien.tipoBien;
+    this.servicesCP.consultarSiBiengarantiaPoseeCredito(bien.codigo).subscribe((res: any) => {
+      //console.log(res);
+      if (res.status == 200) {
+        this.clienteValido = false;
+        this.showNotification('top', 'right', res.body.mensaje, 'done_all', 'success');
+      }
+    }, err => {
+      this.clienteValido = true;
+      //console.log(err);
+      this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+    });
   }
 
   comprobarIngresos() {

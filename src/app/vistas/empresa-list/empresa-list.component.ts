@@ -33,6 +33,7 @@ export class EmpresaListComponent implements OnInit {
     if (value.index == 0) {
       this.listaClientes.length = 0;
       this.llenarEmpresa();
+      
     } else if (value.index == 1) {
       this.listaEmpresa.length = 0;
       this.llenarCliente();

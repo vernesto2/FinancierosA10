@@ -43,6 +43,8 @@ export class CreditoEmpresaAddComponent implements OnInit {
   meses = 0;
   validarBoton = true;
   clienteValido = true;
+  codigoBienSel = 'Código';
+  tipoBienSel = 'Tipo de bien';
 
   //Para seleccionar Cliente y Fiador
   listaCliente: any[] = [];
@@ -121,6 +123,8 @@ export class CreditoEmpresaAddComponent implements OnInit {
     this.validarBoton = true;
     this.mensajeHipotecario = '';
     this.valorFinanciado = 0;
+    this.codigoBienSel = 'Código';
+    this.tipoBienSel = 'Tipo de bien';
   }
 
   guardarCP(forma: NgForm) {
@@ -178,6 +182,19 @@ export class CreditoEmpresaAddComponent implements OnInit {
 
   seleccionarBien(bien: BienGarantiaModel) {
     this.bienHipotecado = bien;
+    this.codigoBienSel = bien.codigo;
+    this.tipoBienSel = bien.tipoBien;
+    this.servicesCP.consultarSiBiengarantiaPoseeCredito(bien.codigo).subscribe((res: any) => {
+      //console.log(res);
+      if (res.status == 200) {
+        this.clienteValido = false;
+        this.showNotification('top', 'right', res.body.mensaje, 'done_all', 'success');
+      }
+    }, err => {
+      this.clienteValido = true;
+      //console.log(err);
+      this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+    });
   }
 
   montoFinanciado(valor: number) {

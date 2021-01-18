@@ -77,9 +77,10 @@ export class CobroComponent implements OnInit {
   }
  
   seleccionarCredito(value: any) { 
+    this.mostrar = true;
     this.dui = value.dui;
     this.nombres = value.nombres + value.apellidos; 
     this.saldoActual = value.capitalrestante;
-    //console.log(value);
+    console.log(value);
   }
 }

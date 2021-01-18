@@ -106,7 +106,7 @@
                             <mat-step state="p2">
                                 <form>
                                     <ng-template matStepLabel>Cobro</ng-template>
-                                    <div class="text-center" *ngIf="mostrar">
+                                    <div class="text-center" *ngIf="!mostrar">
                                         <mat-card class="alert alert-warning">
                                             <mat-card-content>
                                                 <mat-icon>warning</mat-icon>
@@ -114,7 +114,7 @@
                                             ¡ALERTA! Debe seleccionar una persona para poder hacer el cobro
                                         </mat-card>
                                     </div>
-                                    <div *ngIf="!mostrar">
+                                    <div *ngIf="mostrar">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">

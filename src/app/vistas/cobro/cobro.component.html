@@ -59,7 +59,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <div mat-dialog-actions class="align-content-end">
-                                                                        <button mat-button matStepperNext type="button"
+                                                                        <button mat-button matStepperNext (click)="seleccionarCredito(pn)" type="button"
                                                                             color="primary" style="margin-top: -60px;">
                                                                             <mat-icon>check_box_outline_blank</mat-icon>
                                                                         </button>
@@ -106,7 +106,7 @@
                             <mat-step state="p2">
                                 <form>
                                     <ng-template matStepLabel>Cobro</ng-template>
-                                    <div class="text-center" *ngIf="mostrar">
+                                    <div class="text-center" *ngIf="!mostrar">
                                         <mat-card class="alert alert-warning">
                                             <mat-card-content>
                                                 <mat-icon>warning</mat-icon>
@@ -114,18 +114,20 @@
                                             ¡ALERTA! Debe seleccionar una persona para poder hacer el cobro
                                         </mat-card>
                                     </div>
-                                    <div *ngIf="!mostrar">
+                                    <div *ngIf="mostrar">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">
                                                     <mat-label>DUI del cliente</mat-label>
-                                                    <input matInput placeholder="Dui" disabled>
+                                                    <input matInput placeholder="Dui" 
+                                                    [value]="dui" disabled>
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">
                                                     <mat-label>Nombre del cliente</mat-label>
-                                                    <input matInput placeholder="Cliente" disabled>
+                                                    <input matInput placeholder="Cliente" 
+                                                    [value]="nombres" disabled>
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-3">
@@ -237,7 +239,8 @@
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">
                                                     <mat-label>Capital actual</mat-label>
-                                                    <input matInput placeholder="Capital actual" required disabled>
+                                                    <input matInput placeholder="Capital actual" 
+                                                    [value]="saldoActual | number: '.2-3'" disabled>
                                                 </mat-form-field>
                                             </div>
                                         </div>

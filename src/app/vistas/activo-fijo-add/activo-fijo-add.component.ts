@@ -158,7 +158,6 @@ export class ActivoFijoAddComponent implements OnInit {
   selectionChange(e){
     if(e.selectedIndex==0){
       this.mostrar=false;
-      this.activofijo.nombre="";
     }
     if(e.selectedIndex==1){
       this.mostrar=false;

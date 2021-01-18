@@ -111,7 +111,7 @@
                           </mat-expansion-panel-header>
                           <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Buscar</mat-label>
-                            <input matInput placeholder="Buscar por NIT de la empresa" (keyup)="buscarNitoNombre($event.target.value)"
+                            <input matInput placeholder="Buscar por NIT de la empresa" (blur)="buscarNitoNombre($event.target.value)"
                               type="text">
                           </mat-form-field>
                           <div class="table-responsive">
@@ -167,22 +167,22 @@
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <mat-label>Ingresos totales ($)</mat-label>
+                        <mat-label>Ingresos totales mensuales($)</mat-label>
                         <input matInput type="number" required name="ingresostCliente" #ingresostCliente="ngModel"
                           [(ngModel)]="ingresosEgresosCliente.ingresosTotales">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <mat-label>Otros ingresos ($)</mat-label>
+                        <mat-label>Otros ingresos mensuales($)</mat-label>
                         <input matInput type="number" required name="otrosingresosCliente" #otrosingresosCliente="ngModel"
                           [(ngModel)]="ingresosEgresosCliente.otrosIngresos">
                       </mat-form-field>
                     </div>
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width" appearance="standard">
-                        <mat-label>Egresos totales ($)</mat-label>
-                        <input matInput type="number" required name="egresosCliente" #egresosCliente="ngModel"
+                        <mat-label>Egresos totales mensuales($)</mat-label>
+                        <input matInput type="number" required (keyup)="vefirifcarIngresos($event.target.value)" name="egresosCliente" #egresosCliente="ngModel"
                           [(ngModel)]="ingresosEgresosCliente.egresos">
                       </mat-form-field>
                     </div>
@@ -221,7 +221,7 @@
                                 <mat-form-field appearance="outline" class="example-full-width">
                                   <mat-label>Buscar</mat-label>
                                   <input matInput placeholder="Buscar por DUI, Nombres y Apellidos"
-                                    (keyup)="buscarCodigoBien($event.target.value)" type="text">
+                                    (blur)="buscarCodigoBien($event.target.value)" type="text">
                                 </mat-form-field>
                                 <div class="table-responsive">
                                   <table class="table">
@@ -328,8 +328,12 @@
               </div>
               <div class="row">
                 <div class="col-md-12" style="text-align: center;">
-                  <button mat-raised-button class="btn btn-info" (click)="llamarContrato()" style="margin-right: 5px;" type="button">Contrato</button>
                   <button mat-raised-button class="btn btn-primary" [disabled]="validarBoton && clienteValido" type="submit">Guardar</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" style="text-align: center;">
+                  <a href="../../../assets/modelo/modelodecredito.pdf" target="_blank">Click para ver modelo de credito</a>
                 </div>
               </div>
             </mat-step>

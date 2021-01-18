@@ -198,6 +198,17 @@ export class PrecreditoAddComponent implements OnInit {
     });
   }
 
+  vefirifcarIngresos(value: number){
+    if(value>(this.ingresosEgresosCliente.ingresosTotales+this.ingresosEgresosCliente.otrosIngresos)){
+      this.showNotification('bottom', 'right', 'Los egresos deben ser menor que los ingresos', 'cancel', 'danger');
+    }
+  } 
+
+  vefirifcarIngresosFiador(value: number){
+    if(value>(this.ingresoEgresoFiador.ingresosTotales+this.ingresoEgresoFiador.otrosIngresos)){
+      this.showNotification('bottom', 'right', 'Los egresos deben ser menor que los ingresos', 'cancel', 'danger');
+    }
+  }
   buscarDUICliente(value: any) {
     //console.log(value.length);
     if (value.length > 5) {

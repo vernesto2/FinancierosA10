@@ -13,6 +13,8 @@ import { IngresoEgresoModel } from 'app/models/ingresoEgreso.model';
 import { UsuarioModel } from 'app/models/usuario.model';
 import { ProyeccionesComponent } from '../proyecciones/proyecciones.component';
 import { PersonaService } from 'app/services/persona.service';
+import { EmpresaAddComponent } from '../empresa-add/empresa-add.component';
+import { PersonaAddComponent } from '../persona-add/persona-add.component';
 
 declare var $: any;
 
@@ -76,7 +78,6 @@ export class CreditoEmpresaAddComponent implements OnInit {
     this.iniciarFecha();
     this.usuario.nit = '10060309961011';
     this.validarRangos();
-    this.buscarDUICliente();
   }
 
   iniciarFecha() {
@@ -163,20 +164,33 @@ export class CreditoEmpresaAddComponent implements OnInit {
     });
   }
 
-  buscarDUICliente(value?: any) {
-    //console.log(value.length);
-      this.personaService.listarEmpresa().subscribe((lista: any) => {
-        this.listaCliente = lista.body;
-        console.log(lista.body);
-        this.showNotification('top', 'right', 'Empresa encontrada', 'search', 'success');
-      }, err => {
-        this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
-      });
+  buscarNitoNombre(value?: string) {
+      if (value.length > 7) {
+        this.servicesCP.buscarNitNombreEmpresa(value).subscribe((lista: any) => {
+          console.log(lista);
+          this.listaCliente = lista.body;
+          this.showNotification('top', 'right', 'Empresa encontrada', 'search', 'success');
+        }, err => {
+          this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+        });
+      }
   }
 
   buscarCodigoBien(value: string) {
+    this.listaBien = [];
     if (value.length > 5) {
       //aqui tiene q ir en EndPoint de buscar por codigo del bien
+      console.log(value);
+      this.servicesCP.obtenerBienPorCodigo(value).subscribe((resp: any) => {
+        if (resp.status == 200) {
+          this.listaBien.push(resp.body.objeto);
+          this.showNotification('top', 'right', 'Bien encontrado', 'search', 'success');
+        }
+      }, err => {
+        if (err.error.objeto == null) {
+          this.showNotification('bottom', 'right', 'Bien no encontrado', 'cancel', 'danger');
+        }
+      });
     }
   }
 
@@ -184,6 +198,9 @@ export class CreditoEmpresaAddComponent implements OnInit {
     this.bienHipotecado = bien;
     this.codigoBienSel = bien.codigo;
     this.tipoBienSel = bien.tipoBien;
+    this.bienHipotecado = bien;
+    this.valorFinanciado = this.bienHipotecado.valoradoEn * 0.90;
+    this.listaBien = null;
     this.servicesCP.consultarSiBiengarantiaPoseeCredito(bien.codigo).subscribe((res: any) => {
       //console.log(res);
       if (res.status == 200) {
@@ -230,6 +247,16 @@ export class CreditoEmpresaAddComponent implements OnInit {
       monto: this.credito.monto
     }
     const dialogref = this.dialog.open(ProyeccionesComponent, { data: info });
+    dialogref.beforeClosed().subscribe(res => { });
+  }
+
+  openDialogEmpresa() {
+    const dialogref = this.dialog.open(EmpresaAddComponent, {});
+    dialogref.beforeClosed().subscribe(res => { });
+  }
+
+  openDialogPersona() {
+    const dialogref = this.dialog.open(PersonaAddComponent, {});
     dialogref.beforeClosed().subscribe(res => { });
   }
 

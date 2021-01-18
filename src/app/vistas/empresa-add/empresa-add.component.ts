@@ -191,20 +191,19 @@ export class EmpresaAddComponent implements OnInit {
     this.nombreRepre = repre.nombres + ' ' + repre.apellidos;
     this.repre = repre;
     this.showNotification('top', 'right', 'Representante seleccionado', 'check', 'info');
+
   }
 
   buscarPorDUI(value: any) {
-    if (value.length == 10) {
+    //console.log(value.length);
+    if (value.length > 5) {
+      //aqui tiene q ir en EndPoint de buscar por DUI
       this.personaService.buscarPor(value).subscribe((lista: any) => {
-        if (lista.status == 200) {
-          this.listaRepresentante = lista.body;
-          this.showNotification('top', 'right', 'DUI encontrado', 'search', 'success');
-        }
-        //console.log(this.listaRepresentante);
+        this.listaRepresentante = lista.body;
+        //console.log(this.listaCliente);
       }, err => {
-        this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+        this.showNotification('bottom', 'right', 'Cliente no encontrado!', 'cancel', 'danger');
       });
-      //console.log(value);
     }
   }
 

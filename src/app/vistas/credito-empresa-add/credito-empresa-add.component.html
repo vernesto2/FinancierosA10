@@ -88,6 +88,16 @@
                 <div class="card-body">
                   <ng-template matStepLabel>Formulario de Crédito</ng-template>
                   <div class="row">
+                    <div class="col-md-12">
+                      <button mat-raised-button type="button" class="btn btn-primary mr-1 mb-3"
+                        (click)="openDialogEmpresa()">Agregar empresa</button>
+                        <button mat-raised-button type="button" class="btn btn-primary mr-1 mb-3"
+                        (click)="openDialogPersona()">Agregar representante</button>
+                      <button mat-raised-button type="button" class="btn btn-info mb-3"
+                        (click)="openDialogRazones()">Calcular Razones <mat-icon>local_atm</mat-icon></button>
+                    </div>
+                  </div>
+                  <div class="row">
                     <div class="col-md-9">
                       <mat-accordion>
                         <mat-expansion-panel>
@@ -101,7 +111,7 @@
                           </mat-expansion-panel-header>
                           <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Buscar</mat-label>
-                            <input matInput placeholder="Buscar por NIT de la empresa" (keyup)="buscarDUICliente($event.target.value)"
+                            <input matInput placeholder="Buscar por NIT de la empresa" (keyup)="buscarNitoNombre($event.target.value)"
                               type="text">
                           </mat-form-field>
                           <div class="table-responsive">
@@ -129,7 +139,7 @@
                                     {{pn.nombre}}
                                   </td>
                                   <td>
-                                    
+                                    {{pn.representante}}
                                   </td>
                                   <td>
                                     <button mat-icon-button type="button" (click)="seleccionoCliente(pn)"
@@ -143,10 +153,6 @@
                           </div>
                         </mat-expansion-panel>
                       </mat-accordion>
-                    </div>
-                    <div class="col-md-3">
-                      <button mat-raised-button type="button" color="primary" style="margin-top: 10px;"
-                        (click)="openDialogRazones()">Calcular Razones <mat-icon>local_atm</mat-icon></button>
                     </div>
                   </div>            
                
@@ -236,10 +242,13 @@
                                     <tbody>
                                       <tr *ngFor="let b of listaBien; let i = index">
                                         <td>
+                                          {{b.codigo}}
                                         </td>
                                         <td>
+                                          {{b.tipoBien}}
                                         </td>
                                         <td>
+                                          {{b.valoradoEn | number: '.0-2'}}
                                         </td>
                                         <td>
                                           <button mat-icon-button type="button" (click)="seleccionarBien(b)"
@@ -295,7 +304,7 @@
                           
                         </div>
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-10">
                             <mat-form-field appearance="fill">
                               <mat-label>Descripción</mat-label>
                               <textarea matInput name="descripcionBien" #descripcionBien="ngModel" [(ngModel)]="bienHipotecado.descripcion"></textarea>

@@ -231,8 +231,20 @@ export class PrecreditoAddComponent implements OnInit {
   }
 
   buscarCodigoBien(value: string) {
+    this.listaBien = [];
     if (value.length > 5) {
       //aqui tiene q ir en EndPoint de buscar por codigo del bien
+      console.log(value);
+      this.servicesCP.obtenerBienPorCodigo(value).subscribe((resp: any) => {
+        if (resp.status == 200) {
+          this.listaBien.push(resp.body.objeto);
+          this.showNotification('top', 'right', 'Bien encontrado', 'search', 'success');
+        }
+      }, err => {
+        if (err.error.objeto == null) {
+          this.showNotification('bottom', 'right', 'Bien no encontrado', 'cancel', 'danger');
+        }
+      });
     }
   }
 
@@ -240,6 +252,9 @@ export class PrecreditoAddComponent implements OnInit {
     this.bienHipotecado = bien;
     this.codigoBienSel = bien.codigo;
     this.tipoBienSel = bien.tipoBien;
+    this.bienHipotecado = bien;
+    this.valorFinanciado = this.bienHipotecado.valoradoEn * 0.90;
+    this.listaBien = null;
     this.servicesCP.consultarSiBiengarantiaPoseeCredito(bien.codigo).subscribe((res: any) => {
       //console.log(res);
       if (res.status == 200) {

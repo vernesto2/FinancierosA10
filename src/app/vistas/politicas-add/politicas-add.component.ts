@@ -26,15 +26,17 @@ export class PoliticasAddComponent implements OnInit {
    fecValida = true;
    forma: FormGroup;
    estado = false;
+   ocultarBoton = false;
 
   constructor(public dialogRef: MatDialogRef<PoliticasAddComponent>, @Inject(MAT_DIALOG_DATA) public data: PoliticaModel, 
-  public servicePolitica: PoliticasService,) {
+  public servicePolitica: PoliticasService) {
 
     // if para mostrar el formulario lleno al 
     // presionar el boton del ojito
-    if(this.data != null){
+    if (this.data != null) {
       this.politicas = data;
-      this.estado = true; 
+      this.estado = true;
+      this.ocultarBoton = true;
     }
     
     //seteando las fechas minimas y maximas
@@ -49,8 +51,8 @@ export class PoliticasAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  guardarPoliticas(forma: NgForm){
-    if(forma.invalid){
+  guardarPoliticas(forma: NgForm) {
+    if (forma.invalid) {
       return;
     }
     console.log(this.politicas);
@@ -66,7 +68,7 @@ export class PoliticasAddComponent implements OnInit {
     })
   }
 
-  fechaSeleccionada(fechaSel: Date) {     
+  fechaSeleccionada(fechaSel: Date) {
     this.minDateFin = new Date(fechaSel.getFullYear(), fechaSel.getMonth() +1, fechaSel.getDate() +1);
     this.maxDateFin = new Date(fechaSel.getFullYear() + 5, fechaSel.getMonth(), fechaSel.getDate());
     this.fecValida = false;

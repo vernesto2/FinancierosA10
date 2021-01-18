@@ -13,6 +13,8 @@ import { IngresoEgresoModel } from 'app/models/ingresoEgreso.model';
 import { UsuarioModel } from 'app/models/usuario.model';
 import { ProyeccionesComponent } from '../proyecciones/proyecciones.component';
 import { PersonaService } from 'app/services/persona.service';
+import { EmpresaAddComponent } from '../empresa-add/empresa-add.component';
+import { PersonaAddComponent } from '../persona-add/persona-add.component';
 
 declare var $: any;
 
@@ -245,6 +247,16 @@ export class CreditoEmpresaAddComponent implements OnInit {
       monto: this.credito.monto
     }
     const dialogref = this.dialog.open(ProyeccionesComponent, { data: info });
+    dialogref.beforeClosed().subscribe(res => { });
+  }
+
+  openDialogEmpresa() {
+    const dialogref = this.dialog.open(EmpresaAddComponent, {});
+    dialogref.beforeClosed().subscribe(res => { });
+  }
+
+  openDialogPersona() {
+    const dialogref = this.dialog.open(PersonaAddComponent, {});
     dialogref.beforeClosed().subscribe(res => { });
   }
 

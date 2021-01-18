@@ -88,6 +88,16 @@
                 <div class="card-body">
                   <ng-template matStepLabel>Formulario de Crédito</ng-template>
                   <div class="row">
+                    <div class="col-md-12">
+                      <button mat-raised-button type="button" class="btn btn-primary mr-1 mb-3"
+                        (click)="openDialogEmpresa()">Agregar empresa</button>
+                        <button mat-raised-button type="button" class="btn btn-primary mr-1 mb-3"
+                        (click)="openDialogPersona()">Agregar representante</button>
+                      <button mat-raised-button type="button" class="btn btn-info mb-3"
+                        (click)="openDialogRazones()">Calcular Razones <mat-icon>local_atm</mat-icon></button>
+                    </div>
+                  </div>
+                  <div class="row">
                     <div class="col-md-9">
                       <mat-accordion>
                         <mat-expansion-panel>
@@ -143,10 +153,6 @@
                           </div>
                         </mat-expansion-panel>
                       </mat-accordion>
-                    </div>
-                    <div class="col-md-3">
-                      <button mat-raised-button type="button" color="primary" style="margin-top: 10px;"
-                        (click)="openDialogRazones()">Calcular Razones <mat-icon>local_atm</mat-icon></button>
                     </div>
                   </div>            
                

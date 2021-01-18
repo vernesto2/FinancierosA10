@@ -14,9 +14,10 @@ import { RefinanciarComponent } from '../refinanciar/refinanciar.component';
 })
 export class PersonaListComponent implements OnInit {
 
-  listaPersonaNatural: any[];
-  listaCredito: any[]; 
-
+  listaPersonaNatural: any[] = [];
+  listaCredito: any[] = []; 
+  listaCreditoPersonal: any[] = [];
+  
   cargando = false;
   page = 1;
 
@@ -37,6 +38,15 @@ export class PersonaListComponent implements OnInit {
     this.cargando = true;
     this.personaService.listarPersonas().subscribe((res: any) => {
       this.listaPersonaNatural = res.body;
+      this.cargando = false;
+    });
+  }
+
+  llenarCreditoPersonal() {
+    this.cargando = true;
+    this.serviceCP.listaCreditoPersonaEnCurso().subscribe((res: any) => {
+      this.listaCreditoPersonal = res.body;
+      console.log(this.listaCreditoPersonal);
       this.cargando = false;
     });
   }
@@ -71,20 +81,14 @@ export class PersonaListComponent implements OnInit {
 
   LP(value: any) {
     if (value.index == 0) {
-      this.listaPersonaNatural.length = 0;
+      this.listaCreditoPersonal.length = 0;
       this.llenarPersonaNatural();
-    } 
-  }
 
-  /*
-     LE(value: any) {
-    if (value.index == 0) {
-      this.listaClientes.length = 0;
-      this.llenarEmpresa();
     } else if (value.index == 1) {
-      this.listaEmpresa.length = 0;
-      this.llenarCliente();
+      this.listaPersonaNatural.length = 0;
+      this.llenarCreditoPersonal();
+      
     }
   }
-  */
+ 
 }

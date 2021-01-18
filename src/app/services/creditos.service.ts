@@ -40,6 +40,10 @@ export class CreditosService {
     return this.http.get(`${this.base_uri}/credito/librecredito/EMPRESA/${nit}`, {observe: 'response'});
   }
 
+  consultarSiBiengarantiaPoseeCredito(codigo: string): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/librecredito/BIENGARANTIA/${codigo}`, {observe: 'response'});
+  }
+
   calcularPrecredito(monto: number, tiempo: number, tipoCredito: string, fecha: Date): Observable<any> {
     const dias = fecha.getDate(); //sacamos los dias actual
     const mes = fecha.getMonth(); // sacamos los meses actual
@@ -56,5 +60,13 @@ export class CreditosService {
 
   comprobarIngresos(ingresosEgresosCliente: IngresoEgresoModel, ingresosEgresosFiador: IngresoEgresoModel): Observable<any> {
     return this.http.post(`${this.base_uri}/credito/ingresosegresos`, {ingresosEgresosFiador, ingresosEgresosCliente}, {observe: 'response'});
+  }
+
+  listaCreditoPersonaEnCurso(): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/persona/encurso`, {observe: 'response'});
+  }
+
+  listaCreditoEmpresaEnCurso(): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/empresa/encurso`, {observe: 'response'});
   }
 }

@@ -178,6 +178,7 @@ export class CreditoEmpresaAddComponent implements OnInit {
 
   buscarCodigoBien(value: string) {
     this.listaBien = [];
+    console.log(value);
     if (value.length > 5) {
       //aqui tiene q ir en EndPoint de buscar por codigo del bien
       console.log(value);
@@ -191,6 +192,12 @@ export class CreditoEmpresaAddComponent implements OnInit {
           this.showNotification('bottom', 'right', 'Bien no encontrado', 'cancel', 'danger');
         }
       });
+    }
+  }
+
+  vefirifcarIngresos(value: number){
+    if(value>(this.ingresosEgresosCliente.ingresosTotales+this.ingresosEgresosCliente.otrosIngresos)){
+      this.showNotification('bottom', 'right', 'Los egresos deben ser menor que los ingresos', 'cancel', 'danger');
     }
   }
 

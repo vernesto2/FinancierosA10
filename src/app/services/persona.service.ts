@@ -67,6 +67,10 @@ export class PersonaService {
     return this.http.get(`${this.base_uri}/empresa/${nit}`, { observe: 'response' });
   }
 
+  simularFecha(fecha: string): Observable<any> {
+    return this.http.put(`${this.base_uri}/fecha/${fecha}`, { observe: 'response' });
+  }
+
   //EndPoint de Usuario
   agregarUsuario(usuario: UsuarioModel): Observable<any> {
     return this.http.post(`${this.base_uri}/usuario`, usuario, {observe: 'response'});

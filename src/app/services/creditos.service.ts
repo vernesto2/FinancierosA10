@@ -69,4 +69,13 @@ export class CreditosService {
   listaCreditoEmpresaEnCurso(): Observable<any> {
     return this.http.get(`${this.base_uri}/credito/empresa/encurso`, {observe: 'response'});
   }
+
+  //obtener un bien por su codigo
+  obtenerBienPorCodigo(codigo: string): Observable<any> {
+    return this.http.get(`${this.base_uri}/biengarantia/${codigo}`, {observe: 'response'});
+  }
+
+  buscarNitNombreEmpresa(buscar: string): Observable<any> {
+    return this.http.get(`${this.base_uri}/empresa/buscar/${buscar}`, {observe: 'response'});
+  }
 }

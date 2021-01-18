@@ -101,7 +101,7 @@
                           </mat-expansion-panel-header>
                           <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Buscar</mat-label>
-                            <input matInput placeholder="Buscar por NIT de la empresa" (keyup)="buscarDUICliente($event.target.value)"
+                            <input matInput placeholder="Buscar por NIT de la empresa" (keyup)="buscarNitoNombre($event.target.value)"
                               type="text">
                           </mat-form-field>
                           <div class="table-responsive">
@@ -129,7 +129,7 @@
                                     {{pn.nombre}}
                                   </td>
                                   <td>
-                                    
+                                    {{pn.representante}}
                                   </td>
                                   <td>
                                     <button mat-icon-button type="button" (click)="seleccionoCliente(pn)"
@@ -236,10 +236,13 @@
                                     <tbody>
                                       <tr *ngFor="let b of listaBien; let i = index">
                                         <td>
+                                          {{b.codigo}}
                                         </td>
                                         <td>
+                                          {{b.tipoBien}}
                                         </td>
                                         <td>
+                                          {{b.valoradoEn | number: '.0-2'}}
                                         </td>
                                         <td>
                                           <button mat-icon-button type="button" (click)="seleccionarBien(b)"
@@ -295,7 +298,7 @@
                           
                         </div>
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-10">
                             <mat-form-field appearance="fill">
                               <mat-label>Descripción</mat-label>
                               <textarea matInput name="descripcionBien" #descripcionBien="ngModel" [(ngModel)]="bienHipotecado.descripcion"></textarea>

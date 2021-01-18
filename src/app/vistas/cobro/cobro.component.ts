@@ -14,6 +14,10 @@ export class CobroComponent implements OnInit {
   listaCreditoPersonal: any[] = [];
   page = 1;
 
+  dui: any;
+  nombres: any;
+  saldoActual: any;
+
   efectivo: any;
   montoCancelar: any;
   cambio: any;
@@ -67,9 +71,15 @@ export class CobroComponent implements OnInit {
     this.cargando = true;
     this.serviceCP.listaCreditoPersonaEnCurso().subscribe((res: any) => {
       this.listaCreditoPersonal = res.body;
-      console.log(this.listaCreditoPersonal);
+      //console.log(this.listaCreditoPersonal);
       this.cargando = false;
     });
   }
  
+  seleccionarCredito(value: any) { 
+    this.dui = value.dui;
+    this.nombres = value.nombres + value.apellidos; 
+    this.saldoActual = value.capitalrestante;
+    //console.log(value);
+  }
 }

@@ -59,7 +59,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <div mat-dialog-actions class="align-content-end">
-                                                                        <button mat-button matStepperNext type="button"
+                                                                        <button mat-button matStepperNext (click)="seleccionarCredito(pn)" type="button"
                                                                             color="primary" style="margin-top: -60px;">
                                                                             <mat-icon>check_box_outline_blank</mat-icon>
                                                                         </button>
@@ -119,13 +119,15 @@
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">
                                                     <mat-label>DUI del cliente</mat-label>
-                                                    <input matInput placeholder="Dui" disabled>
+                                                    <input matInput placeholder="Dui" 
+                                                    [value]="dui" disabled>
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">
                                                     <mat-label>Nombre del cliente</mat-label>
-                                                    <input matInput placeholder="Cliente" disabled>
+                                                    <input matInput placeholder="Cliente" 
+                                                    [value]="nombres" disabled>
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-3">
@@ -237,7 +239,8 @@
                                             <div class="col-md-3">
                                                 <mat-form-field class="example-full-width">
                                                     <mat-label>Capital actual</mat-label>
-                                                    <input matInput placeholder="Capital actual" required disabled>
+                                                    <input matInput placeholder="Capital actual" 
+                                                    [value]="saldoActual | number: '.2-3'" disabled>
                                                 </mat-form-field>
                                             </div>
                                         </div>

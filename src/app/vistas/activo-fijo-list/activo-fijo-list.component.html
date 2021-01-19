@@ -199,7 +199,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Agrupacion de activos">
-                        <div class="row">
+                        <div class="row" *ngIf="!cargando2 && listaATipoActivo.length > 0">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header card-header-danger" style="text-align: center;">
@@ -217,10 +217,12 @@
                                                     </th> 
                                                 </thead>
                                                 <tbody>
-                                                   <tr (click)="activo()">
+                                                   <tr (click)="activo()" *ngFor="let a of listaATipoActivo | paginate: { itemsPerPage: 5, currentPage: page }; let i= index">
                                                       <td style="text-align: center;"> 
+                                                        {{a.tipoActivo}}
                                                       </td>
                                                       <td style="text-align: center;">
+                                                        {{a.codigoTipoActivo}}
                                                       </td>
                                                    </tr>
                                                 </tbody>

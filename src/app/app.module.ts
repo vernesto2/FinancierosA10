@@ -49,6 +49,7 @@ import { CobroComponent } from './vistas/cobro/cobro.component';
 import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
 import { RefinanciarComponent } from './vistas/refinanciar/refinanciar.component';
 import { InicioComponent } from './vistas/inicio/inicio.component';
+import { AgrupacionActivoComponent } from './vistas/agrupacion-activo/agrupacion-activo.component';
 import { TicketComponent } from './reportes/ticket/ticket.component';
 
 @NgModule({
@@ -96,6 +97,7 @@ import { TicketComponent } from './reportes/ticket/ticket.component';
     CobroComponent,
     DepreamorComponent,
     InicioComponent,
+    AgrupacionActivoComponent,
     TicketComponent,
   ],
   entryComponents: [

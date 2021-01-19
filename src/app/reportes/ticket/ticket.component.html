@@ -40,7 +40,7 @@
                     <h2 style="font-weight: bold;">Capital abonado: </h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <h2>$ {{capital}}</h2>
+                    <h2>$ {{capital | number: '.0-2'}}</h2>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                     <h2 style="font-weight: bold;">Interés abonado: </h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <h2>$ {{interes}}</h2>
+                    <h2>$ {{interes | number: '.0-2'}}</h2>
                 </div>
             </div>
 
@@ -58,7 +58,7 @@
                     <h2 style="font-weight: bold;">Cuota total: </h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <h2>$ {{cuota}}</h2>
+                    <h2>$ {{cuota | number: '.0-2'}}</h2>
                 </div>
             </div>
 
@@ -67,7 +67,7 @@
                     <h2 style="font-weight: bold;">Capital restante: </h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <h2>$ {{capitalRestante}}</h2>
+                    <h2>$ {{capitalRestante | number: '.0-2'}}</h2>
                 </div>
             </div>
 
@@ -82,7 +82,7 @@
                     <h2 style="font-weight: bold;">Monto entregado: </h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <h2>$ {{montoEntregado}}</h2>
+                    <h2>$ {{montoEntregado | number: '.0-2'}}</h2>
                 </div>
             </div>
 
@@ -91,7 +91,16 @@
                     <h2 style="font-weight: bold;">Cambio: </h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <h2>$ {{cambio}}</h2>
+                    <h2>$ {{cambio | number: '.0-2'}}</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h2 style="font-weight: bold;">Próximo pago: </h2>
+                </div>
+                <div class="col-md-2" style="text-align: right;">
+                    <h2>{{fechaSig | date: 'dd/MM/yyyy'}}</h2>
                 </div>
             </div>
 

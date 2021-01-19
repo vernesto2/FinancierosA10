@@ -15,6 +15,7 @@ export class TicketComponent implements OnInit {
   capitalRestante = '$';
   montoEntregado = '$';
   cambio = '$';
+  fechaSig = '';
 
   constructor() { }
 

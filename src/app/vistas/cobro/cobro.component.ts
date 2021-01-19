@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { CreditosService } from 'app/services/creditos.service';
 
@@ -33,6 +34,13 @@ export class CobroComponent implements OnInit {
 
   mensaje() {
     console.log(this.mostrar);
+  }
+
+  guardarPago(forma: FormGroup) {
+    if (forma.invalid) {
+      return;
+    }
+    
   }
 
   habilitarMontos(value: number) {
@@ -82,5 +90,9 @@ export class CobroComponent implements OnInit {
     this.nombres = value.nombres + value.apellidos; 
     this.saldoActual = value.capitalrestante;
     console.log(value);
+  }
+
+  abrirTicket() {
+    window.open("http://localhost:4200/reportes/ticket", "_blank");
   }
 }

@@ -59,8 +59,10 @@
                                                                 </td>
                                                                 <td>
                                                                     <div mat-dialog-actions class="align-content-end">
-                                                                        <button mat-button matStepperNext (click)="seleccionarCredito(pn)" type="button"
-                                                                            color="primary" style="margin-top: -60px;">
+                                                                        <button mat-button matStepperNext
+                                                                            (click)="seleccionarCredito(pn)"
+                                                                            type="button" color="primary"
+                                                                            style="margin-top: -60px;">
                                                                             <mat-icon>check_box_outline_blank</mat-icon>
                                                                         </button>
                                                                     </div>
@@ -80,7 +82,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                
+
                                         <div class="text-center" *ngIf="!cargando && listaCreditoPersonal.length === 0">
                                             <mat-card class="alert alert-warning">
                                                 No hay datos!
@@ -89,7 +91,7 @@
                                                 </mat-card-content>
                                             </mat-card>
                                         </div>
-                
+
                                         <div class="text-center" *ngIf="cargando">
                                             <mat-card class="alert alert-danger">
                                                 Cargando...
@@ -99,213 +101,159 @@
                                                 Por favor espere!
                                             </mat-card>
                                         </div>
-                
+
                                     </div>
                                 </div>
                             </mat-step>
                             <mat-step state="p2">
-                                <form>
-                                    <ng-template matStepLabel>Cobro</ng-template>
-                                    <div class="text-center" *ngIf="!mostrar">
-                                        <mat-card class="alert alert-warning">
-                                            <mat-card-content>
-                                                <mat-icon>warning</mat-icon>
-                                            </mat-card-content>
-                                            ¡ALERTA! Debe seleccionar una persona para poder hacer el cobro
-                                        </mat-card>
+                                <ng-template matStepLabel>Cobro</ng-template>
+                                <div class="text-center" *ngIf="!mostrar">
+                                    <mat-card class="alert alert-warning">
+                                        <mat-card-content>
+                                            <mat-icon>warning</mat-icon>
+                                        </mat-card-content>
+                                        ¡ALERTA! Debe seleccionar una persona para poder hacer el cobro
+                                    </mat-card>
+                                </div>
+                                <form (ngSubmit)="guardarPago(forma)" #forma="ngForm">
+                                <div *ngIf="mostrar">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>DUI del cliente</mat-label>
+                                                <input matInput placeholder="Dui" [value]="dui" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Nombre del cliente</mat-label>
+                                                <input matInput placeholder="Cliente" [value]="nombres" disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field appearance="legacy">
+                                                <mat-label>Fecha de pago</mat-label>
+                                                <input matInput [min]="fecha" [matDatepicker]="picker" [value]="fecha"
+                                                    disabled>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
                                     </div>
-                                    <div *ngIf="mostrar">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>DUI del cliente</mat-label>
-                                                    <input matInput placeholder="Dui" 
-                                                    [value]="dui" disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Nombre del cliente</mat-label>
-                                                    <input matInput placeholder="Cliente" 
-                                                    [value]="nombres" disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field appearance="legacy">
-                                                    <mat-label>Fecha de pago</mat-label>
-                                                    <input matInput [min]="fecha" [matDatepicker]="picker"
-                                                        [value]="fecha" disabled>
-                                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                                    </mat-datepicker-toggle>
-                                                    <mat-datepicker #picker></mat-datepicker>
-                                                </mat-form-field>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Cuota N°</mat-label>
+                                                <input matInput placeholder="Cuota N°" disabled>
+                                            </mat-form-field>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Cuota N°</mat-label>
-                                                    <input matInput placeholder="Cuota N°" disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Monto de cuota ($)</mat-label>
-                                                    <input matInput placeholder="Monto" disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Abono a Interés ($)</mat-label>
-                                                    <input matInput placeholder="Interes" disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Abono a capital ($)</mat-label>
-                                                    <input matInput placeholder="Capital" disabled>
-                                                </mat-form-field>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Monto de cuota ($)</mat-label>
+                                                <input matInput placeholder="Monto" disabled>
+                                            </mat-form-field>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Saldo en mora ($)</mat-label>
-                                                    <input matInput placeholder="Mora" required disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Dias" required disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <mat-card class="alert alert-success">
-                                                    Antes
-                                                </mat-card>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Abono a Interés ($)</mat-label>
+                                                <input matInput placeholder="Interes" disabled>
+                                            </mat-form-field>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <mat-radio-group color="warn" aria-label="Select an option"
-                                                    (change)="habilitarMontos($event.value)">
-                                                    <mat-label>Opción de pago:</mat-label>
-                                                    <mat-radio-button class="ml-3" value="1">Cancelar monto mensual
-                                                    </mat-radio-button>
-                                                    <mat-radio-button class="ml-3" value="2">Cancelar otro monto
-                                                    </mat-radio-button>
-                                                </mat-radio-group>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Abono a capital ($)</mat-label>
+                                                <input matInput placeholder="Capital" disabled>
+                                            </mat-form-field>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>"Efectivo recibido ($)"</mat-label>
-                                                    <input matInput placeholder="Monto recibido ($)" type="number"
-                                                        (keyup)="efectivoEstablecer($event.target.value)" required>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Monto a cancelar ($)</mat-label>
-                                                    <input matInput placeholder="Monto a pagar ($)"
-                                                        [disabled]="vercampos" type="number"
-                                                        (keyup)="calcularCambio($event.target.value)" required>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Interés a cancelar ($)</mat-label>
-                                                    <input matInput placeholder="Interes a pagar ($)"
-                                                        [disabled]="vercampos" type="number" required>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Abono a capital ($)</mat-label>
-                                                    <input matInput placeholder="Abono a capital ($)" type="number"
-                                                        required disabled>
-                                                </mat-form-field>
-                                            </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Saldo en mora ($)</mat-label>
+                                                <input matInput placeholder="Mora" required disabled>
+                                            </mat-form-field>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Cambio ($)</mat-label>
-                                                    <input matInput placeholder="Cambio ($)" type="number"
-                                                        [value]="cambio" disabled>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <mat-form-field class="example-full-width">
-                                                    <mat-label>Capital actual</mat-label>
-                                                    <input matInput placeholder="Capital actual" 
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Dias" required disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <mat-card class="alert alert-success">
+                                                Antes
+                                            </mat-card>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <mat-radio-group color="warn" aria-label="Select an option"
+                                                (change)="habilitarMontos($event.value)">
+                                                <mat-label>Opción de pago:</mat-label>
+                                                <mat-radio-button class="ml-3" value="1">Cancelar monto mensual
+                                                </mat-radio-button>
+                                                <mat-radio-button class="ml-3" value="2">Cancelar otro monto
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>"Efectivo recibido ($)"</mat-label>
+                                                <input matInput placeholder="Monto recibido ($)" type="number"
+                                                    (keyup)="efectivoEstablecer($event.target.value)" required>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Monto a cancelar ($)</mat-label>
+                                                <input matInput placeholder="Monto a pagar ($)" [disabled]="vercampos"
+                                                    type="number" (keyup)="calcularCambio($event.target.value)"
+                                                    required>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Interés a cancelar ($)</mat-label>
+                                                <input matInput placeholder="Interes a pagar ($)" [disabled]="vercampos"
+                                                    type="number" required>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Abono a capital ($)</mat-label>
+                                                <input matInput placeholder="Abono a capital ($)" type="number" required
+                                                    disabled>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Cambio ($)</mat-label>
+                                                <input matInput placeholder="Cambio ($)" type="number" [value]="cambio"
+                                                    disabled>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Capital actual</mat-label>
+                                                <input matInput placeholder="Capital actual"
                                                     [value]="saldoActual | number: '.2-3'" disabled>
-                                                </mat-form-field>
-                                            </div>
+                                            </mat-form-field>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div mat-dialog-actions class="align-content-end">
-                                                    <button mat-raised-button class="btn btn-primary" type="submit"
-                                                        [mat-dialog-close]="true">Registrar pago</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="margin: 10px;"></div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header card-header-danger"
-                                                        style="text-align: center;">
-                                                        <h4 class="card-title">Detalles listados</h4>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead class="text-primary">
-                                                                    <th>
-                                                                        Cuota N°
-                                                                    </th>
-                                                                    <th>
-                                                                        Fecha a pagar
-                                                                    </th>
-                                                                    <th>
-                                                                        Cuota a pagar
-                                                                    </th>
-                                                                    <th>
-                                                                        Interés
-                                                                    </th>
-                                                                    <th>
-                                                                        Capital amortizado
-                                                                    </th>
-                                                                    <th>
-                                                                        Capital vivo
-                                                                    </th>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="text-center">
-                                                                <pagination-controls (pageChange)="page = $event"
-                                                                    previousLabel="Atras" nextLabel="Sig.">
-                                                                </pagination-controls>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div mat-dialog-actions class="align-content-end">
+                                                <button mat-raised-button class="btn btn-primary" (click)="abrirTicket()" type="submit"
+                                                    [mat-dialog-close]="true">Realizar pago</button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                            </form>
                             </mat-step>
                         </mat-horizontal-stepper>
                     </div>

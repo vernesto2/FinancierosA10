@@ -169,27 +169,6 @@ export class CobroComponent implements OnInit {
     });
   }
 
-  actualizarFecha() {
-    if (this.fechaSimulada !== null) {
-      let fecha = new Date(this.fechaSimulada);
-      const dia = fecha.getDate();
-      const mes = fecha.getMonth() + 1;
-      const anio = fecha.getFullYear();
-      const f = anio + "-" + mes + "-" + dia;
-      localStorage.setItem('fechaSimulada', f);
-      this.personaService.simularFecha(f).subscribe((res: any) => {
-        console.log(res);
-        this.showNotificationFecha('bottom', 'left', 'Se a simulado para la fecha ' + res.fecha, 'sync', 'info');
-      });
-    }
-
-  }
-
-  seleccionarFecha(value: any) {
-    this.fechaSimulada = value;
-    this.simulada = false;
-  }
-
   listar(value: any) {
     this.tipoLista = value.index;
     if (value.index == 0) {
@@ -206,7 +185,7 @@ export class CobroComponent implements OnInit {
     this.cargando1 = true;
     this.serviceCP.listaCreditoEmpresaEnCurso().subscribe((res: any) => {
       this.listaCreditoEmpresa = res.body;
-      //console.log(res.body);
+      console.log(res.body);
       this.cargando1 = false;
     });
   }
@@ -266,31 +245,6 @@ export class CobroComponent implements OnInit {
     });
   }
 
-  showNotificationFecha(from, align, message, icon, type) {
-    $.notify({
-      icon: icon,
-      message: message
-
-    }, {
-      type: type,
-      timer: 600000,
-      placement: {
-        from: from,
-        align: align
-      },
-      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
-        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-        '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
-        '<span data-notify="title">{1}</span> ' +
-        '<span data-notify="message">{2}</span>' +
-        '<div class="progress" data-notify="progressbar">' +
-        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-        '</div>' +
-        '<a href="{3}" target="{4}" data-notify="url"></a>' +
-        '</div>'
-    });
-  }
-
   abrirTicket() {
     localStorage.setItem('numCuota', this.numCuota.toString());
     localStorage.setItem('capitalCancelado', this.capitalCancelar.toString());
@@ -302,7 +256,7 @@ export class CobroComponent implements OnInit {
     localStorage.setItem('montoEntregado', this.efectivo.toString());
     localStorage.setItem('cambio', this.cambio.toString());
 
-    this.router.navigateByUrl('/cobro/#');
-    window.open("http://localhost:4200/reportes/ticket", "_blank");
+    this.router.navigate(['cobro/#']);
+    //window.open("http://localhost:4200/reportes/ticket", "_blank");
   }
 }

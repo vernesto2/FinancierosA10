@@ -34,7 +34,6 @@ export class ActivoFijoAddComponent implements OnInit {
   listaUnidad: any[];
   listaTipoActivo: any[];
   listaEncargado: any[];
-
   constructor(public activoServicio:ActivoFijoService,public dialogRef: MatDialogRef<ActivoFijoAddComponent>,
      @Inject(MAT_DIALOG_DATA) public data: string,private router: Router) {
       this.maxDate = new Date();
@@ -164,7 +163,4 @@ export class ActivoFijoAddComponent implements OnInit {
     }
   }
 
-  activo(){
-    
-  }
 }

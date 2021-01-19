@@ -55,4 +55,8 @@ export class ActivoFijoService {
   listardebaja(): Observable<any> {
     return this.http.get(`${this.base_uri}/detalleactivofijo/baja`,{observe: 'response'});
   }
+
+  listaragrupadatipo(): Observable<any> {
+    return this.http.get(`${this.base_uri}/detalleactivofijo/agruparTipo`,{observe: 'response'});
+  }
 }

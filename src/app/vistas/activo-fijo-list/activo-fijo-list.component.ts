@@ -9,6 +9,7 @@ import { DetalleActivoPKModel } from 'app/models/detalleActivoPK.model';
 import { DetalleActivoModel } from 'app/models/detalleActivo.model';
 import { DepreamorComponent } from '../depreamor/depreamor.component';
 import { CalculoModel } from 'app/models/calculo.model';
+import { AgrupacionActivoComponent } from '../agrupacion-activo/agrupacion-activo.component';
 ;
 
 @Component({
@@ -21,6 +22,7 @@ export class ActivoFijoListComponent implements OnInit {
   cargando1 = false;
   arrayDetalleActivo: DetalleActivoModel[] = [];
   listaAdquisicionActivo: any[]=[];
+  listaATipoActivo: any[]=[];
   codigoGenerado: string;
   page = 1;
   d=null;
@@ -62,7 +64,8 @@ export class ActivoFijoListComponent implements OnInit {
     this.servicioDetalleAdquisicion.listarAdquisicion().subscribe((listaA: any) => {
       this.listaAdquisicionActivo = listaA.body;
       this.cargando = false;
-    })
+    });
+
   } 
   openDialogDetalleBaja(){
     this.disable=true;
@@ -107,9 +110,17 @@ export class ActivoFijoListComponent implements OnInit {
     } else if (value.index == 1) {
       this.listaAdquisicionActivo.length = 0;
       this.baja();
+    }else if (value.index == 2) {
+      this.listaATipoActivo.length = 0;
+      this.llenarAgrupacion();
     }
   }
 
+  llenarAgrupacion(){
+    this.servicioDetalleAdquisicion.listaragrupadatipo().subscribe((listaU:any)=>{
+      this.listaATipoActivo=listaU.body;
+    });
+  }
   deprecia(a:any[]){
     let dialogref = this.dialog.open(DepreamorComponent, {data: a});
   }
@@ -164,6 +175,10 @@ export class ActivoFijoListComponent implements OnInit {
     cal.vidaUtil=a.vidaUtil;
     let dialogref = this.dialog.open(DepreamorComponent, {data: cal});
     //console.log(this.array);
+  }
+
+  activo(){
+    let dialogref = this.dialog.open(AgrupacionActivoComponent, {});
   }
 
 }

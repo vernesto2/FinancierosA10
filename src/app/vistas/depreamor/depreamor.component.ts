@@ -95,3 +95,36 @@ llenarTable(n:number,list:any){
   }
 
 }
+/*caracteristicas de escritorio
+
+Tipo
+Escritorios
+Requiere sistema de anclaje
+No
+Hecho en
+Brasil
+Dificultad de armado
+Medio
+Requiere armado
+Sí
+Política de devolución
+Falabella
+Información adicional
+Ármalo como gustes y úsalo en 2 posiciones distintas.
+Temporada
+Toda temporada
+Disponible en
+Blanco y Café
+Instrucciones de armado
+Sí
+
+
+software 
+elaborado en angular con gestor de base de datos postgresql
+
+
+calcular valor actual de los activos
+primero calculamos la depreciacion diaria
+depreciacion diaria= preciounitario/(vida util * 30)
+valoractual= preciounitario-deppreciacion diaria * dias
+dias = fecha actual - fecha de adquisicion */

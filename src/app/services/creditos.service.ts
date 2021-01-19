@@ -16,7 +16,6 @@ export class CreditosService {
 
   constructor(private http: HttpClient) { }
 
-
   //consultas de personas
   agregarCreditoPersona(credito: CreditoModel, tipoCredito: string, tipoTiempo: string): Observable<any> {
     if (tipoTiempo == 'año') {
@@ -32,8 +31,13 @@ export class CreditosService {
   listaCreditoPersonaEnCurso(): Observable<any> {
     return this.http.get(`${this.base_uri}/credito/persona/encurso`, { observe: 'response' });
   }
+  
   consultarSiPersonaPoseeCredito(dui: string): Observable<any> {
     return this.http.get(`${this.base_uri}/credito/librecredito/PERSONA/${dui}`, { observe: 'response' });
+  }
+
+  traerPago(idCredito: number): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/pago/${idCredito}`, { observe: 'response' });
   }
 
   //Consultas de empresas

@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,8 @@ export class NavbarComponent implements OnInit {
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+
+    fechaSimulada: Date;
 
     constructor(location: Location,  private element: ElementRef, private router: Router) {
       this.location = location;
@@ -32,6 +35,12 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+
+     if (localStorage.getItem('fechaSimulada') != null) {
+         this.fechaSimulada = new Date(localStorage.getItem('fechaSimulada'));
+     } else {
+         this.fechaSimulada = new Date();
+     }
     }
 
     sidebarOpen() {

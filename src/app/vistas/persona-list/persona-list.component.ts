@@ -91,20 +91,6 @@ export class PersonaListComponent implements OnInit {
     }
   }
 
-  actualizarFecha() {
-    if (this.fechaSimulada !== null) {
-      let fecha=new Date(this.fechaSimulada);
-      const dia=fecha.getDate();
-      const mes=fecha.getMonth()+1;
-      const anio=fecha.getFullYear();
-      const f=anio+"-"+mes+"-"+dia;
-      this.personaService.simularFecha(f).subscribe((res: any) => {
-          console.log(res);
-          this.showNotification('top', 'right', 'Se a simulado para la fecha '+res.fecha, 'sync', 'info');
-      });
-    }
-  } 
-
   showNotification(from, align, message, icon, type) {
     $.notify({
         icon: icon,
@@ -130,6 +116,19 @@ export class PersonaListComponent implements OnInit {
     });
   }
 
+  actualizarFecha() {
+    if (this.fechaSimulada !== null) {
+      let fecha=new Date(this.fechaSimulada);
+      const dia=fecha.getDate();
+      const mes=fecha.getMonth()+1;
+      const anio=fecha.getFullYear();
+      const f=anio+"-"+mes+"-"+dia;
+      this.personaService.simularFecha(f).subscribe((res: any) => {
+          console.log(res);
+          this.showNotification('top', 'right', 'Se a simulado para la fecha '+res.fecha, 'sync', 'info');
+      });
+    }
+  } 
 
   seleccionarFecha(value: any) {
     this.fechaSimulada = value;

@@ -1,6 +1,10 @@
+import { Router } from '@angular/router';
+import { environment } from './../../../environments/environment';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { CreditosService } from 'app/services/creditos.service';
+import { PersonaService } from 'app/services/persona.service';
+declare var $: any;
 
 @Component({
   selector: 'app-cobro',
@@ -11,23 +15,47 @@ export class CobroComponent implements OnInit {
 
   mostrar = false;
   vercampos = true;
-  cargando = false;
   listaCreditoPersonal: any[] = [];
+  listaCreditoEmpresa: any[] = [];
   page = 1;
+  page1 = 1;
+  cargando = false;
+  cargando1 = false;
+  fechaSimulada = new Date();
 
-  dui: any;
-  nombres: any;
-  saldoActual: any;
+  //variables para mostrar la info
+  dui: '';
+  nombres: '';
+  numCuota = 0;
+  montoCuota = 0;
+  abonoInteres = 0;
+  abonoCapital = 0;
+  saldoMora = 0;
+  dias = 0;
+  
+  saldoActual: 0;
 
-  efectivo: any;
-  montoCancelar: any;
-  cambio: any;
+  efectivo = 0;
+  cuotaCancelar = 0;
+  interesCancelar = 0;
+  capitalCancelar = 0;
+  capitalRestante = 0;
+  cambio = 0;
+
+  interesMasMora = 0;
+  tipoLista = 0;
+
+  fechaCorrespondiente = '';
+
   fecha: Date;
+  botonValido = true;
+  simulada = true;
 
-  constructor(public serviceCP: CreditosService) { 
+  constructor(public serviceCP: CreditosService, public personaService: PersonaService,
+    private router: Router) {
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.iniciarFecha();
     this.llenarCreditoPersonal();
   }
@@ -40,29 +68,86 @@ export class CobroComponent implements OnInit {
     if (forma.invalid) {
       return;
     }
-    
+
   }
 
   habilitarMontos(value: number) {
     if (value == 2) {
       this.vercampos = false;
-    } else {
+      this.cuotaCancelar = 0;
+      this.interesCancelar = this.abonoInteres;
+      this.capitalCancelar = 0;
+      this.capitalRestante = this.saldoActual;
+      this.botonValido = true;
+    } else if (value == 1) {
       this.vercampos = true;
+      this.cuotaCancelar = this.montoCuota + this.saldoMora;
+      this.interesCancelar = this.abonoInteres;
+      this.capitalCancelar = this.abonoCapital;
+      this.capitalRestante = this.saldoActual - this.capitalCancelar;
+      if (this.efectivo > 0) {
+        this.botonValido = false;
+      } else {
+        this.botonValido = true;
+      }
+    } else if (value == 3) {
+      this.cuotaCancelar = this.saldoActual + this.interesMasMora;
+      this.capitalCancelar = this.saldoActual;
+      this.capitalRestante = 0;
+      this.interesCancelar = this.abonoInteres;
+      this.interesMasMora = this.interesCancelar + this.saldoMora;
     }
-  }
+  } 
 
   calcularCambio(value: number) {
-    this.montoCancelar = value;
-    if (this.efectivo != null) {
-      this.cambio = this.efectivo - this.montoCancelar;
+    console.log(value);
+    this.cuotaCancelar = value;
+    if (this.efectivo > 0) {
+      this.cambio = this.efectivo - this.cuotaCancelar;
+      this.capitalCancelar = this.cuotaCancelar - this.interesMasMora;
+      this.capitalRestante = this.saldoActual - this.capitalCancelar;
+      if (this.cambio >= 0) {
+        this.botonValido = false;
+      } else {
+        this.botonValido = true;
+      }
+    } else {
+      this.botonValido = true;
+      this.cambio = 0;
     }
-    
+
   }
 
-  efectivoEstablecer(value: number) { 
+  cargandoCredito() {
+    $.notify({
+      icon: 'refresh',
+      message: 'Cargando...'
+
+    }, {
+      type: 'info',
+      placement: {
+        from: 'top',
+        align: 'right'
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons fa-spin" data-notify="icon">refresh</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>'
+    });
+  }
+
+  efectivoEstablecer(value: number) {
     this.efectivo = value;
-    if (this.montoCancelar != null) {
-      this.cambio = this.efectivo - this.montoCancelar;
+    if (this.cuotaCancelar > 0) {
+      this.cambio = this.efectivo - this.cuotaCancelar;
+      if (this.cambio >= 0) {
+        this.botonValido = false;
+      } else {
+        this.botonValido = true;
+      }
+    } else {
+      this.botonValido = true;
     }
   }
 
@@ -79,20 +164,145 @@ export class CobroComponent implements OnInit {
     this.cargando = true;
     this.serviceCP.listaCreditoPersonaEnCurso().subscribe((res: any) => {
       this.listaCreditoPersonal = res.body;
-      //console.log(this.listaCreditoPersonal);
+      //console.log(res.body);
       this.cargando = false;
     });
   }
- 
-  seleccionarCredito(value: any) { 
+
+  actualizarFecha() {
+    if (this.fechaSimulada !== null) {
+      let fecha = new Date(this.fechaSimulada);
+      const dia = fecha.getDate();
+      const mes = fecha.getMonth() + 1;
+      const anio = fecha.getFullYear();
+      const f = anio + "-" + mes + "-" + dia;
+      localStorage.setItem('fechaSimulada', f);
+      this.personaService.simularFecha(f).subscribe((res: any) => {
+        console.log(res);
+        this.showNotificationFecha('bottom', 'left', 'Se a simulado para la fecha ' + res.fecha, 'sync', 'info');
+      });
+    }
+
+  }
+
+  seleccionarFecha(value: any) {
+    this.fechaSimulada = value;
+    this.simulada = false;
+  }
+
+  listar(value: any) {
+    this.tipoLista = value.index;
+    if (value.index == 0) {
+      this.listaCreditoPersonal.length = 0;
+      this.llenarCreditoPersonal();
+
+    } else if (value.index == 1) {
+      this.listaCreditoEmpresa.length = 0;
+      this.llenarCreditoEmpresa();
+    }
+  }
+
+  llenarCreditoEmpresa() {
+    this.cargando1 = true;
+    this.serviceCP.listaCreditoEmpresaEnCurso().subscribe((res: any) => {
+      this.listaCreditoEmpresa = res.body;
+      //console.log(res.body);
+      this.cargando1 = false;
+    });
+  }
+
+  seleccionarCredito(value: any) {
     this.mostrar = true;
-    this.dui = value.dui;
-    this.nombres = value.nombres + value.apellidos; 
-    this.saldoActual = value.capitalrestante;
+    this.cargandoCredito();
     console.log(value);
+    this.serviceCP.traerPago(value.id).subscribe((res: any) => {
+      //console.log(res);
+      if (this.tipoLista == 0) {
+        this.dui = value.dui;
+        this.nombres = value.nombres + value.apellidos;
+      } else {
+        this.dui = value.nit;
+        this.nombres = value.nombre;
+      }
+      this.numCuota = res.body.objeto.id.numero;
+      this.abonoInteres = res.body.objeto.interes;
+      this.abonoCapital = res.body.objeto.capitalAmortizado;
+      this.montoCuota = this.abonoCapital + this.abonoInteres;
+      this.saldoMora = res.body.objeto.mora;
+      this.dias = res.body.objeto.diasAntesDespues;
+      this.fechaCorrespondiente = res.body.objeto.fechaCorrespondiente;
+      this.saldoActual = res.body.capitalVivo;
+      this.capitalRestante = this.saldoActual;
+      this.interesMasMora = this.abonoInteres + this.saldoMora;
+      this.showNotification('top', 'right', 'Datos recuperados', 'done_all', 'success');
+    }, err => {
+      this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
+    });
+
+  }
+
+  showNotification(from, align, message, icon, type) {
+    $.notify({
+      icon: icon,
+      message: message
+
+    }, {
+      type: type,
+      timer: 4000,
+      placement: {
+        from: from,
+        align: align
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
+  }
+
+  showNotificationFecha(from, align, message, icon, type) {
+    $.notify({
+      icon: icon,
+      message: message
+
+    }, {
+      type: type,
+      timer: 600000,
+      placement: {
+        from: from,
+        align: align
+      },
+      template: '<div data-notify="container" class="col-xl-3 col-lg-3 col-11 col-sm-3 col-md-3 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">' + icon + '</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
   }
 
   abrirTicket() {
+    localStorage.setItem('numCuota', this.numCuota.toString());
+    localStorage.setItem('capitalCancelado', this.capitalCancelar.toString());
+    localStorage.setItem('interesCancelado', this.interesCancelar.toString());
+    localStorage.setItem('cuotaCancelada', this.cuotaCancelar.toString());
+    localStorage.setItem('saldoMora', this.saldoMora.toString());
+    localStorage.setItem('capitalRestante', this.capitalRestante.toString());
+    localStorage.setItem('fechaCorrespondiente', this.fechaCorrespondiente.toString());
+    localStorage.setItem('montoEntregado', this.efectivo.toString());
+    localStorage.setItem('cambio', this.cambio.toString());
+
+    this.router.navigateByUrl('/cobro/#');
     window.open("http://localhost:4200/reportes/ticket", "_blank");
   }
 }

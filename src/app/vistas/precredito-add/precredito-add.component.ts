@@ -210,16 +210,12 @@ export class PrecreditoAddComponent implements OnInit {
     }
   }
   buscarDUICliente(value: any) {
-    //console.log(value.length);
-    if (value.length > 5) {
-      //aqui tiene q ir en EndPoint de buscar por DUI
       this.personaService.buscarPor(value).subscribe((lista: any) => {
         this.listaCliente = lista.body;
         //console.log(this.listaCliente);
       }, err => {
         this.showNotification('bottom', 'right', 'Cliente no encontrado!', 'cancel', 'danger');
       });
-    }
   }
 
   seleccionoFiador(fiador: PersonaNaturalModel) {
@@ -230,22 +226,16 @@ export class PrecreditoAddComponent implements OnInit {
   }
 
   buscarDUIFiador(value: any) {
-    if (value.length > 5) {
-      //aqui tiene q ir en EndPoint de buscar por DUI
       this.personaService.buscarPor(value).subscribe((lista: any) => {
         this.listaFiador = lista.body;
         //console.log(this.listaFiador);
       }, err => {
         this.showNotification('bottom', 'right', 'Fiador no encontrado!', 'cancel', 'danger');
       });
-    }
   }
 
   buscarCodigoBien(value: string) {
     this.listaBien = [];
-    if (value.length > 5) {
-      //aqui tiene q ir en EndPoint de buscar por codigo del bien
-      console.log(value);
       this.servicesCP.obtenerBienPorCodigo(value).subscribe((resp: any) => {
         if (resp.status == 200) {
           this.listaBien.push(resp.body.objeto);
@@ -256,7 +246,6 @@ export class PrecreditoAddComponent implements OnInit {
           this.showNotification('bottom', 'right', 'Bien no encontrado', 'cancel', 'danger');
         }
       });
-    }
   }
 
   seleccionarBien(bien: BienGarantiaModel) {

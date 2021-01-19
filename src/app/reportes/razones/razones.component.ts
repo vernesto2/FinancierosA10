@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RazonesComponent implements OnInit {
 
-  fecha;
+  fecha = '';
   liquidezCorriente;
   razonRapida;
   pruebaAcidicima;
@@ -23,12 +23,20 @@ export class RazonesComponent implements OnInit {
 
   ngOnInit(): void {
     this.razonesFinancieras();
-    console.log(this.fecha);
+    const dia = new Date().getDate(); //sacamos los dias actual
+    const mes = new Date().getMonth(); // sacamos los meses actual
+    const ano = new Date().getFullYear(); // sacamos el año actual
+    const hora = new Date().getHours();
+    const minuto = new Date().getMinutes();
+
+    if (minuto < 10) {
+      this.fecha = dia + '-' + mes + 1 + '-' + ano + ' ' + hora + ':' + '0' + minuto;
+    } else {
+      this.fecha = dia + '-' + mes + 1 + '-' + ano + ' ' + hora + ':' + minuto;
+    }
   }
 
   razonesFinancieras() {
-    this.fecha = localStorage.getItem('fecha');
-
     //Liquidez y Solvencia
     this.liquidezCorriente = localStorage.getItem('liquidezCorriente');
     this.razonRapida = localStorage.getItem('razonRapida');

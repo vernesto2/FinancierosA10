@@ -20,6 +20,7 @@ import { AgrupacionActivoComponent } from '../agrupacion-activo/agrupacion-activ
 export class ActivoFijoListComponent implements OnInit {
   cargando = false;
   cargando1 = false;
+  cargando2 = false;
   arrayDetalleActivo: DetalleActivoModel[] = [];
   listaAdquisicionActivo: any[]=[];
   listaATipoActivo: any[]=[];
@@ -111,14 +112,16 @@ export class ActivoFijoListComponent implements OnInit {
       this.listaAdquisicionActivo.length = 0;
       this.baja();
     }else if (value.index == 2) {
-      this.listaATipoActivo.length = 0;
+      //this.listaATipoActivo.length = 0;
       this.llenarAgrupacion();
     }
   }
 
   llenarAgrupacion(){
+    this.cargando2 = true;
     this.servicioDetalleAdquisicion.listaragrupadatipo().subscribe((listaU:any)=>{
       this.listaATipoActivo=listaU.body;
+      this.cargando2 = false;
     });
   }
   deprecia(a:any[]){

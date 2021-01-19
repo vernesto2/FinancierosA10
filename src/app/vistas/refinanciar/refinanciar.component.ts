@@ -17,14 +17,21 @@ export class RefinanciarComponent implements OnInit {
   @Output() onAgregoRefinanciar = new EventEmitter();
 
   forma: FormGroup;
-  constructor(public dialogRef: MatDialogRef<RefinanciarComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: PersonaNaturalModel) { 
+  constructor(public dialogRef: MatDialogRef<RefinanciarComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: CreditoPersonalModel) { 
 
-    if (data != null) {
-      //console.log(data);
-      //this.credito = data;
-      this.per = data;
+    if (this.data != null) {
+      console.log(data);
+      this.credito = data; 
     }
   }
+
+  /*
+     if (this.data != null) {
+      this.politicas = data;
+      this.estado = true;
+      this.ocultarBoton = true;
+    }
+  */
 
   ngOnInit(): void {
   }

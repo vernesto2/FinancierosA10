@@ -48,9 +48,9 @@ import { ProyeccionesComponent } from './vistas/proyecciones/proyecciones.compon
 import { CobroComponent } from './vistas/cobro/cobro.component';
 import { DepreamorComponent } from './vistas/depreamor/depreamor.component';
 import { RefinanciarComponent } from './vistas/refinanciar/refinanciar.component';
-import { ContratoPersonaComponent } from './reportes/contrato-persona/contrato-persona.component';
 import { InicioComponent } from './vistas/inicio/inicio.component';
 import { AgrupacionActivoComponent } from './vistas/agrupacion-activo/agrupacion-activo.component';
+import { TicketComponent } from './reportes/ticket/ticket.component';
 
 @NgModule({
   imports: [
@@ -93,12 +93,12 @@ import { AgrupacionActivoComponent } from './vistas/agrupacion-activo/agrupacion
     LoginComponent,
     DetalleBajaActivoComponent,
     ProyeccionesComponent,
-    ContratoPersonaComponent,
     RefinanciarComponent,
     CobroComponent,
     DepreamorComponent,
     InicioComponent,
     AgrupacionActivoComponent,
+    TicketComponent,
   ],
   entryComponents: [
     ActivoFijoAddComponent

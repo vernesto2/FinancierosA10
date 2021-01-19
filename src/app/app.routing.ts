@@ -1,3 +1,4 @@
+import { TicketComponent } from './reportes/ticket/ticket.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
@@ -6,7 +7,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './componentesAntiguos/layouts/admin-layout/admin-layout.component';
 import { RazonesComponent } from './reportes/razones/razones.component';
 import { LoginComponent } from './vistas/login/login.component';
-import { ContratoPersonaComponent } from './reportes/contrato-persona/contrato-persona.component';
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
       loadChildren: './componentesAntiguos/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     }]
   }, { path: 'reportes/razones-financieras', component: RazonesComponent },
-  { path: 'reportes/contrato-credito', component: ContratoPersonaComponent },
+  { path: 'reportes/ticket', component: TicketComponent },
   { path: 'iniciar-session', component: LoginComponent },
 
 ];

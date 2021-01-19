@@ -59,4 +59,12 @@ export class ActivoFijoService {
   listaragrupadatipo(): Observable<any> {
     return this.http.get(`${this.base_uri}/detalleactivofijo/agruparTipo`,{observe: 'response'});
   }
+
+  listaragrupadaActivo(id:number): Observable<any> {
+    return this.http.get(`${this.base_uri}/detalleactivofijo/agruparTipo/${id}`,{observe: 'response'});
+  }
+
+  listarActivos(id:number,idactivo): Observable<any> {
+    return this.http.get(`${this.base_uri}/detalleactivofijo/agruparTipo/${id}/${idactivo}`,{observe: 'response'});
+  }
 }

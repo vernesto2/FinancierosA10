@@ -107,3 +107,4 @@ import { TicketComponent } from './reportes/ticket/ticket.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

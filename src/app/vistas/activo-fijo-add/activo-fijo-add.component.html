@@ -1,3 +1,4 @@
+<div mat-dialog-content>
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
@@ -210,7 +211,8 @@
                             <mat-form-field appearance="fill">
                               <mat-label>Carácteristica del activo</mat-label>
                               <textarea matInput 
-                              name="caracteristica"  #caracteristica="ngModel" [(ngModel)]="adquisicionActivo.descripcion"></textarea>
+                              name="caracteristica" #input maxlength="800" #caracteristica="ngModel" [(ngModel)]="adquisicionActivo.descripcion"></textarea>
+                              <mat-hint align="end">{{input.value?.length || 0}}/800</mat-hint>
                             </mat-form-field>
                           </div>
                         </div>
@@ -232,4 +234,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

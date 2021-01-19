@@ -10,6 +10,7 @@ import { DetalleActivoModel } from 'app/models/detalleActivo.model';
 import { DepreamorComponent } from '../depreamor/depreamor.component';
 import { CalculoModel } from 'app/models/calculo.model';
 import { AgrupacionActivoComponent } from '../agrupacion-activo/agrupacion-activo.component';
+import { AgrupacionModel } from 'app/models/agrupacion.model';
 ;
 
 @Component({
@@ -30,6 +31,7 @@ export class ActivoFijoListComponent implements OnInit {
   disable=true;
   listabaja:any[]=[];
   array=new CalculoModel();
+  agrupar=new AgrupacionModel()
   constructor(public dialog: MatDialog, public servicioDetalleAdquisicion: ActivoFijoService) {
   }
 
@@ -118,7 +120,7 @@ export class ActivoFijoListComponent implements OnInit {
   }
 
   llenarAgrupacion(){
-    this.cargando2 = true;
+    this.cargando2 = true; 
     this.servicioDetalleAdquisicion.listaragrupadatipo().subscribe((listaU:any)=>{
       this.listaATipoActivo=listaU.body;
       this.cargando2 = false;
@@ -180,8 +182,9 @@ export class ActivoFijoListComponent implements OnInit {
     //console.log(this.array);
   }
 
-  activo(){
-    let dialogref = this.dialog.open(AgrupacionActivoComponent, {});
+  activo(a:any){
+    this.agrupar=a;
+    let dialogref = this.dialog.open(AgrupacionActivoComponent, {data:this.agrupar});
   }
 
 }

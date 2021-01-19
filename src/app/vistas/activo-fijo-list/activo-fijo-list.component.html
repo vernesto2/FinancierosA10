@@ -217,12 +217,12 @@
                                                     </th> 
                                                 </thead>
                                                 <tbody>
-                                                   <tr (click)="activo()" *ngFor="let a of listaATipoActivo | paginate: { itemsPerPage: 5, currentPage: page }; let i= index">
+                                                   <tr (click)="activo(a)" *ngFor="let a of listaATipoActivo | paginate: { itemsPerPage: 5, currentPage: page }; let i= index">
                                                       <td style="text-align: center;"> 
                                                         {{a.tipoActivo}}
                                                       </td>
                                                       <td style="text-align: center;">
-                                                        {{a.codigoTipoActivo}}
+                                                        {{a.cantidad}}
                                                       </td>
                                                    </tr>
                                                 </tbody>

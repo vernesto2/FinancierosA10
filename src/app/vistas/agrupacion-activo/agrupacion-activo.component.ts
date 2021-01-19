@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivoFijoService } from 'app/services/activo-fijo.service';
 
 @Component({
   selector: 'app-agrupacion-activo',
@@ -8,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgrupacionActivoComponent implements OnInit {
 
-  constructor() { }
+  listaTipoActivo: any[];
+
+  constructor(public activoServicio:ActivoFijoService) { }
 
   ngOnInit(): void {
+  }
+
+  llenarComponente(){
+    
   }
 
 }

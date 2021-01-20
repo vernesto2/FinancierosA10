@@ -40,6 +40,10 @@ export class CreditosService {
     return this.http.get(`${this.base_uri}/credito/pago/${idCredito}`, { observe: 'response' });
   }
 
+  personaEnMora(): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/persona/enmora/`, { observe: 'response' });
+  }
+
   //Consultas de empresas
   agregarCreditoEmpresa(credito: CreditoModel, tipoCredito: string, tipoTiempo: string): Observable<any> {
     if (tipoTiempo == 'año') {

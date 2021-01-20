@@ -185,7 +185,7 @@ export class CobroComponent implements OnInit {
     this.cargando1 = true;
     this.serviceCP.listaCreditoEmpresaEnCurso().subscribe((res: any) => {
       this.listaCreditoEmpresa = res.body;
-      console.log(res.body);
+      //console.log(res.body);
       this.cargando1 = false;
     });
   }
@@ -195,30 +195,40 @@ export class CobroComponent implements OnInit {
     this.cargandoCredito();
     console.log(value);
     this.serviceCP.traerPago(value.id).subscribe((res: any) => {
-      //console.log(res);
-      if (this.tipoLista == 0) {
-        this.dui = value.dui;
-        this.nombres = value.nombres + value.apellidos;
-      } else {
-        this.dui = value.nit;
-        this.nombres = value.nombre;
+      console.log(res);
+      if (res.status == 200) {
+        if (this.tipoLista == 0) {
+          this.dui = value.dui;
+          this.nombres = value.nombres + value.apellidos;
+        } else {
+          this.dui = value.nit;
+          this.nombres = value.nombre;
+        }
+        this.numCuota = res.body.cuota.id.numero;
+        this.abonoInteres = res.body.cuota.interes;
+        this.abonoCapital = res.body.cuota.capitalAmortizado;
+        this.montoCuota = this.abonoCapital + this.abonoInteres;
+        this.saldoMora = res.body.cuota.mora;
+        this.dias = res.body.cuota.diasAntesDespues;
+        this.fechaCorrespondiente = res.body.cuota.fechaCorrespondiente;
+        this.saldoActual = res.body.capitalVivo;
+        this.capitalRestante = this.saldoActual;
+        this.interesMasMora = this.abonoInteres + this.saldoMora;
+        this.showNotification('top', 'right', 'Datos recuperados', 'done_all', 'success');
       }
-      this.numCuota = res.body.objeto.id.numero;
-      this.abonoInteres = res.body.objeto.interes;
-      this.abonoCapital = res.body.objeto.capitalAmortizado;
-      this.montoCuota = this.abonoCapital + this.abonoInteres;
-      this.saldoMora = res.body.objeto.mora;
-      this.dias = res.body.objeto.diasAntesDespues;
-      this.fechaCorrespondiente = res.body.objeto.fechaCorrespondiente;
-      this.saldoActual = res.body.capitalVivo;
-      this.capitalRestante = this.saldoActual;
-      this.interesMasMora = this.abonoInteres + this.saldoMora;
-      this.showNotification('top', 'right', 'Datos recuperados', 'done_all', 'success');
     }, err => {
-      this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
+      this.showNotification('bottom', 'right', 'Ocurrio un problema', 'cancel', 'danger');
     });
 
   }
+
+  buscarDUICliente(value: any) {
+    this.personaService.buscarPor(value).subscribe((lista: any) => {
+      this.listaCreditoPersonal = lista.body;
+      //console.log(this.listaCliente);
+    }, err => {
+    });
+}
 
   showNotification(from, align, message, icon, type) {
     $.notify({
@@ -255,8 +265,20 @@ export class CobroComponent implements OnInit {
     localStorage.setItem('fechaCorrespondiente', this.fechaCorrespondiente.toString());
     localStorage.setItem('montoEntregado', this.efectivo.toString());
     localStorage.setItem('cambio', this.cambio.toString());
+    this.mostrar = false;
+    this.llenarCreditoPersonal();
+    this.llenarCreditoEmpresa();
+    //this.router.navigateByUrl('inicio');
+    window.open("http://localhost:4200/reportes/ticket", "_blank");
+  }
 
-    this.router.navigate(['cobro/#']);
-    //window.open("http://localhost:4200/reportes/ticket", "_blank");
+
+  buscarNitoNombre(value?: string) {
+    this.serviceCP.buscarNitNombreEmpresa(value).subscribe((lista: any) => {
+      console.log(lista);
+      this.listaCreditoEmpresa = lista.body;
+    }, err => {
+      this.showNotification('bottom', 'right', err.error.mensaje, 'cancel', 'danger');
+    });
   }
 }

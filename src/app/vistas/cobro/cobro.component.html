@@ -11,7 +11,12 @@
                             <mat-step state="p1">
                                 <ng-template matStepLabel>Clientes con creditos</ng-template>
                                 <mat-tab-group (selectedTabChange)="listar($event)">
-                                    <mat-tab label="Cliente Naturale">
+                                    <mat-tab label="Cliente Natural">
+                                        <mat-form-field appearance="outline" class="example-full-width pt-2 ">
+                                            <mat-label>Buscar</mat-label>
+                                            <input matInput placeholder="Buscar por DUI, Nombres y Apellidos" (keyup)="buscarDUICliente($event.target.value)"
+                                              type="text">
+                                          </mat-form-field>
                                         <div class="row" *ngIf="!cargando && listaCreditoPersonal.length > 0">
                                             <div class="col-md-12">
                                                 <div class="card">
@@ -106,6 +111,11 @@
                                         </div>
                                     </mat-tab>
                                     <mat-tab label="Cliente Juridico">
+                                        <mat-form-field appearance="outline" class="example-full-width pt-2">
+                                            <mat-label>Buscar</mat-label>
+                                            <input matInput placeholder="Buscar por NIT de la empresa" (keyup)="buscarNitoNombre($event.target.value)"
+                                              type="text">
+                                          </mat-form-field>
                                         <div class="row" *ngIf="!cargando1 && listaCreditoEmpresa.length > 0">
                                             <div class="col-md-12">
                                                 <div class="card">
@@ -368,7 +378,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div mat-dialog-actions class="align-content-end">
-                                                <button mat-raised-button class="btn btn-primary" [disabled]="botonValido" (click)="abrirTicket()" routerLink="/monto/#" type="submit"
+                                                <button mat-raised-button class="btn btn-primary" matStepperPrevious [disabled]="botonValido" (click)="abrirTicket()" routerLink="/monto/#" type="submit"
                                                     [mat-dialog-close]="true">Realizar pago</button>
                                             </div>
                                         </div>

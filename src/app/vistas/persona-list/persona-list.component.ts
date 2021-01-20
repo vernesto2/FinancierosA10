@@ -15,12 +15,14 @@ declare var $: any;
 export class PersonaListComponent implements OnInit {
 
   listaPersonaNatural: any[] = [];
-  listaCredito: any[] = []; 
+  listaCredito: any[] = [];
   listaCreditoPersonal: any[] = [];
   fechaSimulada: Date;
   simulada = true;
   cargando = false;
+  cargando1 = false;
   page = 1;
+  page1 = 1;
 
   constructor(public dialog: MatDialog, public personaService: PersonaService, public serviceCP: CreditosService) { }
 
@@ -31,6 +33,7 @@ export class PersonaListComponent implements OnInit {
   onAgrego() {
     this.llenarPersonaNatural();
   }
+
   onAgregoRefinanciar() {
    // this.llenarRefinanciar();
   }
@@ -39,16 +42,17 @@ export class PersonaListComponent implements OnInit {
     this.cargando = true;
     this.personaService.listarPersonas().subscribe((res: any) => {
       this.listaPersonaNatural = res.body;
+      console.log(this.listaPersonaNatural);
       this.cargando = false;
     });
   }
 
   llenarCreditoPersonal() {
-    this.cargando = true;
+    this.cargando1 = true;
     this.serviceCP.listaCreditoPersonaEnCurso().subscribe((res: any) => {
       this.listaCreditoPersonal = res.body;
       console.log(this.listaCreditoPersonal);
-      this.cargando = false;
+      this.cargando1 = false;
     });
   }
 

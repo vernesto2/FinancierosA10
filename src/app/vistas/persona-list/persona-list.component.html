@@ -103,7 +103,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Créditos en curso">
-                        <div class="row" *ngIf="!cargando && listaPersonaNatural.length >= 0">
+                        <div class="row" *ngIf="!cargando1 && listaCreditoPersonal.length >= 0">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header card-header-danger" style="text-align: center;">
@@ -134,7 +134,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr
-                                                        *ngFor="let pn of listaCreditoPersonal | paginate: { itemsPerPage: 5, currentPage: page }">
+                                                        *ngFor="let pn of listaCreditoPersonal | paginate: { itemsPerPage: 5, currentPage: page1 }">
                                                         <td>
                                                             {{pn.dui | dui}}
                                                         </td>
@@ -158,7 +158,7 @@
                                                 </tbody>
                                             </table>
                                             <div class="text-center">
-                                                <pagination-controls (pageChange)="page = $event" previousLabel="Atras"
+                                                <pagination-controls (pageChange)="page1 = $event" previousLabel="Atras"
                                                     nextLabel="Sig."></pagination-controls> 
                                             </div>
                                         </div>
@@ -169,7 +169,7 @@
                         <div class="row">
                             <div class="col-md-12">
         
-                                <div class="text-center" *ngIf="!cargando && listaCreditoPersonal.length === 0">
+                                <div class="text-center" *ngIf="!cargando1 && listaCreditoPersonal.length === 0">
                                     <mat-card class="alert alert-warning">
                                         No hay datos!
                                         <mat-card-content>
@@ -178,7 +178,7 @@
                                     </mat-card>
                                 </div>
         
-                                <div class="text-center" *ngIf="cargando">
+                                <div class="text-center" *ngIf="cargando1">
                                     <mat-card class="alert alert-danger">
                                         Cargando...
                                         <mat-card-content>

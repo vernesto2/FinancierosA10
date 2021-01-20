@@ -116,6 +116,7 @@ export class PrecreditoAddComponent implements OnInit {
     this.credito.fechaSolicitud = this.credito.fechaAprobacion;
     this.credito.usuario = this.usuario;
     this.credito.creditoPersona = this.creditoPersonal;
+    console.log(JSON.stringify(this.credito));
   }
 
   separarModeloHipoteca() {
@@ -124,6 +125,8 @@ export class PrecreditoAddComponent implements OnInit {
     this.credito.fechaSolicitud = this.credito.fechaAprobacion;
     this.credito.usuario = this.usuario;
     this.credito.creditoPersona = this.creditoPersonal;
+
+    console.log(JSON.stringify(this.credito));
   }
 
   resetearForm() {
@@ -170,8 +173,6 @@ export class PrecreditoAddComponent implements OnInit {
         this.showNotification('top', 'right', 'Agregado Correctamente!', 'save', 'success');
         this.resetearForm();
         this.iniciarFecha();
-      } else {
-        this.showNotification('bottom', 'right', 'Ocurrio un problema!', 'cancel', 'danger');
       }
     }, err => {
       this.resetearForm();
@@ -290,7 +291,7 @@ export class PrecreditoAddComponent implements OnInit {
       if (this.credito.monto != null) {
         if (this.credito.monto >= this.valorFinanciado) {
           this.validarBoton = true;
-          this.showNotification('top', 'right', 'El monto solicitado no puede ser financiado', 'cancel', 'danger');
+          this.showNotification('bottom', 'right', 'El monto solicitado no puede ser financiado', 'cancel', 'danger');
         } else {
           this.validarBoton = false;
           this.showNotification('top', 'right', 'El monto solicitado si puede ser financiado', 'done_all', 'success');
@@ -381,8 +382,6 @@ export class PrecreditoAddComponent implements OnInit {
           this.interes = obj.body.politica.tasaInteres;
           this.activarProyeccion = false;
           this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-        } else {
-          this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
         }
       }, err => {
         this.activarProyeccion = true;
@@ -417,8 +416,6 @@ export class PrecreditoAddComponent implements OnInit {
             this.interes = obj.body.politica.tasaInteres;
             this.activarProyeccion = false;
             this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-          } else {
-            this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
           this.activarProyeccion = true;
@@ -446,8 +443,6 @@ export class PrecreditoAddComponent implements OnInit {
             this.interes = obj.body.politica.tasaInteres;
             this.activarProyeccion = false;
             this.showNotification('top', 'right', 'Política seleccionada', 'check', 'success');
-          } else {
-            this.showNotification('bottom', 'right', 'Política no encontrada', 'cancel', 'danger');
           }
         }, err => {
           this.activarProyeccion = true;

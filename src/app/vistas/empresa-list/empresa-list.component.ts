@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CreditoPersonalModel } from 'app/models/creditoPersonal.model';
 import { EmpresaModel } from 'app/models/empresa.model';
+import { CreditosService } from 'app/services/creditos.service';
 import { PersonaService } from 'app/services/persona.service';
 import { EmpresaAddComponent } from '../empresa-add/empresa-add.component';
+import { RefinanciarComponent } from '../refinanciar/refinanciar.component';
 declare var $: any;
 @Component({
   selector: 'app-empresa-list',
@@ -16,11 +19,10 @@ export class EmpresaListComponent implements OnInit {
   page1 = 1;
   page = 1;
   cargando = false;
-  simulada=true;
   fechaSimulada: Date;
-  listaClientes: any[] = [];
+  listaCreditoEmpresaCurso: any[] = [];
 
-  constructor(public dialog: MatDialog, public personaService: PersonaService) { }
+  constructor(public dialog: MatDialog, public personaService: PersonaService, private serviceCP: CreditosService) { }
 
   ngOnInit(): void {
     this.llenarEmpresa();
@@ -32,22 +34,34 @@ export class EmpresaListComponent implements OnInit {
  
   LE(value: any) {
     if (value.index == 0) {
-      this.listaClientes.length = 0;
+      this.listaCreditoEmpresaCurso.length = 0;
       this.llenarEmpresa();
       
     } else if (value.index == 1) {
       this.listaEmpresa.length = 0;
-      this.llenarCliente();
+      this.llenarCreditosCurso();
     }
   }
 
-  llenarCliente() {
+  llenarCreditosCurso() {
     this.cargando = true;
-    this.personaService.listarPersonas().subscribe((lista: any) => {
-      this.listaClientes = lista.body;
-      console.log(this.listaClientes);
+    this.serviceCP.listaCreditoEmpresaEnCurso().subscribe((lista: any) => {
+      this.listaCreditoEmpresaCurso = lista.body;
+      console.log(this.listaCreditoEmpresaCurso);
       this.cargando = false;
     });
+  }
+
+  onAgregoRefinanciar() {
+    // this.llenarRefinanciar();
+   }
+
+  openDialogRefinanciar(financiar?: CreditoPersonalModel) {
+    let dialogref = this.dialog.open(RefinanciarComponent, { data: financiar});
+    const sub = dialogref.componentInstance.onAgregoRefinanciar.subscribe(() => {
+      this.onAgregoRefinanciar();
+    });
+    dialogref.afterClosed().subscribe( res => {});
   }
 
   llenarEmpresa() {

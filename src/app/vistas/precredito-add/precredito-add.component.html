@@ -387,7 +387,7 @@
                           <div class="col-md-2">
                             <mat-form-field class="example-full-width" appearance="standard">
                               <mat-label>valorado en ($)</mat-label>
-                              <input matInput type="number" (keyup)="montoFinanciado($event.target.value)" 
+                              <input matInput type="number" (blur)="montoFinanciado($event.target.value)" 
                               name="montoBien" #montoBien="ngModel" [(ngModel)]="bienHipotecado.valoradoEn">
                             </mat-form-field>
                           </div>

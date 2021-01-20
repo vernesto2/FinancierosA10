@@ -84,7 +84,7 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Créditos en curso">
-                        <div class="row" *ngIf="!cargando && listaClientes.length > 0">
+                        <div class="row" *ngIf="!cargando && listaCreditoEmpresaCurso.length > 0">
                             <div class="col-md-12">
                                 <div class="card" >
                                     <div class="card-header card-header-danger" style="text-align: center;">
@@ -95,26 +95,43 @@
                                             <table class="table">
                                                 <thead class=" text-primary">
                                                     <th>
-                                                        DUI
+                                                        NIT
                                                     </th>
                                                     <th>
-                                                        Nombres
+                                                        Nombre
                                                     </th>
                                                     <th>
-                                                        Acciones
+                                                        Tipo de Crédito
+                                                    </th>
+                                                    <th>
+                                                        Cuotas restantes
+                                                    </th>
+                                                    <th>
+                                                        Saldo actual
+                                                    </th>
+                                                    <th>
+                                                        Refinanciar
                                                     </th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let pn of listaClientes | paginate: { itemsPerPage: 5, currentPage: page1 }">
+                                                    <tr *ngFor="let pn of listaCreditoEmpresaCurso | paginate: { itemsPerPage: 5, currentPage: page1 }">
                                                         <td>
-                                                            {{pn.dui | dui}}
+                                                            {{pn.nit | nit}}
                                                         </td>
                                                         <td>
-                                                            {{pn.nombres}} {{pn.apellidos}}
+                                                            {{pn.nombre}}
                                                         </td>
                                                         <td>
-                                                            <button mat-icon-button type="button" (click)="openDialogEmpresa(pn)" color="info">
-                                                                <mat-icon>edit</mat-icon>
+                                                            {{pn.tipocredito}}
+                                                        </td>
+                                                        <td>
+                                                            {{pn.cuotasrestantes}}
+                                                        </td>
+                                                        <td>
+                                                            $ {{pn.capitalrestante | number: '.0-2'}}
+                                                        </td>
+                                                        <td>
+                                                            <button mat-icon-button (click)="openDialogRefinanciar(pn)" class="btn btn-outline-info ml-1" matTooltip="Refinanciar"><i class="material-icons">event</i>
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -131,7 +148,7 @@
                         <div class="row">
                             <div class="col-md-12">
                 
-                                <div class="text-center" *ngIf="!cargando && listaClientes.length === 0">
+                                <div class="text-center" *ngIf="!cargando && listaCreditoEmpresaCurso.length === 0">
                                     <mat-card class="alert alert-warning">
                                         No hay datos!
                                         <mat-card-content>

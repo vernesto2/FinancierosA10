@@ -81,4 +81,15 @@ export class CreditosService {
   rangoPolitica(): Observable<any> {
     return this.http.get(`${this.base_uri}/politica/rangopolitica`, { observe: 'response' });
   }
+
+  //pago de cuotas
+  hacerPagoCuota(idCredito: number): Observable<any> {
+    return this.http.put(`${this.base_uri}/credito/pago/${idCredito}`, { observe: 'response' });
+  }
+
+  hacerPagoMayor(idCredito: number, efectivo: number): Observable<any> {
+    console.log(efectivo);
+    return this.http.put(`${this.base_uri}/credito/pago/${idCredito}/${efectivo}`, { observe: 'response' });
+  }
+
 }

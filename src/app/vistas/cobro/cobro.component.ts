@@ -208,7 +208,7 @@ export class CobroComponent implements OnInit {
     this.cargando = true;
     this.serviceCP.listaCreditoPersonaEnCurso().subscribe((res: any) => {
       this.listaCreditoPersonal = res.body;
-      //console.log(res.body);
+      console.log(res.body);
       this.cargando = false;
     });
   }

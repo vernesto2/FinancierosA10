@@ -64,6 +64,10 @@ export class CreditosService {
     return this.http.get(`${this.base_uri}/empresa/buscar/${buscar}`, { observe: 'response' });
   }
 
+  empresaEnMora(): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/empresa/enmora/`, { observe: 'response' });
+  }
+
   //Consultas que se usan tanto en persona como empresa
   obtenerBienPorCodigo(codigo: string): Observable<any> {
     return this.http.get(`${this.base_uri}/biengarantia/${codigo}`, { observe: 'response' });

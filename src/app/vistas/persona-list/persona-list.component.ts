@@ -17,12 +17,15 @@ export class PersonaListComponent implements OnInit {
   listaPersonaNatural: any[] = [];
   listaCredito: any[] = [];
   listaCreditoPersonal: any[] = [];
+  listaPersonaMora: any[] = [];
   fechaSimulada: Date;
   simulada = true;
   cargando = false;
   cargando1 = false;
+  cargando2 = false;
   page = 1;
   page1 = 1;
+  page2 = 1;
 
   constructor(public dialog: MatDialog, public personaService: PersonaService, public serviceCP: CreditosService) { }
 
@@ -53,6 +56,15 @@ export class PersonaListComponent implements OnInit {
       this.listaCreditoPersonal = res.body;
       console.log(this.listaCreditoPersonal);
       this.cargando1 = false;
+    });
+  }
+
+  llenarPersonaEnMora(){
+    this.cargando2 = true;
+    this.serviceCP.personaEnMora().subscribe((res: any) => {
+      this.listaPersonaMora = res.body.objeto;
+      console.log(this.listaPersonaMora);
+      this.cargando2 = false;
     });
   }
 
@@ -87,11 +99,18 @@ export class PersonaListComponent implements OnInit {
   LP(value: any) {
     if (value.index == 0) {
       this.listaCreditoPersonal.length = 0;
+      this.listaPersonaMora.length = 0;
       this.llenarPersonaNatural();
 
     } else if (value.index == 1) {
       this.listaPersonaNatural.length = 0;
+      this.listaPersonaMora.length = 0;      
       this.llenarCreditoPersonal();
+
+    } else if (value.index == 2) {
+      this.listaPersonaNatural.length = 0;
+      this.listaCreditoPersonal.length = 0;
+      this.llenarPersonaEnMora();
     }
   }
 

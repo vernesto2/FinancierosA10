@@ -64,6 +64,10 @@ export class CreditosService {
     return this.http.get(`${this.base_uri}/empresa/buscar/${buscar}`, { observe: 'response' });
   }
 
+  empresaEnMora(): Observable<any> {
+    return this.http.get(`${this.base_uri}/credito/empresa/enmora/`, { observe: 'response' });
+  }
+
   //Consultas que se usan tanto en persona como empresa
   obtenerBienPorCodigo(codigo: string): Observable<any> {
     return this.http.get(`${this.base_uri}/biengarantia/${codigo}`, { observe: 'response' });
@@ -85,4 +89,15 @@ export class CreditosService {
   rangoPolitica(): Observable<any> {
     return this.http.get(`${this.base_uri}/politica/rangopolitica`, { observe: 'response' });
   }
+
+  //pago de cuotas
+  hacerPagoCuota(idCredito: number): Observable<any> {
+    return this.http.put(`${this.base_uri}/credito/pago/${idCredito}`, { observe: 'response' });
+  }
+
+  hacerPagoMayor(idCredito: number, efectivo: number): Observable<any> {
+    console.log(efectivo);
+    return this.http.put(`${this.base_uri}/credito/pago/${idCredito}/${efectivo}`, { observe: 'response' });
+  }
+
 }

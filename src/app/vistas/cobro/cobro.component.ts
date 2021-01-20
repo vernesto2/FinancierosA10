@@ -51,6 +51,10 @@ export class CobroComponent implements OnInit {
   botonValido = true;
   simulada = true;
 
+  opcionPagar = 0;
+  idCredito = 0;
+
+
   constructor(public serviceCP: CreditosService, public personaService: PersonaService,
     private router: Router) {
   }
@@ -69,9 +73,48 @@ export class CobroComponent implements OnInit {
       return;
     }
 
+    if (this.opcionPagar == 1) { //cuota exacta
+      this.serviceCP.hacerPagoCuota(this.idCredito).subscribe((resp: any) => {
+        this.showNotification('top', 'right', resp.mensaje, 'done_all', 'success');
+        if (this.tipoLista == 0) {
+          this.llenarCreditoPersonal();
+        } else {
+          this.llenarCreditoEmpresa();
+        }
+        this.mostrar = false;
+      }, err => {
+        this.showNotification('bottom', 'right', 'No se completo', 'cancel', 'danger');
+      });
+    } else if (this.opcionPagar == 2) { //otro monto
+      this.serviceCP.hacerPagoMayor(this.idCredito, this.cuotaCancelar).subscribe((resp: any) => {
+        this.showNotification('top', 'right', resp.mensaje, 'done_all', 'success');
+        if (this.tipoLista == 0) {
+          this.llenarCreditoPersonal();
+        } else {
+          this.llenarCreditoEmpresa();
+        }
+        this.mostrar = false;
+      }, err => {
+        this.showNotification('bottom', 'right', 'No se completo', 'cancel', 'danger');
+      });
+    } else if (this.opcionPagar == 3) { // pagar todo
+      this.serviceCP.hacerPagoMayor(this.idCredito, this.cuotaCancelar).subscribe((resp: any) => {
+        this.showNotification('top', 'right', resp.mensaje, 'done_all', 'success');
+        if (this.tipoLista == 0) {
+          this.llenarCreditoPersonal();
+        } else {
+          this.llenarCreditoEmpresa();
+        }
+        this.mostrar = false;
+      }, err => {
+        this.showNotification('bottom', 'right', 'No se completo', 'cancel', 'danger');
+      });
+    }
+
   }
 
   habilitarMontos(value: number) {
+    this.opcionPagar = value;
     if (value == 2) {
       this.vercampos = false;
       this.cuotaCancelar = 0;
@@ -91,6 +134,7 @@ export class CobroComponent implements OnInit {
         this.botonValido = true;
       }
     } else if (value == 3) {
+      this.vercampos = false;
       this.cuotaCancelar = this.saldoActual + this.interesMasMora;
       this.capitalCancelar = this.saldoActual;
       this.capitalRestante = 0;
@@ -193,7 +237,8 @@ export class CobroComponent implements OnInit {
   seleccionarCredito(value: any) {
     this.mostrar = true;
     this.cargandoCredito();
-    console.log(value);
+    //console.log(value);
+    this.idCredito = value.id;
     this.serviceCP.traerPago(value.id).subscribe((res: any) => {
       console.log(res);
       if (res.status == 200) {
@@ -265,9 +310,6 @@ export class CobroComponent implements OnInit {
     localStorage.setItem('fechaCorrespondiente', this.fechaCorrespondiente.toString());
     localStorage.setItem('montoEntregado', this.efectivo.toString());
     localStorage.setItem('cambio', this.cambio.toString());
-    this.mostrar = false;
-    this.llenarCreditoPersonal();
-    this.llenarCreditoEmpresa();
     //this.router.navigateByUrl('inicio');
     window.open("http://localhost:4200/reportes/ticket", "_blank");
   }

@@ -18,9 +18,12 @@ export class EmpresaListComponent implements OnInit {
   cargando1 = false;
   page1 = 1;
   page = 1;
+  page2 = 1;
+  cargando2 = false;
   cargando = false;
   fechaSimulada: Date;
   listaCreditoEmpresaCurso: any[] = [];
+  listaCreditoEmpresaMora: any[] = [];
 
   constructor(public dialog: MatDialog, public personaService: PersonaService, private serviceCP: CreditosService) { }
 
@@ -35,11 +38,16 @@ export class EmpresaListComponent implements OnInit {
   LE(value: any) {
     if (value.index == 0) {
       this.listaCreditoEmpresaCurso.length = 0;
+      this.listaCreditoEmpresaMora.length = 0;
       this.llenarEmpresa();
-      
     } else if (value.index == 1) {
       this.listaEmpresa.length = 0;
+      this.listaCreditoEmpresaMora.length = 0;
       this.llenarCreditosCurso();
+    } else if (value.index == 2) {
+      this.listaEmpresa.length = 0;
+      this.listaCreditoEmpresaCurso.length = 0;
+      this.llenarCreditosMora();
     }
   }
 
@@ -49,6 +57,15 @@ export class EmpresaListComponent implements OnInit {
       this.listaCreditoEmpresaCurso = lista.body;
       console.log(this.listaCreditoEmpresaCurso);
       this.cargando = false;
+    });
+  }
+
+  llenarCreditosMora() {
+    this.cargando2 = true;
+    this.serviceCP.empresaEnMora().subscribe((lista: any) => {
+      this.listaCreditoEmpresaMora = lista.body.objeto;
+      console.log(this.listaCreditoEmpresaMora);
+      this.cargando2 = false;
     });
   }
 
